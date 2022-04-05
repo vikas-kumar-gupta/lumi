@@ -20,6 +20,10 @@ const reportSchema = new Schema<IReport>({
     reportedTo: {
         type: mongoose.Types.ObjectId,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
     }
 })
 

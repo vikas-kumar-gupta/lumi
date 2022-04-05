@@ -28,10 +28,6 @@ const paymentSchema = new Schema<IPayment>({
         type: mongoose.Types.ObjectId,
         required: true
     },
-    createdAt: {
-        type: Date,
-        required: true
-    },
     amount: { 
         type: Number,
         required: true
@@ -47,6 +43,10 @@ const paymentSchema = new Schema<IPayment>({
     status: {
         type: String,
         enum: DBENUMS.PAYMENT_STATUS,
+        required: true
+    },
+    createdAt: {
+        type: Date,
         required: true
     }
 })

@@ -44,7 +44,8 @@ const userSchema = new Schema<IUser>({
         required: true
     },
     updatedAt: {
-        type: Date
+        type: Date,
+        required: false
     }
 })
 

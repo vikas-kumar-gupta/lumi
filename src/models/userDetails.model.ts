@@ -17,7 +17,7 @@ const userDetailsSchema = new Schema<IUserDetails>({
         type: [String],
         required: false
     },
-    location: {
+    geometry: {
         // schema of location
         type: {
             type: String,
@@ -112,6 +112,14 @@ const userDetailsSchema = new Schema<IUserDetails>({
         type: Number,
         default: 0,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    updatedAt: {
+        type: Date,
+        required: false
     }
 })
 

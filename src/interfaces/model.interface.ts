@@ -39,6 +39,8 @@ export interface IUserDetails {
     blockedUsers?: [object],
     reportUsers?: [object],
     reportNum: number,
+    createdAt? : Date,
+    updatedAt? : Date
 }
 
 export interface IEvent {
@@ -55,7 +57,9 @@ export interface IEvent {
     price: number,
     bookedBy?: [object],
     eventImages?: [string],
-    attendees?: [object]
+    attendees?: [object],
+    createdAt? : Date,
+    updatedAt? : Date
 }
 
 export interface IPayment {
@@ -67,11 +71,11 @@ export interface IPayment {
     payDate: Date,
     payBy: object,
     payTo: object,
-    createdAt: Date,
     amount: number,
     payTax: number,
     total: number
-    status: string
+    status: string,
+    createdAt: Date,
 }
 
 export interface ISubscription {
@@ -81,7 +85,8 @@ export interface ISubscription {
     subStartDate: Date,
     subEndDate: Date,
     price: number,
-    paymentId: object
+    paymentId: object,
+    createdAt: Date
 }
 
 export interface IReport {
@@ -89,7 +94,8 @@ export interface IReport {
     reasons: string,
     otherReasons?: string,
     reportedBy: object,
-    reportedTo: object
+    reportedTo: object,
+    createdAt: Date
 }
 
 export interface ICard {
@@ -98,5 +104,6 @@ export interface ICard {
     cardNumber: number,
     expDate: Date,
     cvv: number,
-    cardType: string
+    cardType: string,
+    createdAt: Date
 }

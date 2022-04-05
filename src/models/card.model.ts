@@ -24,6 +24,10 @@ const cardSchema = new Schema<ICard>({
         type: String,
         enum: DBENUMS.CARD_TYPE,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
     }
 })
 
