@@ -1,0 +1,32 @@
+import { DBENUMS } from '../constants'
+import mongoose, { Schema, model } from "mongoose";
+
+import { ICard } from '../interfaces/model.interface';
+
+const cardSchema = new Schema<ICard>({
+    nameOnCard: {
+        type: String,
+        required: true
+    },
+    cardNumber: {
+        type: Number,
+        required: true
+    },
+    expDate: {
+        type: Date,
+        required: true
+    },
+    cvv: { 
+        type: Number, 
+        required: true 
+    },
+    cardType: {
+        type: String,
+        enum: DBENUMS.CARD_TYPE,
+        required: true
+    }
+})
+
+const Card = model<ICard>('Card', cardSchema)
+
+export default Card;
