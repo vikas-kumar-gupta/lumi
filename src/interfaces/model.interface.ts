@@ -1,5 +1,3 @@
-import mongoose, { Schema, model } from "mongoose";
-
 export interface IUser {
     _id? : object,
     name: string,
@@ -8,18 +6,10 @@ export interface IUser {
     gender: string,
     dob: Date,
     mobileNumber: number,
-    profilePicture: [string],
-    isVerified: boolean,
-    createdAt? : Date,
-    updatedAt? : Date
-}
-
-export interface IUserDetails {
-    _id?: object,
-    user: object,
     subscription: object,
+    profilePicture: [string],
     bio: [string],
-    geometry: object                // location has to be modifeied
+    geometry: object,               // location has to be modifeied
     height: [number],
     interestedIn: string,
     ageBetween: [number],
@@ -32,13 +22,22 @@ export interface IUserDetails {
     haveAlcohol: string,
     haveMarijuana: string,
     haveDrugs: string,
+    reportNum: number,
+    isVerified: boolean,
+    userDetails: object,
+    createdAt? : Date,
+    updatedAt? : Date
+}
+
+export interface IUserDetails {
+    _id?: object,
+    user: object,
+    savedCards?: [object],
     myEvents?: [object],
     invitesSend?: [object],
     invitesReceive?: [object],
-    savedCards?: [object],
     blockedUsers?: [object],
     reportUsers?: [object],
-    reportNum: number,
     createdAt? : Date,
     updatedAt? : Date
 }
@@ -75,6 +74,7 @@ export interface IPayment {
     payTax: number,
     total: number
     status: string,
+    payId: string,
     createdAt: Date,
 }
 
@@ -95,7 +95,9 @@ export interface IReport {
     otherReasons?: string,
     reportedBy: object,
     reportedTo: object,
-    createdAt: Date
+    isApproved: boolean,
+    createdAt: Date,
+    updatedAt: Date
 }
 
 export interface ICard {

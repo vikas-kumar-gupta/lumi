@@ -38,6 +38,91 @@ const userSchema = new Schema<IUser>({
         type: Boolean,
         default: false,
         required: true
+    },    
+    subscription: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+    bio: {
+        type: [String],
+        required: false
+    },
+    geometry: {
+        // schema of location
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
+    homeTown: {
+        type: String,
+        required: true
+    },
+    jobTitle: {
+        type: String,
+        required: true
+    },
+    eduLevel: {
+        type: String,
+        required: true
+    },
+    religiousBelief: {
+        type: String,
+        enum: DBENUMS.RELIGIOUS,
+        required: true
+    },
+    haveCigares: {
+        type: String,
+        enum: DBENUMS.ACCEPTANCE,
+        required: true
+    },
+    haveAlcohol: {
+        type: String,
+        enum: DBENUMS.ACCEPTANCE,
+        required: true
+    },
+    haveMarijuana: {
+        type: String,
+        enum: DBENUMS.ACCEPTANCE,
+        required: true
+    },
+    haveDrugs: {
+        type: String,
+        enum: DBENUMS.ACCEPTANCE,
+        required: true
+    },
+    politicalLeaning: {
+        type: String,
+        enum: DBENUMS.POLITICAL_LEANING,
+        required: true
+    },
+    ageBetween: {
+        type: [Number],
+        required: true
+    },
+    height: {
+        type: [Number],
+        required: true
+    },    
+    interestedIn: {
+        type: String,
+        enum: DBENUMS.INTERESTS,
+        required: true
+    },
+    reportNum: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    userDetails: {
+        type: Schema.Types.ObjectId,
+        ref: 'User_Details',
+        required: true
     },
     createdAt: {
         type: Date,

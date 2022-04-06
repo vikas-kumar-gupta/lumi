@@ -45,6 +45,10 @@ const paymentSchema = new Schema<IPayment>({
         enum: DBENUMS.PAYMENT_STATUS,
         required: true
     },
+    payId: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         required: true

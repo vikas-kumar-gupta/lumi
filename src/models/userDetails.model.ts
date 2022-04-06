@@ -9,81 +9,6 @@ const userDetailsSchema = new Schema<IUserDetails>({
         ref: "User",
         required: true
     },
-    subscription: {
-        type: mongoose.Types.ObjectId,
-        required: true
-    },
-    bio: {
-        type: [String],
-        required: false
-    },
-    geometry: {
-        // schema of location
-        type: {
-            type: String,
-            enum: ['Point'],
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-            required: true
-        }
-    },
-    height: {
-        type: [Number],
-        required: true
-    },
-    interestedIn: {
-        type: String,
-        enum: DBENUMS.INTERESTS,
-        required: true
-    },
-    ageBetween: {
-        type: [Number],
-        required: true
-    },
-    homeTown: {
-        type: String,
-        required: true
-    },
-    jobTitle: {
-        type: String,
-        required: true
-    },
-    eduLevel: {
-        type: String,
-        required: true
-    },
-    religiousBelief: {
-        type: String,
-        enum: DBENUMS.RELIGIOUS,
-        required: true
-    },
-    politicalLeaning: {
-        type: String,
-        enum: DBENUMS.POLITICAL_LEANING,
-        required: true
-    },
-    haveCigares: {
-        type: String,
-        enum: DBENUMS.ACCEPTANCE,
-        required: true
-    },
-    haveAlcohol: {
-        type: String,
-        enum: DBENUMS.ACCEPTANCE,
-        required: true
-    },
-    haveMarijuana: {
-        type: String,
-        enum: DBENUMS.ACCEPTANCE,
-        required: true
-    },
-    haveDrugs: {
-        type: String,
-        enum: DBENUMS.ACCEPTANCE,
-        required: true
-    },
     myEvents: {
         type: [mongoose.Types.ObjectId],
         required: false
@@ -108,11 +33,7 @@ const userDetailsSchema = new Schema<IUserDetails>({
         type: [mongoose.Types.ObjectId],
         required: false
     },
-    reportNum: {
-        type: Number,
-        default: 0,
-        required: true
-    },
+    
     createdAt: {
         type: Date,
         required: true
