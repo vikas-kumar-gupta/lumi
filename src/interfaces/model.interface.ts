@@ -5,7 +5,7 @@ export interface IUser {
     password: string,
     gender: string,
     dob: Date,
-    mobileNumber: number,
+    phoneNumber: number,
     subscription: object,
     profilePicture: [string],
     bio: [string],
@@ -32,6 +32,7 @@ export interface IUser {
 export interface IUserDetails {
     _id?: object,
     user: object,
+    matches: [object],
     savedCards?: [object],
     myEvents?: [object],
     invitesSend?: [object],

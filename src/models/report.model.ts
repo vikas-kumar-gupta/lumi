@@ -12,6 +12,7 @@ const reportSchema = new Schema<IReport>({
     otherReasons: {
         type: String,
         required: false,
+        trim: true
     },
     reportedBy: {
         type: mongoose.Types.ObjectId,

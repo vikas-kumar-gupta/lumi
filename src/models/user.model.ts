@@ -7,10 +7,16 @@ import { IUser } from "../interfaces/model.interface";
 const userSchema = new Schema<IUser>({
     name: {
         type: String,
+        trim: true,
+        minlength: 2,
+        maxlength: 25,
         required: true
     },
     email: {
         type: String,
+        lowercase: true,
+        trim: true,
+        unique: true,
         required: true
     },
     password: {
@@ -26,8 +32,13 @@ const userSchema = new Schema<IUser>({
         type: Date,
         required: true
     },
-    mobileNumber: {
+    phoneNumber: {
         type: Number,
+        unique: true,
+        minlength: 10,
+        maxlength: 10,
+        min: 1000000000,
+        max: 9999999999,
         required: false
     },
     profilePicture: {
@@ -61,15 +72,19 @@ const userSchema = new Schema<IUser>({
     },
     homeTown: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 2
     },
     jobTitle: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 2
     },
     eduLevel: {
         type: String,
-        required: true
+        required: true,
     },
     religiousBelief: {
         type: String,

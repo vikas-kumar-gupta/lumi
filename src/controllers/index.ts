@@ -1,0 +1,1 @@
+export * as userController from './v1/user.controller'

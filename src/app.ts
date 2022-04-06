@@ -1,22 +1,29 @@
 import { CONFIG } from './constants'
 import express, {Request, Response, NextFunction, Application} from 'express';
+import swaggerUi from 'swagger-ui-express'
+
+import * as v1Route from './routes/index'
 
 import connection from './config/db.config';
+import { swaggerFunc } from './lib/swagger';
+
+const port = CONFIG.PORT
+
 const app: Application = express();
 
-const port = CONFIG.PORT;
-
 //  db connection
-// connection();
+connection();
 
-app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({message: 'welcome'})
-})
+// express bodyParser
+app.use(express.json());
 
-app.get('/*', (req: Request, res: Response) => {
-    res.status(404).json({message: 'page not found'})
-})
+// swagger  documentation setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
 
-app.listen(port, () => {
+// mount paths
+app.use('/user', v1Route.userRoute.default);
+app.use('/', v1Route.noramlRoute.default);
+
+app.listen(port, (): void => {
     console.log(`listening on port ${port}`);
 })

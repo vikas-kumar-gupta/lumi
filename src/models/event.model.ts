@@ -6,7 +6,10 @@ import { IEvent } from "../interfaces/model.interface";
 const eventSchema = new Schema<IEvent>({
     eventName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 3,
+        maxlength: 25
     },
     bookingId: {
         type: String,
@@ -30,7 +33,7 @@ const eventSchema = new Schema<IEvent>({
     },
     eventDescription: {
         type: String,
-        required: true
+        required: true, 
     },
     availableTicks: {
         type: Number,

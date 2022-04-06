@@ -6,7 +6,9 @@ import { ICard } from '../interfaces/model.interface';
 const cardSchema = new Schema<ICard>({
     nameOnCard: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 2
     },
     cardNumber: {
         type: Number,
@@ -18,7 +20,8 @@ const cardSchema = new Schema<ICard>({
     },
     cvv: { 
         type: Number, 
-        required: true 
+        required: true,
+        minlength: 3
     },
     cardType: {
         type: String,

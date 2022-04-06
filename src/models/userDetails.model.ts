@@ -9,6 +9,10 @@ const userDetailsSchema = new Schema<IUserDetails>({
         ref: "User",
         required: true
     },
+    matches: {
+        type: [mongoose.Types.ObjectId],
+        required: false
+    },
     myEvents: {
         type: [mongoose.Types.ObjectId],
         required: false
