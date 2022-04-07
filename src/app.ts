@@ -1,6 +1,7 @@
 import { CONFIG } from './constants'
 import express, {Request, Response, NextFunction, Application} from 'express';
 import swaggerUi from 'swagger-ui-express'
+import cookieParser from 'cookie-parser';
 
 import * as v1Route from './routes/index'
 
@@ -16,6 +17,7 @@ connection();
 
 // express bodyParser
 app.use(express.json());
+app.use(cookieParser());
 
 // swagger  documentation setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));

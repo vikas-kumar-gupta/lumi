@@ -1,5 +1,6 @@
 import { CONFIG, STATUS_MSG, DATE } from '../../constants'
 import express, { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken'
 
 import User from '../../models/user.model'
 import UserDetails from '../../models/userDetails.model'
@@ -46,6 +47,8 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                     });
                 }
                 else {
+                    const token = jwt.sign({_id: user._id}, CONFIG.JWT_SECRET_KEY);
+                    res.cookie('jwt', token, { expires: new Date(Date.now() + 600000) });
                     throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message)
                 }
             })
