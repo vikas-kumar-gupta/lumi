@@ -1,5 +1,6 @@
 import express from "express";
 import { userController } from "../../controllers";
+import {auth, isLoggedIn} from '../../middlewares/user.middleware'
 
 const routes = express.Router();
 
@@ -128,7 +129,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/send-otp', userController.getOtp);
+routes.post('/signup/get-otp', userController.getOtp);
 
 /**
  * @swagger
@@ -161,5 +162,7 @@ routes.post('/signup/send-otp', userController.getOtp);
  *              description: Internal server error
  */
 routes.post('/signup/verify-otp', userController.verifyOtp);
+
+routes.post('/update', auth, userController.updateUser);
 
 export default routes

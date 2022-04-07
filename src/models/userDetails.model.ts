@@ -37,15 +37,18 @@ const userDetailsSchema = new Schema<IUserDetails>({
         type: [mongoose.Types.ObjectId],
         required: false
     },
-    
-    createdAt: {
-        type: Date,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        required: false
-    }
+
+    // createdAt: {
+    //     type: Date,
+    //     required: true
+    // },
+    // updatedAt: {
+    //     type: Date,
+    //     required: false
+    // }
+},
+{
+    timestamps: true,
 })
 
 const UserDetails = model<IUserDetails>('User_Details', userDetailsSchema);

@@ -148,14 +148,17 @@ const userSchema = new Schema<IUser>({
     //     ref: 'User_Details',
     //     required: true
     // },
-    createdAt: {
-        type: Date,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        required: false
-    }
+    // createdAt: {
+    //     type: Date,
+    //     required: true
+    // },
+    // updatedAt: {
+    //     type: Date,
+    //     required: false
+    // }
+},
+{
+    timestamps: true
 })
 
 // hashing password using pre hook

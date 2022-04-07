@@ -11,6 +11,7 @@ export const isLoggedIn = async (req: express.Request, res: express.Response, ne
                 if (err) throw new Error(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.message)
                 req.body.tokenId = data._id;   
             })
+            next()
         }
         else {
             throw new Error(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.message)
@@ -28,11 +29,14 @@ export const auth = async (req: express.Request, res: express.Response, next: Ne
             if (err) {
                 throw new Error(err)
             }
+            console.log(data);
+            
             req.body.tokenId = data._id;
         })
         next();
     }
     catch (err) {
+        console.log('auth error');
         res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
     }
 }
