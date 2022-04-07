@@ -4,11 +4,11 @@ import mongoose, { Schema, model } from "mongoose";
 import { IUserDetails } from "../interfaces/model.interface";
 
 const userDetailsSchema = new Schema<IUserDetails>({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
+    // user: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "User",
+    //     required: true
+    // },
     matches: {
         type: [mongoose.Types.ObjectId],
         required: false

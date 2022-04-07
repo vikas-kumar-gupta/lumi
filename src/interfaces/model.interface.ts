@@ -2,7 +2,7 @@ export interface IUser {
     _id? : object,
     name: string,
     email: string,
-    password: string,
+    // password: string,
     gender: string,
     dob: Date,
     phoneNumber: number,
@@ -11,6 +11,7 @@ export interface IUser {
     bio: [string],
     geometry: object,               // location has to be modifeied
     height: [number],
+    zodiac: String,
     interestedIn: string,
     ageBetween: [number],
     homeTown: string,
@@ -23,15 +24,16 @@ export interface IUser {
     haveMarijuana: string,
     haveDrugs: string,
     reportNum: number,
-    isVerified: boolean,
-    userDetails: object,
+    isPhoneVerified: boolean,
+    isMailVerified: boolean,
+    // userDetails: object,
     createdAt? : Date,
     updatedAt? : Date
 }
 
 export interface IUserDetails {
     _id?: object,
-    user: object,
+    // user: object,
     matches: [object],
     savedCards?: [object],
     myEvents?: [object],

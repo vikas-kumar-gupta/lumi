@@ -128,7 +128,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/send-otp', userController.sendOtp);
+routes.post('/signup/send-otp', userController.getOtp);
 
 /**
  * @swagger

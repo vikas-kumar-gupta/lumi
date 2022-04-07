@@ -10,27 +10,27 @@ const userSchema = new Schema<IUser>({
         trim: true,
         minlength: 2,
         maxlength: 25,
-        required: true
+        required: false
     },
     email: {
         type: String,
         lowercase: true,
         trim: true,
         unique: true,
-        required: true
+        required: false
     },
-    password: {
-        type: String,
-        required: true  
-    },
+    // password: {
+    //     type: String,
+    //     required: false  
+    // },
     gender: {
         type: String,
         enum: DBENUMS.USER_GENDER,
-        required: true
+        required: false
     },
     dob: {
         type: Date,
-        required: true
+        required: false
     },
     phoneNumber: {
         type: Number,
@@ -39,20 +39,24 @@ const userSchema = new Schema<IUser>({
         maxlength: 10,
         min: 1000000000,
         max: 9999999999,
-        required: false
+        required: true
     },
     profilePicture: {
         type: [String],
         required: false
     },
-    isVerified: {
+    isPhoneVerified: {
         type: Boolean,
-        default: false,
         required: true
     },    
+    isMailVerified: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
     subscription: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: false
     },
     bio: {
         type: [String],
@@ -63,82 +67,87 @@ const userSchema = new Schema<IUser>({
         type: {
             type: String,
             enum: ['Point'],
-            required: true
+            required: false
         },
         coordinates: {
             type: [Number],
-            required: true
+            required: false
         }
     },
     homeTown: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
         minlength: 2
     },
     jobTitle: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
         minlength: 2
     },
     eduLevel: {
         type: String,
-        required: true,
+        required: false,
     },
     religiousBelief: {
         type: String,
         enum: DBENUMS.RELIGIOUS,
-        required: true
+        required: false
     },
     haveCigares: {
         type: String,
         enum: DBENUMS.ACCEPTANCE,
-        required: true
+        required: false
     },
     haveAlcohol: {
         type: String,
         enum: DBENUMS.ACCEPTANCE,
-        required: true
+        required: false
     },
     haveMarijuana: {
         type: String,
         enum: DBENUMS.ACCEPTANCE,
-        required: true
+        required: false
     },
     haveDrugs: {
         type: String,
         enum: DBENUMS.ACCEPTANCE,
-        required: true
+        required: false
     },
     politicalLeaning: {
         type: String,
         enum: DBENUMS.POLITICAL_LEANING,
-        required: true
+        required: false
     },
     ageBetween: {
         type: [Number],
-        required: true
+        required: false
     },
     height: {
         type: [Number],
-        required: true
+        required: false
     },    
     interestedIn: {
         type: String,
         enum: DBENUMS.INTERESTS,
-        required: true
+        required: false
+    },
+    zodiac: {
+        type: String,
+        enum: DBENUMS.ZODIAC,
+        required: false
     },
     reportNum: {
         type: Number,
         default: 0,
         required: true
     },
-    userDetails: {
-        type: Schema.Types.ObjectId,
-        ref: 'User_Details',
-        required: true
-    },
+    // userDetails: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User_Details',
+    //     required: true
+    // },
     createdAt: {
         type: Date,
         required: true
@@ -150,17 +159,17 @@ const userSchema = new Schema<IUser>({
 })
 
 // hashing password using pre hook
-userSchema.pre('save', function (next) {
-    try{
-        if(this.isModified('password') || this.isNew) {
-            this.password = md5(this.password)
-        }
-        next()
-    }
-    catch(err: any) {
-        next(err)
-    }
-})
+// userSchema.pre('save', function (next) {
+//     try{
+//         if(this.isModified('password') || this.isNew) {
+//             this.password = md5(this.password)
+//         }
+//         next()
+//     }
+//     catch(err: any) {
+//         next(err)
+//     }
+// })
 
 const User = model<IUser>('User', userSchema);
 
