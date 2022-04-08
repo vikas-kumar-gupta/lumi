@@ -147,32 +147,11 @@ const userSchema = new Schema<IUser>({
     //     type: Schema.Types.ObjectId,
     //     ref: 'User_Details',
     //     required: true
-    // },
-    // createdAt: {
-    //     type: Date,
-    //     required: true
-    // },
-    // updatedAt: {
-    //     type: Date,
-    //     required: false
     // }
 },
 {
     timestamps: true
 })
-
-// hashing password using pre hook
-// userSchema.pre('save', function (next) {
-//     try{
-//         if(this.isModified('password') || this.isNew) {
-//             this.password = md5(this.password)
-//         }
-//         next()
-//     }
-//     catch(err: any) {
-//         next(err)
-//     }
-// })
 
 const User = model<IUser>('User', userSchema);
 

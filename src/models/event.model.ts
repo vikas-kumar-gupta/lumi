@@ -33,7 +33,7 @@ const eventSchema = new Schema<IEvent>({
     },
     eventDescription: {
         type: String,
-        required: true, 
+        required: true,
     },
     availableTicks: {
         type: Number,
@@ -66,16 +66,12 @@ const eventSchema = new Schema<IEvent>({
     attendees: {
         type: [mongoose.Types.ObjectId],
         required: false
-    },
-    createdAt: {
-        type: Date,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        required: false
     }
-})
+},
+    {
+        timestamps: true
+    }
+)
 
 const Event = model<IEvent>('Event', eventSchema);
 

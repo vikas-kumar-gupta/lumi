@@ -1,34 +1,34 @@
 export interface IUser {
-    _id? : object,
-    name? : string,
-    email? : string,
+    _id?: object,
+    name?: string,
+    email?: string,
     // password: string,
-    gender? : string,
-    dob? : Date,
-    phoneNumber? : number,
-    subscription? : object,
-    profilePicture? : [string],
-    bio? : [string],
-    geometry? : object,               // location has to be modifeied
-    height? : [number],
-    zodiac? : String,
-    interestedIn? : string,
-    ageBetween? : [number],
-    homeTown? : string,
-    jobTitle? : string,
-    eduLevel? : string,
-    religiousBelief? : string,
-    politicalLeaning? : string,
-    haveCigares? : string,
-    haveAlcohol? : string,
-    haveMarijuana? : string,
-    haveDrugs? : string,
-    reportNum? : number,
-    isPhoneVerified? : boolean,
-    isMailVerified? : boolean,
+    gender?: string,
+    dob?: Date,
+    phoneNumber?: number,
+    subscription?: object,
+    profilePicture?: [string],
+    bio?: [string],
+    geometry?: object,               // location has to be modifeied
+    height?: [number],
+    zodiac?: String,
+    interestedIn?: string,
+    ageBetween?: [number],
+    homeTown?: string,
+    jobTitle?: string,
+    eduLevel?: string,
+    religiousBelief?: string,
+    politicalLeaning?: string,
+    haveCigares?: string,
+    haveAlcohol?: string,
+    haveMarijuana?: string,
+    haveDrugs?: string,
+    reportNum?: number,
+    isPhoneVerified?: boolean,
+    isMailVerified?: boolean,
     // userDetails: object,
-    createdAt? : Date,
-    updatedAt? : Date
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 export interface IUserDetails {
@@ -41,8 +41,8 @@ export interface IUserDetails {
     invitesReceive?: [object],
     blockedUsers?: [object],
     reportUsers?: [object],
-    createdAt? : Date,
-    updatedAt? : Date
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 export interface IEvent {
@@ -60,14 +60,14 @@ export interface IEvent {
     bookedBy?: [object],
     eventImages?: [string],
     attendees?: [object],
-    createdAt? : Date,
-    updatedAt? : Date
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 export interface IPayment {
     _id?: object,
     nameOnCard: string,
-    cardNumber:number,
+    cardNumber: number,
     expDate: Date,
     cvv: number,
     payDate: Date,
