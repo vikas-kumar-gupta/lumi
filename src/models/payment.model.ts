@@ -22,11 +22,13 @@ const paymentSchema = new Schema<IPayment>({
     },
     payBy: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     payTo: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     amount: { 
         type: Number,
@@ -48,11 +50,10 @@ const paymentSchema = new Schema<IPayment>({
     payId: {
         type: String,
         required: true
-    },
-    createdAt: {
-        type: Date,
-        required: true
     }
+}, 
+{
+    timestamps: true
 })
 
 const Payment = model<IPayment>('Payment', paymentSchema)

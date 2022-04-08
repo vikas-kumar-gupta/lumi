@@ -27,12 +27,12 @@ const subscriptionSchema = new Schema<ISubscription>({
     },
     paymentId: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Payment'
     },
-    createdAt: {
-        type: Date,
-        required: true
-    }
+},
+{
+    timestamps: true
 })
 
 const Subscription = model<ISubscription>('Subscription', subscriptionSchema);

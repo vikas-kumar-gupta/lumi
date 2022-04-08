@@ -4,16 +4,17 @@ import mongoose, { Schema, model } from "mongoose";
 import { IEvent } from "../interfaces/model.interface";
 
 const eventSchema = new Schema<IEvent>({
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     eventName: {
         type: String,
         required: true,
         trim: true,
         minlength: 3,
         maxlength: 25
-    },
-    bookingId: {
-        type: String,
-        required: true
     },
     geometry: {
         // schema of location
@@ -35,16 +36,21 @@ const eventSchema = new Schema<IEvent>({
         type: String,
         required: true,
     },
-    availableTicks: {
+    totalTickets: {
         type: Number,
+        required: true
+    },
+    availableTickets: {
+        type: Number,
+        required: true
+    },
+    bookedTickets: {
+        type: Number,
+        default: 0,
         required: true
     },
     ageBetween: {
         type: [Number],
-        required: true
-    },
-    attendeesNumber: {
-        type: Number,
         required: true
     },
     freeDrinks: {
@@ -57,14 +63,11 @@ const eventSchema = new Schema<IEvent>({
     },
     bookedBy: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'User'
     },
     eventImages: {
         type: [String],
-        required: false
-    },
-    attendees: {
-        type: [mongoose.Types.ObjectId],
         required: false
     }
 },

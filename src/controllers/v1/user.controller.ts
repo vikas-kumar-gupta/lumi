@@ -38,13 +38,12 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
             .then((data: any) => {
                 otpData = data;
                 console.log(data);
-
             });
 
         //  if OTP verified then creating new User account
         if (otpData != undefined && otpData.status === 'approved') {
             const phoneNumber = otpData.to.slice(3, 13);
-            const isAlreadyExist: any = await User.find({ phoneNumber: phoneNumber })
+            const isAlreadyExist: any = await User.findOne({ phoneNumber: phoneNumber })
 
             // check if phoneNumber already exist
             if (isAlreadyExist === undefined) {
@@ -56,7 +55,14 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                         userDetails.save(err => {
                             if (!err) {
                                 const token = jwt.sign({ _id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
-                                res.cookie('jwt', token, { expires: new Date(Date.now() + 6000000) });
+                                /**
+                                 * milisecond converting values
+                                 * 6 hrs --> 21600000
+                                 * 1 hrs --> 3600000
+                                 * 1 day --> 86400000
+                                 * 10 day --> 864000000
+                                 */
+                                res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) });     // 6 hrs     
                                 res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json(STATUS_MSG.SUCCESS.CREATED)
                             }
                             else {
@@ -71,13 +77,10 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
             }
             else {
                 const token = jwt.sign({_id: isAlreadyExist._id}, CONFIG.JWT_SECRET_KEY)
-                console.log('already a user');
-                res.cookie('jwt', token, { expires: new Date(Date.now() + 6000000) });
+                res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) });     // 6 hrs
                 res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(STATUS_MSG.SUCCESS.DEFAULT)
             }
-
         } else {
-            console.log(`otpData != undefined && otpData.status === 'approved'`);
             throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message)
         }
     }

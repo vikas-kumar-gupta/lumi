@@ -47,19 +47,20 @@ export interface IUserDetails {
 
 export interface IEvent {
     _id?: object,
-    bookingId: string,             // #987654
+    createdBy: object,
     eventName: string,
     geometry: object,        // location has to be modifeied
     eventDate: Date,
-    eventDescription: string
-    availableTicks: number,
+    eventDescription: string,
+    totalTickets: number,
+    availableTickets: number,
+    bookedTickets: number,
     ageBetween: [number],
-    attendeesNumber: number,
     freeDrinks: number,
     price: number,
     bookedBy?: [object],
     eventImages?: [string],
-    attendees?: [object],
+    // attendees?: [object],
     createdAt?: Date,
     updatedAt?: Date
 }

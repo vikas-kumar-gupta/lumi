@@ -4,6 +4,10 @@ import {auth, isLoggedIn} from '../../middlewares/user.middleware'
 
 const routes = express.Router();
 
+routes.post('/signup/verify-otp', userController.verifyOtp);
+routes.post('/signup/get-otp', userController.getOtp);
+routes.post('/update', auth, userController.updateUser);
+
 // CREATING TAGS
 /**
  * @swagger
@@ -129,7 +133,6 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/get-otp', userController.getOtp);
 
 /**
  * @swagger
@@ -161,8 +164,6 @@ routes.post('/signup/get-otp', userController.getOtp);
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/verify-otp', userController.verifyOtp);
 
-routes.post('/update', auth, userController.updateUser);
 
 export default routes

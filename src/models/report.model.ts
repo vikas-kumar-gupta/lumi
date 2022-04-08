@@ -16,26 +16,24 @@ const reportSchema = new Schema<IReport>({
     },
     reportedBy: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     reportedTo: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     isApproved: {
         type: Boolean,
         default: false,
         required: true
-    },
-    createdAt: {
-        type: Date,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        required: true
     }
-})
+},
+{
+    timestamps: true,
+}
+)
 
 const Report = model<IReport>('Report', reportSchema);
 

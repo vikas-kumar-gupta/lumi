@@ -56,7 +56,8 @@ const userSchema = new Schema<IUser>({
     },
     subscription: {
         type: mongoose.Types.ObjectId,
-        required: false
+        required: false,
+        ref: 'Subscription'
     },
     bio: {
         type: [String],
@@ -142,12 +143,7 @@ const userSchema = new Schema<IUser>({
         type: Number,
         default: 0,
         required: true
-    },
-    // userDetails: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User_Details',
-    //     required: true
-    // }
+    }
 },
 {
     timestamps: true

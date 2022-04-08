@@ -1,6 +1,8 @@
 import { STATUS_MSG } from '../../constants'
 import express, { Request, Response } from 'express';
 
+import {normalController} from '../../controllers'
+
 const router = express.Router();
 
 
@@ -26,9 +28,7 @@ const router = express.Router();
  *          500:
  *              description: Internal server error
  */
-router.get('/', (req: Request, res: Response) => {
-    res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(STATUS_MSG.SUCCESS.DEFAULT);
-})
+router.get('/', normalController.homePage)
 
 /**
  * @swagger
@@ -43,8 +43,6 @@ router.get('/', (req: Request, res: Response) => {
  *          500:
  *              description: Internal server error
  */
-router.get('/*', (req: Request, res: Response) => {
-    res.status(STATUS_MSG.ERROR.PAGE_NOT_FOUND.statusCode).json(STATUS_MSG.ERROR.PAGE_NOT_FOUND);
-})
+router.get('/*', normalController.pageNotFound)
 
 export default router;

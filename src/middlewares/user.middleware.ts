@@ -28,10 +28,14 @@ export const auth = async (req: express.Request, res: express.Response, next: Ne
         const verifyToken = jwt.verify(token, CONFIG.JWT_SECRET_KEY, (err: any, data: any) => {
             if (err) {
                 throw new Error(err)
+            } else {
+                if(data._id != undefined) {
+                    req.body.tokenId = data._id;
+                }
+                else {
+                    res.status(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED)
+                }
             }
-            console.log(data);
-            
-            req.body.tokenId = data._id;
         })
         next();
     }

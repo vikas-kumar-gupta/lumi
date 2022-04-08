@@ -11,41 +11,39 @@ const userDetailsSchema = new Schema<IUserDetails>({
     // },
     matches: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'User'
     },
     myEvents: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'Event'
     },
     invitesSend: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'User'
     },
     invitesReceive: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'User'
     },
     savedCards: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'Card'
     },
     blockedUsers: {
         type: [mongoose.Types.ObjectId],
-        required: false
+        required: false,
+        ref: 'User'
     },
     reportUsers: {
         type: [mongoose.Types.ObjectId],
-        required: false
-    },
-
-    // createdAt: {
-    //     type: Date,
-    //     required: true
-    // },
-    // updatedAt: {
-    //     type: Date,
-    //     required: false
-    // }
+        required: false,
+        ref: 'User'
+    }
 },
 {
     timestamps: true,
