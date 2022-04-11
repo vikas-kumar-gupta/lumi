@@ -76,7 +76,7 @@ export let STATUS_MSG = {
             message: 'Page not found!'
         },
 
-        TOKEN_ALREADY_EXPIRED: {
+        TOKEN_EXPIRED: {
             statusCode: 408,
             success: false,
             message: 'Your session has expired. Please logout and login again.',

@@ -24,6 +24,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
 
 // mount paths
 app.use('/user', v1Route.userRoute.default);
+app.use('/match', v1Route.matchRoute.default);
 app.use('/event', v1Route.eventRoute.default);
 app.use('/', v1Route.noramlRoute.default);
 

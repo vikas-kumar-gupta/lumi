@@ -52,3 +52,24 @@ export const addEvent = async (req: Request, res: Response, next: NextFunction) 
         next(err)
     }
 }
+
+export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const events = await Event.find();
+        if(events != undefined) {
+            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS("").statusCode).json(events)
+        }
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+export const bookEvent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        console.log('to be implemented'); 
+    }
+    catch (err) {
+        next(err)
+    }
+}

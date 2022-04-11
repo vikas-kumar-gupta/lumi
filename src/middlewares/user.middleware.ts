@@ -8,13 +8,13 @@ export const isLoggedIn = async (req: express.Request, res: express.Response, ne
         const token = req.cookies.jwt;
         if (token != undefined) {
             const verifyToken = jwt.verify(token, CONFIG.JWT_SECRET_KEY, (err: any, data: any) => {
-                if (err) throw new Error(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.message)
+                if (err) throw new Error(STATUS_MSG.ERROR.TOKEN_EXPIRED.message)
                 req.body.tokenId = data._id;   
             })
             next()
         }
         else {
-            throw new Error(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.message)
+            throw new Error(STATUS_MSG.ERROR.TOKEN_EXPIRED.message)
         }
     }
     catch (err) {
@@ -33,7 +33,7 @@ export const auth = async (req: express.Request, res: express.Response, next: Ne
                     req.body.tokenId = data._id;
                 }
                 else {
-                    res.status(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_ALREADY_EXPIRED)
+                    res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)
                 }
             }
         })

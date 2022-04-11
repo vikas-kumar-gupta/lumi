@@ -4,9 +4,10 @@ import {auth, isLoggedIn} from '../../middlewares/user.middleware'
 
 const routes = express.Router();
 
-routes.post('/signup/verify-otp', userController.verifyOtp);
 routes.post('/signup/get-otp', userController.getOtp);
-routes.post('/update', auth, userController.updateUser);
+routes.post('/signup/verify-otp', userController.verifyOtp);
+routes.patch('/update', auth, userController.updateUser);
+// routes.get('/maybe-matches', auth, userController.mayBeMatches)
 
 // CREATING TAGS
 /**
@@ -154,6 +155,135 @@ routes.post('/update', auth, userController.updateUser);
  *                          otp:
  *                              type: string
  *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/signup/send-otp:
+ *  post:
+ *      summary: Phone Number Authenctication
+ *      tags: [User]
+ *      description: user login with phone number
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          phoneNumber:
+ *                              type: string
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/update:
+ *  patch:
+ *      summary: User data updation
+ *      tags: [User]
+ *      description: Update all the remaining crucial information of user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          name:
+ *                              type: string
+ *                              required: false
+ *                          email:
+ *                              type: string
+ *                              requied: false
+ *                          gender:
+ *                              type: string
+ *                              required: false
+ *                          dob:
+ *                              type: date
+ *                              required: false
+ *                          phoneNumber:
+ *                              type: string
+ *                              required: false
+ *                          profilePicture:
+ *                              type: [string]
+ *                              required: false
+ *                          isPhoneVerified:
+ *                              type: boolean
+ *                              required: false
+ *                          isMailVerified:
+ *                              type: boolean
+ *                              required: false
+ *                          subscription:
+ *                              type: object
+ *                              required: false
+ *                          bio:
+ *                              type: [string]
+ *                              required: false
+ *                          geometry:
+ *                              type: object
+ *                              required: false
+ *                          homeTown:
+ *                              type: string
+ *                              required: false
+ *                          jobTitle:
+ *                              type: string
+ *                              required: false
+ *                          eduLevel:
+ *                              type: string
+ *                              required: false
+ *                          religiousBelief:
+ *                              type: string
+ *                              required: false
+ *                          haveCigares:
+ *                              type: string
+ *                              required: false
+ *                          haveAlcohol:
+ *                              type: string
+ *                              required: false
+ *                          haveMarijuana:
+ *                              type: string
+ *                              required: false
+ *                          haveDrugs:
+ *                              type: string
+ *                              required: false
+ *                          politicalLeaning:
+ *                              type: string
+ *                              required: false
+ *                          ageBetween:
+ *                              type: [number]
+ *                              required: false
+ *                          height:
+ *                              type: [number]
+ *                              required: false
+ *                          interestedIn:
+ *                              type: string
+ *                              required: false
+ *                          zodiac:
+ *                              type: string
+ *                              required: false
+ *                          reportNum:
+ *                              type: number
+ *                              required: false
+ *                          
  *      responses:
  *          200:
  *              description: Sucess

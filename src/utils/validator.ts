@@ -7,12 +7,12 @@ export const getOtp = Joi.object({
 
 export const verifyOtp = Joi.object({
     phoneNumber: Joi.string().trim().required(),
-    otp: Joi.number().max(9999).required()
+    otp: Joi.string().trim().length(4).required()
 })
 
 export const updateUser = Joi.object({
     name: Joi.string().trim().min(3).max(20),
-    email: Joi.string().email().trim().min(6),
+    email: Joi.string().trim().min(6),
     gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.USER_GENDER)),
     dob: Joi.date(),
     profilePicture: Joi.array(),

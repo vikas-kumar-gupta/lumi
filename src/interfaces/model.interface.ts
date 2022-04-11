@@ -5,7 +5,7 @@ export interface IUser {
     // password: string,
     gender?: string,
     dob?: Date,
-    phoneNumber?: number,
+    phoneNumber?: string,
     subscription?: object,
     profilePicture?: [string],
     bio?: [string],

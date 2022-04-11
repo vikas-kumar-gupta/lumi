@@ -16,13 +16,8 @@ const userSchema = new Schema<IUser>({
         type: String,
         lowercase: true,
         trim: true,
-        unique: true,
         required: false
     },
-    // password: {
-    //     type: String,
-    //     required: false  
-    // },
     gender: {
         type: String,
         enum: DBENUMS.USER_GENDER,
@@ -33,12 +28,7 @@ const userSchema = new Schema<IUser>({
         required: false
     },
     phoneNumber: {
-        type: Number,
-        unique: true,
-        minlength: 10,
-        maxlength: 10,
-        min: 1000000000,
-        max: 9999999999,
+        type: String,
         required: true
     },
     profilePicture: {
@@ -142,7 +132,7 @@ const userSchema = new Schema<IUser>({
     reportNum: {
         type: Number,
         default: 0,
-        required: true
+        required: false
     }
 },
 {

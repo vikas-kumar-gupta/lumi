@@ -6,6 +6,7 @@ import * as validate from '../../utils/validator'
 import User from '../../models/user.model'
 import UserDetails from '../../models/userDetails.model'
 import { IUser } from '../../interfaces/model.interface';
+import * as utils from '../../utils/utils'
 
 const client = require('twilio')(CONFIG.TWILIO_ACC_SID, CONFIG.TWILIO_AUTH_TOKEN)
 
@@ -17,7 +18,8 @@ export const getOtp = async (req: express.Request, res: express.Response, next: 
         client.verify
             .services(CONFIG.TWILIO_SERVICE_ID)
             .verifications.create({ to: phoneNumber, channel: "sms" })
-            .then((data: any) => res.status(200).json(data));
+            .then((data: any) => res.status(200).json(data))
+            .catch((err: any) => res.status(500).json(err));
     }
     catch (err: any) {
         next(err);
@@ -38,23 +40,24 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
             .then((data: any) => {
                 otpData = data;
                 console.log(data);
-            });
+            })
+            .catch((err: any) => console.log(`--------------\n${err}`));
 
         //  if OTP verified then creating new User account
         if (otpData != undefined && otpData.status === 'approved') {
-            const phoneNumber = otpData.to.slice(3, 13);
-            const isAlreadyExist: any = await User.findOne({ phoneNumber: phoneNumber })
+            const isAlreadyExist = await User.findOne({ phoneNumber: phoneNumber });
 
             // check if phoneNumber already exist
-            if (isAlreadyExist === undefined) {
-                const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true })
+            if (isAlreadyExist == null) {
+                const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true})
                 user.save(err => {
                     if (!err) {
                         // creating new userDetails schema for the same user with same _id
-                        const userDetails = new UserDetails({ _id: user._id, createdAt: DATE.TIMESTAMP.CREATED_AT() })
+                        const userDetails = new UserDetails({ _id: user._id });
                         userDetails.save(err => {
                             if (!err) {
                                 const token = jwt.sign({ _id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
+                                // const token = utils.getJWTToken({ _id: userDetails._id }, 21600000);
                                 /**
                                  * milisecond converting values
                                  * 6 hrs --> 21600000
@@ -62,22 +65,29 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                                  * 1 day --> 86400000
                                  * 10 day --> 864000000
                                  */
-                                res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) });     // 6 hrs     
-                                res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json(STATUS_MSG.SUCCESS.CREATED)
+                                res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) }); // 6 hrs     
+                                res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json(STATUS_MSG.SUCCESS.CREATED);
                             }
                             else {
-                                throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message)
+                                throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message);
                             }
                         });
                     }
                     else {
-                        throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message)
+                        console.log('error wile saving user data');
+                        console.log(err.message);
+                        console.log(err.name);
+                        
+                        throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message);
                     }
                 })
             }
             else {
-                const token = jwt.sign({_id: isAlreadyExist._id}, CONFIG.JWT_SECRET_KEY)
+                // const token = jwt.sign({ _id: isAlreadyExist._id }, CONFIG.JWT_SECRET_KEY)
+                const token = utils.getJWTToken({_id: isAlreadyExist._id}, 21600000)
                 res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) });     // 6 hrs
+                console.log('logged in -------------------------');
+                
                 res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(STATUS_MSG.SUCCESS.DEFAULT)
             }
         } else {
