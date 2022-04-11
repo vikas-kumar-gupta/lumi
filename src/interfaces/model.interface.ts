@@ -1,10 +1,11 @@
 export interface IUser {
     _id?: object,
     name?: string,
+    phoneNumber?: string,
     email?: string,
+    password?: String   //there is 
     gender?: string,
     dob?: Date,
-    phoneNumber?: string,
     subscription?: object,
     profilePicture?: [string],
     bio?: [string],
@@ -76,17 +77,19 @@ export interface IPayment {
     status: string,
     payId: string,
     createdAt: Date,
+    updatedAt: Date
 }
 
 export interface ISubscription {
     _id?: object,
-    subType: string,
-    subMonths: number,
-    subStartDate: Date,
-    subEndDate: Date,
+    subscriptionPlan: string,
+    subscriptionMonths: number,
+    subscriptionStartDate: Date,
+    subscriptionEndDate: Date,
     price: number,
     paymentId: object,
-    createdAt: Date
+    createdAt: Date,
+    updatedAt: Date
 }
 
 export interface IReport {
@@ -107,7 +110,8 @@ export interface ICard {
     expDate: Date,
     cvv: number,
     cardType: string,
-    createdAt: Date
+    createdAt: Date,
+    updatedAt: Date
 }
 
 export interface IInvite {
@@ -116,6 +120,18 @@ export interface IInvite {
     invitedTo: object,
     eventDetails: object,
     inviteStatus: string,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface IBooking {
+    _id?: object,
+    bookingId: string,
+    eventDetails: object,
+    bookedBy: object,
+    bookedFor: object,
+    paymentDetails: object,
+    bookingStatus: string,
     createdAt?: Date,
     updatedAt?: Date
 }
