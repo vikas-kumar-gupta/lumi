@@ -5,6 +5,9 @@ import {normalController} from '../../controllers'
 
 const router = express.Router();
 
+router.get('/', normalController.homePage)
+router.post('/form-data', normalController.getFormData)
+router.get('/*', normalController.pageNotFound)
 
 // CREATING TAGS
 
@@ -28,7 +31,6 @@ const router = express.Router();
  *          500:
  *              description: Internal server error
  */
-router.get('/', normalController.homePage)
 
 /**
  * @swagger
@@ -43,6 +45,5 @@ router.get('/', normalController.homePage)
  *          500:
  *              description: Internal server error
  */
-router.get('/*', normalController.pageNotFound)
 
 export default router;

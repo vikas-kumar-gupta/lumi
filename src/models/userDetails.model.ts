@@ -22,12 +22,12 @@ const userDetailsSchema = new Schema<IUserDetails>({
     invitesSend: {
         type: [mongoose.Types.ObjectId],
         required: false,
-        ref: 'User'
+        ref: 'Invite'
     },
     invitesReceive: {
         type: [mongoose.Types.ObjectId],
         required: false,
-        ref: 'User'
+        ref: 'Invite'
     },
     savedCards: {
         type: [mongoose.Types.ObjectId],

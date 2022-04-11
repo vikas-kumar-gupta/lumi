@@ -20,7 +20,7 @@ const userSchema = new Schema<IUser>({
     },
     gender: {
         type: String,
-        enum: DBENUMS.USER_GENDER,
+        enum: DBENUMS.GENDER,
         required: false
     },
     dob: {

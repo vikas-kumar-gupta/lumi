@@ -13,7 +13,7 @@ export const verifyOtp = Joi.object({
 export const updateUser = Joi.object({
     name: Joi.string().trim().min(3).max(20),
     email: Joi.string().trim().min(6),
-    gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.USER_GENDER)),
+    gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)),
     dob: Joi.date(),
     profilePicture: Joi.array(),
     bio: Joi.array(),

@@ -2,7 +2,6 @@ export interface IUser {
     _id?: object,
     name?: string,
     email?: string,
-    // password: string,
     gender?: string,
     dob?: Date,
     phoneNumber?: string,
@@ -26,14 +25,12 @@ export interface IUser {
     reportNum?: number,
     isPhoneVerified?: boolean,
     isMailVerified?: boolean,
-    // userDetails: object,
     createdAt?: Date,
     updatedAt?: Date
 }
 
 export interface IUserDetails {
     _id?: object,
-    // user: object,
     matches: [object],
     savedCards?: [object],
     myEvents?: [object],
@@ -60,7 +57,6 @@ export interface IEvent {
     price: number,
     bookedBy?: [object],
     eventImages?: [string],
-    // attendees?: [object],
     createdAt?: Date,
     updatedAt?: Date
 }
@@ -112,4 +108,14 @@ export interface ICard {
     cvv: number,
     cardType: string,
     createdAt: Date
+}
+
+export interface IInvite {
+    _id?: object,
+    invitedBy: object,
+    invitedTo: object,
+    eventDetails: object,
+    inviteStatus: string,
+    createdAt?: Date,
+    updatedAt?: Date
 }

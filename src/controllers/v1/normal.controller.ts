@@ -8,3 +8,13 @@ export const homePage = async (req: Request, res: Response, next: NextFunction) 
 export const pageNotFound = async (req: Request, res: Response, next: NextFunction) => {
     res.status(STATUS_MSG.ERROR.PAGE_NOT_FOUND.statusCode).json(STATUS_MSG.ERROR.PAGE_NOT_FOUND);
 }
+
+export const getFormData = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        console.log(req.body);
+        res.status(200).json(req.body);
+    }
+    catch (err) {
+        next(err)
+    }
+}
