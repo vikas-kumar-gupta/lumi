@@ -5,6 +5,10 @@ import { IEvent } from "../interfaces/model.interface";
 
 const eventSchema = new Schema<IEvent>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         createdBy: {
             type: Schema.Types.ObjectId,
             required: true,
@@ -18,7 +22,6 @@ const eventSchema = new Schema<IEvent>(
             maxlength: 25
         },
         geometry: {
-            // schema of location
             type: {
                 type: String,
                 enum: ['Point'],
@@ -26,6 +29,7 @@ const eventSchema = new Schema<IEvent>(
             },
             coordinates: {
                 type: [Number],
+                length: 2,
                 required: true
             }
         },
@@ -35,14 +39,22 @@ const eventSchema = new Schema<IEvent>(
         },
         eventDescription: {
             type: String,
+            trim: true,
             required: true,
+        },
+        eventStatus: {
+            type: String,
+            enum: DBENUMS.EVENT_STATUS,
+            required: true
         },
         totalTickets: {
             type: Number,
+            min: 1,
             required: true
         },
         availableTickets: {
             type: Number,
+            min: 0,
             required: true
         },
         bookedTickets: {
@@ -52,17 +64,22 @@ const eventSchema = new Schema<IEvent>(
         },
         ageBetween: {
             type: [Number],
+            length: 2,
             required: true
         },
         freeDrinks: {
             type: Number,
+            min: 0,
+            default: 0,
             required: true
         },
         price: {
             type: Number,
+            min: 0,
+            default: 0,
             required: true
         },
-        bookedBy: {
+        bookedFor: {
             type: [mongoose.Types.ObjectId],
             required: false,
             ref: 'User'

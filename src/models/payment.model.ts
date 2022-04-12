@@ -5,6 +5,15 @@ import { IPayment } from "../interfaces/model.interface";
 
 const paymentSchema = new Schema<IPayment>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
+        payId: {
+            type: String,
+            trim: true,
+            required: true
+        },
         nameOnCard: {
             type: String,
             uppercase: true,
@@ -30,17 +39,15 @@ const paymentSchema = new Schema<IPayment>(
             required: true,
             ref: 'User'
         },
-        payTo: {
-            type: mongoose.Types.ObjectId,
-            required: true,
-            ref: 'User'
-        },
         amount: {
             type: Number,
+            min: 1,
             required: true
         },
         payTax: {
             type: Number,
+            min: 0,
+            default: 0,
             required: false
         },
         total: {
@@ -51,15 +58,12 @@ const paymentSchema = new Schema<IPayment>(
             type: String,
             enum: DBENUMS.PAYMENT_STATUS,
             required: true
-        },
-        payId: {
-            type: String,
-            required: true
         }
     },
     {
         timestamps: true
-    })
+    }
+)
 
 const Payment = model<IPayment>('Payment', paymentSchema)
 

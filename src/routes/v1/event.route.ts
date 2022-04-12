@@ -7,8 +7,14 @@ const routes = express.Router();
 
 routes.post('/add', auth, eventController.addEvent);
 routes.get('/all-events', auth, eventController.allEvents)
-//  booking to be implemented                                                                                   
-routes.post('/:eventId/book', auth, eventController.bookEvent)                                                  
+
+/**
+ * TODO:
+ * Given below each route & controller is to be implemented
+ */     
+
+routes.post('/:eventId/book', auth, eventController.bookEvent);
+routes.delete('/:eventId/delete', auth, eventController.deleteEvent)                                                
                               
 
 // CREATING TAGS

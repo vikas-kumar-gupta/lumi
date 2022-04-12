@@ -14,11 +14,12 @@ export const isLoggedIn = async (req: express.Request, res: express.Response, ne
             next()
         }
         else {
-            throw new Error(STATUS_MSG.ERROR.TOKEN_EXPIRED.message)
+            res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)
         }
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.INVALID_TOKEN.statusCode).json(STATUS_MSG.ERROR.INVALID_TOKEN)
+        // res.status(STATUS_MSG.ERROR.INVALID_TOKEN.statusCode).json(STATUS_MSG.ERROR.INVALID_TOKEN)
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
     }
 }
 

@@ -42,6 +42,11 @@ export const changePassword = Joi.object({
     tokenId: Joi.string().trim()
 })
 
+export const changePhoneNumber = Joi.object({
+    newPhoneNumber: Joi.string().trim().required(),
+    tokenId: Joi.string().trim()
+})
+
 export const verifyMail = Joi.object({
     email: Joi.string().trim().email().required(),
     tokenId: Joi.string().trim()

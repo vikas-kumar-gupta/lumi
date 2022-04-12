@@ -28,10 +28,14 @@ import UserDetails from '../../models/userDetails.model'
 /**
  * !matching algorithm to be implemented more accurately
  */
-
  export const matches = async (req: Request, res: Response, next: NextFunction) => {
     console.log('/match');
 }
+
+/**
+ * TODO:
+ * Given below each controller is to be implemented
+ */
 
 export const matchProfile = async (req: Request, res: Response, next: NextFunction) => {
     console.log('/match/:userId/profile');
@@ -61,12 +65,19 @@ export const matchProfileReport = async (req: Request, res: Response, next: Next
 }
 
 export const matchProfileBlock = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('/match/:userid/block');
+    try {
+
+    }
+    catch (err) {
+
+    }
 }
 
-/**
- *  recieves data for booking ticken for both user
- */
 export const matchProfileInviteEvent = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('/match/:userid/:eventid/invite');
+    try {
+
+    }
+    catch (err) {
+
+    }
 }

@@ -1,10 +1,14 @@
 import { DBENUMS } from '../constants'
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from 'mongoose';
 
-import { IInvite } from "../interfaces/model.interface"
+import { IUserInvite } from '../interfaces/model.interface';
 
-const inviteSchema = new Schema<IInvite>(
+const userInviteSchema = new Schema<IUserInvite>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         invitedBy: {
             type: Schema.Types.ObjectId,
             ref: 'User',
@@ -15,7 +19,7 @@ const inviteSchema = new Schema<IInvite>(
             ref: 'User',
             required: true
         },
-        eventDetails: {
+        eventId: {
             type: Schema.Types.ObjectId,
             ref: 'Event',
             required: true
@@ -25,13 +29,18 @@ const inviteSchema = new Schema<IInvite>(
             enum: DBENUMS.INVITE_STATUS,
             default: DBENUMS.INVITE_STATUS[0],
             required: true
-        }
+        },
+        inviteType: {
+            type: String,
+            enum: DBENUMS.INVITE_TYPE,
+            required: true
+        }        
     },
     {
         timestamps: true
     }
 )
 
-const Invite = model<IInvite>('Invite', inviteSchema);
+const UserInvite = model<IUserInvite>('User_invite', userInviteSchema);
 
-export default Invite;
+export default UserInvite;

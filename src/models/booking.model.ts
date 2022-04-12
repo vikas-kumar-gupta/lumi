@@ -4,11 +4,16 @@ import { IBooking } from '../interfaces/model.interface'
 
 const bookingSchema = new Schema<IBooking>(
     {
-        bookingId: {
-            type: String,
+        _id: {
+            type: Schema.Types.ObjectId,
             required: true
         },
-        eventDetails: {
+        bookingId: {
+            type: String,
+            trim: true,
+            required: true
+        },
+        eventId: {
             type: Schema.Types.ObjectId,
             ref: 'Event',
             required: true
@@ -23,7 +28,7 @@ const bookingSchema = new Schema<IBooking>(
             ref: 'User',
             required: true
         },
-        paymentDetails: {
+        paymentId: {
             type: Schema.Types.ObjectId,
             ref: 'Payment',
             required: true
@@ -38,3 +43,7 @@ const bookingSchema = new Schema<IBooking>(
         timestamps: true
     }
 )
+
+const Booking = model<IBooking>('Booking', bookingSchema)
+
+export default Booking;

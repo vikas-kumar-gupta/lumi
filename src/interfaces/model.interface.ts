@@ -1,3 +1,87 @@
+export interface IBooking {
+    _id?: object,
+    bookingId: String,
+    eventId: object,
+    bookedBy: object,
+    bookedFor: object,
+    paymentId: object,
+    bookingStatus: String,
+    createdAt?: Date,
+    updatedAt?: Date,
+}
+
+export interface ICard {
+    _id?: object,
+    nameOnCard: string,
+    cardNumber: number,
+    expDate: Date,
+    cvv: number,
+    cardType: string,
+    cardStatus: string,
+    userId: object,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface IEvent {
+    _id?: object,
+    createdBy: object,
+    eventName: string,
+    geometry: object,
+    eventDate: Date,
+    eventDescription: string,
+    eventStatus: string,
+    totalTickets: number,
+    availableTickets: number,
+    bookedTickets: number,
+    ageBetween: [number],
+    freeDrinks: number,
+    price: number,
+    bookedFor?: [object],
+    eventImages?: [string],
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface IPayment {
+    _id?: object,
+    payId: string,
+    nameOnCard: string,
+    cardNumber: number,
+    expDate: Date,
+    cvv: number,
+    payDate: Date,
+    payBy: object,
+    amount: number,
+    payTax: number,
+    total: number
+    status: string,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface IReport {
+    _id?: object,
+    reasons: string,
+    otherReasons?: string,
+    reportedBy: object,
+    reportedTo: object,
+    isApproved: boolean,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface ISubscription {
+    _id?: object,
+    subscriptionPlan: string,
+    subscriptionMonths: number,
+    subscriptionStartDate: Date,
+    subscriptionEndDate: Date,
+    price: number,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
 export interface IUser {
     _id?: object,
     name?: string,
@@ -6,10 +90,11 @@ export interface IUser {
     password?: String   //there is 
     gender?: string,
     dob?: Date,
-    subscription?: object,
+    loginType?: string,
+    facebookId?: string,
     profilePicture?: [string],
     bio?: [string],
-    geometry?: object,               // location has to be modifeied
+    geometry?: object,
     height?: [number],
     zodiac?: String,
     interestedIn?: string,
@@ -32,106 +117,37 @@ export interface IUser {
 
 export interface IUserDetails {
     _id?: object,
-    matches: [object],
-    savedCards?: [object],
-    myEvents?: [object],
-    invitesSend?: [object],
-    invitesReceive?: [object],
     blockedUsers?: [object],
     reportUsers?: [object],
     createdAt?: Date,
     updatedAt?: Date
 }
 
-export interface IEvent {
-    _id?: object,
-    createdBy: object,
-    eventName: string,
-    geometry: object,        // location has to be modifeied
-    eventDate: Date,
-    eventDescription: string,
-    totalTickets: number,
-    availableTickets: number,
-    bookedTickets: number,
-    ageBetween: [number],
-    freeDrinks: number,
-    price: number,
-    bookedBy?: [object],
-    eventImages?: [string],
+export interface IUserEvent {
+    _id: object,
+    eventId: object,
+    userInvite: object,
+    paymentId: object,
     createdAt?: Date,
     updatedAt?: Date
 }
 
-export interface IPayment {
-    _id?: object,
-    nameOnCard: string,
-    cardNumber: number,
-    expDate: Date,
-    cvv: number,
-    payDate: Date,
-    payBy: object,
-    payTo: object,
-    amount: number,
-    payTax: number,
-    total: number
-    status: string,
-    payId: string,
-    createdAt: Date,
-    updatedAt: Date
-}
-
-export interface ISubscription {
-    _id?: object,
-    subscriptionPlan: string,
-    subscriptionMonths: number,
-    subscriptionStartDate: Date,
-    subscriptionEndDate: Date,
-    price: number,
-    paymentId: object,
-    createdAt: Date,
-    updatedAt: Date
-}
-
-export interface IReport {
-    _id?: object,
-    reasons: string,
-    otherReasons?: string,
-    reportedBy: object,
-    reportedTo: object,
-    isApproved: boolean,
-    createdAt: Date,
-    updatedAt: Date
-}
-
-export interface ICard {
-    _id?: object,
-    nameOnCard: string,
-    cardNumber: number,
-    expDate: Date,
-    cvv: number,
-    cardType: string,
-    createdAt: Date,
-    updatedAt: Date
-}
-
-export interface IInvite {
-    _id?: object,
+export interface IUserInvite {
+    _id: object,
     invitedBy: object,
     invitedTo: object,
-    eventDetails: object,
-    inviteStatus: string,
+    eventId: object,
+    inviteStatus: String,
+    inviteType: String,
     createdAt?: Date,
     updatedAt?: Date
 }
 
-export interface IBooking {
-    _id?: object,
-    bookingId: string,
-    eventDetails: object,
-    bookedBy: object,
-    bookedFor: object,
-    paymentDetails: object,
-    bookingStatus: string,
+export interface IUserSubscription {
+    _id: object,
+    subscriptionId: object,
+    userId: object,
+    paymentId: object,
     createdAt?: Date,
     updatedAt?: Date
 }

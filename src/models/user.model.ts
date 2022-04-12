@@ -6,6 +6,10 @@ import { IUser } from "../interfaces/model.interface";
 
 const userSchema = new Schema<IUser>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         name: {
             type: String,
             trim: true,
@@ -33,6 +37,16 @@ const userSchema = new Schema<IUser>(
             type: Date,
             required: false
         },
+        loginType: {
+            type: String,
+            enum: DBENUMS.LOGIN_TYPE,
+            required: true
+        },
+        facebookId: {
+            type: String,
+            trim: true,
+            required: false
+        },
         phoneNumber: {
             type: String,
             required: true
@@ -50,17 +64,11 @@ const userSchema = new Schema<IUser>(
             default: false,
             required: false
         },
-        subscription: {
-            type: mongoose.Types.ObjectId,
-            required: false,
-            ref: 'Subscription'
-        },
         bio: {
             type: [String],
             required: false
         },
         geometry: {
-            // schema of location
             type: {
                 type: String,
                 enum: ['Point'],
@@ -68,6 +76,7 @@ const userSchema = new Schema<IUser>(
             },
             coordinates: {
                 type: [Number],
+                length: 2,
                 required: false
             }
         },
@@ -119,10 +128,12 @@ const userSchema = new Schema<IUser>(
         },
         ageBetween: {
             type: [Number],
+            length: 2,
             required: false
         },
         height: {
             type: [Number],
+            length: 2,
             required: false
         },
         interestedIn: {

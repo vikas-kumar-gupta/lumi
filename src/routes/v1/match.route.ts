@@ -4,6 +4,11 @@ import { matchController } from "../../controllers";
 
 const routes = express.Router();
 
+/**
+ * TODO:
+ * Given below each route & controller is to be implemented
+ */
+
 routes.get('/', auth, matchController.matches)
 routes.get('/maybe-matches', auth, matchController.mayBeMatches)
 routes.get('/profile/:userId', auth, matchController.matchProfile)

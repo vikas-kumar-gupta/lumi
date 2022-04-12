@@ -7,7 +7,17 @@ const routes = express.Router();
 routes.post('/signup/get-otp', userController.getOtp);
 routes.post('/signup/verify-otp', userController.verifyOtp);
 routes.patch('/update', auth, userController.updateUser);
-// routes.get('/maybe-matches', auth, userController.mayBeMatches)
+
+/**
+ * TODO:
+ * Given below each route & controller is to be implemented
+ */
+
+routes.patch('/change-password', auth, userController.changePassword);                      //  partially done
+routes.patch('/change-phoneNumber', auth, userController.changePhoneNumber);                //  done
+routes.post('veryfi-email', auth, userController.verifyEmail);
+routes.get('/my-events', auth, userController.myEvents);
+routes.get('/my-bookings', auth, userController.myBookings);
 
 // CREATING TAGS
 /**

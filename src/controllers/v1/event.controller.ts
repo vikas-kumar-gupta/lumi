@@ -65,11 +65,25 @@ export const allEvents = async (req: Request, res: Response, next: NextFunction)
     }
 }
 
+/**
+ * TODO:
+ * Given below each controller is to be implemented
+ */
+
 export const bookEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('to be implemented'); 
+        // booking of an event is to implemented here
     }
     catch (err) {
-        next(err)
+        
+    }
+}
+
+export const deleteEvent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        //  deleting of an event is to be implemented
+    }
+    catch (err) {
+
     }
 }

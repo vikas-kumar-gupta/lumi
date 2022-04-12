@@ -11,8 +11,7 @@ export const pageNotFound = async (req: Request, res: Response, next: NextFuncti
 
 export const getFormData = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.body);
-        res.status(200).json(req.body);
+        res.status(200).json({message: "uploaded successfully"})
     }
     catch (err) {
         next(err)

@@ -5,6 +5,10 @@ import { ICard } from '../interfaces/model.interface';
 
 const cardSchema = new Schema<ICard>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         nameOnCard: {
             type: String,
             required: true,
@@ -21,12 +25,23 @@ const cardSchema = new Schema<ICard>(
         },
         cvv: {
             type: Number,
-            required: true,
-            minlength: 3
+            minlength: 3,
+            maxlength: 3,
+            required: true
         },
         cardType: {
             type: String,
             enum: DBENUMS.CARD_TYPE,
+            required: true
+        },
+        cardStatus: {
+            type: String,
+            enum: DBENUMS.CARD_STATUS,
+            required: true
+        },
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
             required: true
         }
     },

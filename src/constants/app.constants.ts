@@ -8,20 +8,24 @@ export const ENVIRONMENT = {
 }
 
 export const DBENUMS = {
-    SIGNUPSOURCE: ['NORMAL', 'APPLE', 'GOOGLE', 'FACEBOOK'],
-    INVITE_STATUS: ['PENDING', 'ACCEPTED', 'DECLINE'],
-    BOOKING_STATUS: ['BOOKED', 'CANCELED'],
-    GENDER: ['MALE', "FEMALE", "NON-BINARY"],
-    STATUS: ['ACTIVE', 'INACTIVE', 'DELETED'],
-    INTERESTS: ['MEN', 'WOMEN', 'MEN + WOMEN', 'GENDER FLUID PEOPLE'],
-    EDU_LEVEL: ['HIGH SCHOOL', 'UNDERGRADUATE', 'POST GRADUATE', 'PREFER NOT TO SAY'],
-    RELIGIOUS: ['BUDDHISM', 'CHRISTIANITY', 'JUDAISM', 'ISLAM', 'HINDUISM', 'OTHER', 'NONE', 'PREFER NOT TO SAY'],
-    POLITICAL_LEANING: ['LIBERAL', 'MODERATE', 'CONSERVATIVE', 'OTHER', 'PREFER NOT TO  SAY'],
-    ACCEPTANCE: ['YES', 'NO', 'SOMETIMES', 'PREFER NOT TO SAY'],
-    PAYMENT_STATUS: ['COMPLETE', 'CANCELLED', 'PENDING'],
-    SUBSCRIPTION_PLAN: ['SILVER', 'GOLD', 'PLATINUM'],
-    REPORT_REASON: ['INAPPROPRIATE CONTENT', 'HATE SPEECH OR VOILENCE', 'I DONT WANT THEM TO SEE ME', 'OTHER'],
-    CARD_TYPE: ['CREDIT CARD', 'DEBIT CARD'],
+    ACCEPTANCE: ["YES", "NO", "SOMETIMES", "PREFER NOT TO SAY"],
+    BOOKING_STATUS: ["BOOKED", "CANCELED"],
+    CARD_TYPE: ["CREDIT CARD", "DEBIT CARD"],
+    CARD_STATUS: ["ACTIVE", "INACTIVE", "EXPIRED"],
+    EDU_LEVEL: ["HIGH SCHOOL", "UNDERGRADUATE", "POST GRADUATE", "PREFER NOT TO SAY"],
+    EVENT_STATUS: ["UPCOMING", "ACTIVE", "EXPIRED", "DELETED", "CANCELED"],
+    GENDER: ["MALE", "FEMALE", "NON-BINARY"],
+    INTERESTS: ["MEN", "WOMEN", "MEN + WOMEN", "GENDER FLUID PEOPLE"],
+    INVITE_STATUS: ["PENDING", "ACCEPTED", "DECLINE"],
+    INVITE_TYPE: ["SENT", "RECEIVED"],
+    LOGIN_TYPE: ["FACEBOOK", "PHONE NUMBER"],
+    POLITICAL_LEANING: ["LIBERAL", "MODERATE", "CONSERVATIVE", "OTHER", "PREFER NOT TO  SAY"],
+    PAYMENT_STATUS: ["COMPLETE", "CANCELLED", "PENDING"],
+    RELIGIOUS: ["BUDDHISM", "CHRISTIANITY", "JUDAISM", "ISLAM", "HINDUISM", "OTHER", "NONE", "PREFER NOT TO SAY"],
+    REPORT_REASON: ["INAPPROPRIATE CONTENT", "HATE SPEECH OR VOILENCE", "I DONT WANT THEM TO SEE ME", "OTHER"],
+    SIGNUPSOURCE: ["NORMAL", "APPLE", "GOOGLE", "FACEBOOK"],
+    STATUS: ["ACTIVE", "INACTIVE", "DELETED"],
+    SUBSCRIPTION_PLAN: ["SILVER", "GOLD", "PLATINUM"],
     ZODIAC: ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
 }
 
@@ -30,65 +34,65 @@ export let STATUS_MSG = {
         BAD_REQUEST: {
             statusCode: 400,
             success: false,
-            message: 'BAD REQUEST',
-            type: 'BAD_REQUEST'
+            message: "BAD REQUEST",
+            type: "BAD_REQUEST"
         },
 
         PAGINATION: {
             statusCode: 400,
             success: false,
-            message: 'Page value can not be less than zero',
-            type: 'BAD_REQUEST'
+            message: "Page value can not be less than zero",
+            type: "BAD_REQUEST"
         },
         HEADER_MISSING: {
             statusCode: 400,
             success: false,
-            message: 'Token missing',
-            type: 'BAD_REQUEST'
+            message: "Token missing",
+            type: "BAD_REQUEST"
         },
         PASSWORD_NOT_MATCHED: {
             statusCode: 400,
             success: false,
-            type: 'PASSWORD_NOT_MATCHED',
-            message: 'Password does not match with confirm password'
+            type: "PASSWORD_NOT_MATCHED",
+            message: "Password does not match with confirm password"
         },
 
         INCORRECT_CREDENTIALS: {
             statusCode: 400,
             success: false,
-            message: 'Incorrect credentials. Please try again',
-            type: 'INCORRECT_CREDENTIALS'
+            message: "Incorrect credentials. Please try again",
+            type: "INCORRECT_CREDENTIALS"
         },
         BLOCKED_ACCOUNT: {
             statusCode: 403,
             success: false,
-            name: 'INVALID_ACCOUNT',
-            message: 'Your account has been temporarly blocked'
+            name: "INVALID_ACCOUNT",
+            message: "Your account has been temporarly blocked"
         },
         INVALID_CREDENTIALS: {
             statusCode: 400,
             success: false,
-            type: 'INVALID_PASSWORD',
-            message: 'The email or password you entered is incorrect.'
+            type: "INVALID_PASSWORD",
+            message: "The email or password you entered is incorrect."
         },
         PAGE_NOT_FOUND: {
             statusCode: 400,
             success: false,
-            type: 'PAGE_NOT_FOUND',
-            message: 'Page not found!'
+            type: "PAGE_NOT_FOUND",
+            message: "Page not found!"
         },
 
         TOKEN_EXPIRED: {
             statusCode: 408,
             success: false,
-            message: 'Your session has expired. Please logout and login again.',
-            type: 'TOKEN_ALREADY_EXPIRED'
+            message: "Your session has expired. Please logout and login again.",
+            type: "TOKEN_ALREADY_EXPIRED"
         },
         TOKEN_ALREADY_EXIST: {
             statusCode: 400,
             success: false,
-            type: 'TOKEN_ALREADY_EXIST',
-            message: 'Your session has already logged in'
+            type: "TOKEN_ALREADY_EXIST",
+            message: "Your session has already logged in"
         },
         DB_ERROR: {
             statusCode: 400,
@@ -192,6 +196,12 @@ export let STATUS_MSG = {
             success: true,
             message: 'Logged Out Successfully',
             type: 'LOGOUT'
+        },
+        LOGIN: {
+            statusCode: 200,
+            success: true,
+            message: 'Log In Successful',
+            type: 'LOGIN'
         },
         DELETED: {
             statusCode: 200,

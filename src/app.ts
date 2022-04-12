@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import * as v1Route from './routes/index'
 
-import connection from './config/db.config';
+import connection from './db/db.config';
 import { swaggerFunc } from './lib/swagger';
 
 const port = CONFIG.PORT

@@ -1,13 +1,14 @@
 import { STATUS_MSG } from '../../constants'
 import express, { Request, Response } from 'express';
 
-import {normalController} from '../../controllers'
+import { upload } from '../../middlewares/multer.middleware'
+import { normalController } from '../../controllers'
 
 const router = express.Router();
 
 router.get('/', normalController.homePage)
-router.post('/form-data', normalController.getFormData)
 router.get('/*', normalController.pageNotFound)
+router.post('/form-data',upload.single("img"), normalController.getFormData)
 
 // CREATING TAGS
 

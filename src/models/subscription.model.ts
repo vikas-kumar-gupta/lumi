@@ -5,6 +5,10 @@ import { ISubscription } from "../interfaces/model.interface"
 
 const subscriptionSchema = new Schema<ISubscription>(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         subscriptionPlan: {
             type: String,
             enum: DBENUMS.SUBSCRIPTION_PLAN,
@@ -12,6 +16,8 @@ const subscriptionSchema = new Schema<ISubscription>(
         },
         subscriptionMonths: {
             type: Number,
+            min: 0,
+            max: 12,
             required: true
         },
         subscriptionStartDate: {
@@ -24,13 +30,9 @@ const subscriptionSchema = new Schema<ISubscription>(
         },
         price: {
             type: Number,
+            min: 0,
             required: true
-        },
-        paymentId: {
-            type: mongoose.Types.ObjectId,
-            required: true,
-            ref: 'Payment'
-        },
+        }
     },
     {
         timestamps: true
