@@ -1,7 +1,7 @@
-import { DBENUMS } from "../constants";
+import { DBENUMS } from "../../constants";
 import mongoose, { Schema, model } from "mongoose";
 
-import { ISubscription } from "../interfaces/model.interface"
+import { ISubscription } from "../../interfaces/model.interface"
 
 const subscriptionSchema = new Schema<ISubscription>(
     {
@@ -36,7 +36,8 @@ const subscriptionSchema = new Schema<ISubscription>(
     },
     {
         timestamps: true
-    })
+    }
+)
 
 const Subscription = model<ISubscription>('Subscription', subscriptionSchema);
 

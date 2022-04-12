@@ -1,7 +1,7 @@
-import { DBENUMS } from "../constants";
+import { DBENUMS } from "../../constants";
 import mongoose, { Schema, model } from "mongoose";
 
-import { IEvent } from "../interfaces/model.interface";
+import { IEvent } from "../../interfaces/model.interface";
 
 const eventSchema = new Schema<IEvent>(
     {

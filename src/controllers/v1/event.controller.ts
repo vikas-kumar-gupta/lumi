@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import * as validate from '../../utils/validator'
 import { IEvent } from '../../interfaces/model.interface'
-import Event from '../../models/event.model'
+import Event from '../../models/admin/event.model'
 
 export const addEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -41,7 +41,7 @@ export const addEvent = async (req: Request, res: Response, next: NextFunction) 
             eventImages: eventImages
         }
         const event = new Event(query);
-        event.save(err => {
+        event.save((err: any) => {
             if (err) {
                 throw new Error(err.message)
             }
