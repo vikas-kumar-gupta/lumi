@@ -1,12 +1,12 @@
-import { CONFIG, STATUS_MSG, SERVICES } from '../../constants'
+import { CONFIG, STATUS_MSG, SERVICES } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
 import { Twilio } from 'twilio'
 
-import * as validate from '../../utils/validator'
-import User from '../../models/user.model'
-import UserDetails from '../../models/userDetails.model'
-import { IUser } from '../../interfaces/model.interface';
+import * as validate from '../../../utils/validator'
+import User from '../../../models/user.model'
+import UserDetails from '../../../models/userDetails.model'
+import { IUser } from '../../../interfaces/model.interface';
 
 const client = new Twilio(SERVICES.TWILIO.ACCOUNT_SID, SERVICES.TWILIO.AUTH_TOKEN)
 

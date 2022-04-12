@@ -56,7 +56,7 @@ export interface IEvent {
     ageBetween: [Number],
     freeDrinks: Number,
     price: Number,
-    bookedFor?: [Object],
+    bookedBy?: [Object],
     eventImages?: [String],
     createdAt?: Date,
     updatedAt?: Date

@@ -1,9 +1,9 @@
-import { CONFIG, STATUS_MSG, DATE } from '../../constants'
+import { CONFIG, STATUS_MSG, DATE } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
 
-import User from '../../models/user.model'
-import UserDetails from '../../models/userDetails.model'
+import User from '../../../models/user.model'
+import UserDetails from '../../../models/userDetails.model'
 
 /**
  * ! matching algorithm to be implemented more accurately

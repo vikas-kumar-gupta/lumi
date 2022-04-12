@@ -79,7 +79,7 @@ const eventSchema = new Schema<IEvent>(
             default: 0,
             required: true
         },
-        bookedFor: {
+        bookedBy: {
             type: [mongoose.Types.ObjectId],
             required: false,
             ref: 'User'

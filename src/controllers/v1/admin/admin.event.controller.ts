@@ -1,43 +1,42 @@
-import { STATUS_MSG } from '../../constants'
+import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 
-import * as validate from '../../utils/validator'
-import { IEvent } from '../../interfaces/model.interface'
-import Event from '../../models/admin/event.model'
+import * as validate from '../../../utils/validator'
+import Event from '../../../models/admin/event.model'
 
-export const addEvent = async (req: Request, res: Response, next: NextFunction) => {
+export const newEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log(req.body.tokenId);
 
-        const { 
-            eventName, 
-            geometry, 
-            eventDate, 
-            eventDescription, 
-            totalTickets, 
-            availableTickets, 
-            bookedTickets, 
-            ageBetween, 
+        const {
+            eventName,
+            geometry,
+            eventDate,
+            eventDescription,
+            eventStatus,
+            totalTickets,
+            availableTickets,
+            bookedTickets,
+            ageBetween,
             freeDrinks,
             price,
-            bookedBy,
             eventImages,
         } = req.body
         await validate.event.validateAsync(req.body)
-        
+
         const query = {
             createdBy: req.body.tokenId,
             eventName: eventName,
             geometry: geometry,
             eventDate: eventDate,
             eventDescription: eventDescription,
+            eventStatus: eventStatus,
             totalTickets: totalTickets,
             availableTickets: availableTickets,
             bookedTickets: bookedTickets,
             ageBetween: ageBetween,
             freeDrinks: freeDrinks,
             price: price,
-            bookedBy: bookedBy,
             eventImages: eventImages
         }
         const event = new Event(query);
@@ -53,29 +52,12 @@ export const addEvent = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
-export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
+export const updateEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const events = await Event.find();
-        if(events != undefined) {
-            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS("").statusCode).json(events)
-        }
+        // to bbe implemented
     }
     catch (err) {
-        next(err)
-    }
-}
 
-/**
- * TODO:
- * Given below each controller is to be implemented
- */
-
-export const bookEvent = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        // booking of an event is to implemented here
-    }
-    catch (err) {
-        
     }
 }
 
