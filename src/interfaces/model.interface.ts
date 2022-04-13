@@ -94,8 +94,6 @@ export interface ISubscription {
     _id?: Object,
     subscriptionPlan: String,
     subscriptionMonths: Number,
-    subscriptionStartDate: Date,
-    subscriptionEndDate: Date,
     price: Number,
     createdAt?: Date,
     updatedAt?: Date
@@ -165,6 +163,9 @@ export interface IUserInvite {
 export interface IUserSubscription {
     _id: Object,
     subscriptionId: Object,
+    subscriptionStartDate: Date,
+    subscriptionEndDate: Date,
+    subscriptionStatus: String,
     userId: Object,
     paymentId: Object,
     createdAt?: Date,

@@ -1,7 +1,25 @@
 import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 
-import Event from '../../../models/admin/event.model'
+import Event from '../../../models/admin/admin.event.model'
+
+export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // here user registered event will be displayed
+    }
+    catch (err) {
+
+    }
+}
+
+export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // here user registered event will be displayed
+    }
+    catch (err) {
+
+    }
+}
 
 export const allEvents = async (req: express.Request, res: express.Response) => {
     try {

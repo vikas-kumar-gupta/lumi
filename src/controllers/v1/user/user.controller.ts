@@ -3,8 +3,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
 import { Twilio } from 'twilio'
 
-import * as validate from '../../../utils/validator'
+import * as validate from '../../../utils/user.validator'
 import User from '../../../models/user.model'
+import Booking from '../../../models/booking.model'
 import UserDetails from '../../../models/userDetails.model'
 import { IUser } from '../../../interfaces/model.interface';
 
@@ -79,10 +80,15 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                 })
             }
             else {
+                if (!isAlreadyExist.isPhoneVerified) {
+                    const user = await User.findByIdAndUpdate(isAlreadyExist._id, { isPhoneVerified: true }, null, (err: any, data: any) => {
+                        if (err) throw new Error()
+                    });
+                }
                 const token = jwt.sign({ _id: isAlreadyExist._id }, CONFIG.JWT_SECRET_KEY)
-                // const token = utils.getJWTToken({_id: isAlreadyExist._id}, 21600000)
                 res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) });     // 6 hrs
                 res.status(STATUS_MSG.SUCCESS.LOGIN.statusCode).json(STATUS_MSG.SUCCESS.LOGIN)
+
             }
         } else {
             throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message)
@@ -108,10 +114,17 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-/**
- * TODO:
- * Given below each controller is to be implemented
- */
+export const userDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await User.findById(req.body.tokenId);
+        if (user) {
+            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(user)
+        }
+    }
+    catch (err) {
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+    }
+}
 
 export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -120,12 +133,19 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
          */
         const { currentPassword, newPassword } = req.body;
         await validate.changePassword.validateAsync(req.body);
-        await User.findByIdAndUpdate(req.body.tokenId, { password: newPassword }, null, (err: any, data: any) => {
-            if (err) {
-                throw new Error(err)
-            }
-            res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Password'))
-        });
+        const user = await User.findById(req.body.tokenId);
+        if (user && user.password == currentPassword) {
+            await User.findByIdAndUpdate(req.body.tokenId, { password: newPassword }, null, (err: any, data: any) => {
+                if (err) {
+                    throw new Error(err)
+                }
+                res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Password'))
+            });
+        }
+        else {
+            res.status(STATUS_MSG.ERROR.INVALID_CREDENTIALS.statusCode).json(STATUS_MSG.ERROR.INVALID_CREDENTIALS)
+        }
+
     }
     catch (err) {
         res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while changing the password'))
@@ -134,42 +154,41 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
 
 export const changePhoneNumber = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // here user phone number will be changed
         const { newPhoneNumber } = req.body;
         await validate.changePhoneNumber.validateAsync(req.body);
-        await User.findByIdAndUpdate(req.body.tokenId, {phoneNumber: newPhoneNumber}, null, (err: any, data: any) => {
-            if(err) {
-                throw new Error(err)
-            }
-            res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Phone number'))
-        })
+
+        //  check wheather the given phone number already registered
+        const isPhoneAlreadyRegistered = await User.findOne({ phoneNumber: newPhoneNumber })
+        if (!isPhoneAlreadyRegistered) {
+            const user = await User.findByIdAndUpdate(req.body.tokenId, { phoneNumber: newPhoneNumber, isPhoneVerified: false }, null, (err: any, data: any) => {
+                if (err) {
+                    throw new Error()
+                }
+                res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Phone number updated'))
+            })
+        }
+        else {
+            res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Given phone number is already registered'))
+        }
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while changing phone number'))
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+    }
+}
+
+export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const bookings = await Booking.find({ bookedBy: req.body.tokenId })
+        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(bookings)
+    }
+    catch (err) {
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
     }
 }
 
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // here user email will be verified
-    }
-    catch (err) {
-
-    }
-}
-
-export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        // here user registered event will be displayed
-    }
-    catch (err) {
-
-    }
-}
-
-export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        // here all the event booking will be displayed
     }
     catch (err) {
 

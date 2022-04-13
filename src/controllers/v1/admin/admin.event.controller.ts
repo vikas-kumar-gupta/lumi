@@ -1,8 +1,8 @@
 import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 
-import * as validate from '../../../utils/validator'
-import Event from '../../../models/admin/event.model'
+import * as validate from '../../../utils/user.validator'
+import Event from '../../../models/admin/admin.event.model'
 
 export const newEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {

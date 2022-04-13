@@ -20,14 +20,6 @@ const subscriptionSchema = new Schema<ISubscription>(
             max: 12,
             required: true
         },
-        subscriptionStartDate: {
-            type: Date,
-            required: true
-        },
-        subscriptionEndDate: {
-            type: Date,
-            required: true
-        },
         price: {
             type: Number,
             min: 0,

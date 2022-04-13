@@ -16,7 +16,7 @@ export const updateUser = Joi.object({
     gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)),
     dob: Joi.date(),
     profilePicture: Joi.array(),
-    bio: Joi.array(),
+    bio: Joi.array(),   
     geometry: Joi.object(),
     height: Joi.array().length(2),
     zodiac: Joi.string().min(3).uppercase().trim().valid(...Object.values(DBENUMS.ZODIAC)),

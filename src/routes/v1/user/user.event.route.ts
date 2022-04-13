@@ -5,7 +5,10 @@ import {auth} from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
+routes.get('/:eventId', auth, userEventController.eventDetails)
 routes.get('/all-events', auth, userEventController.allEvents)                            
+routes.get('/my-events', auth, userEventController.myEvents);
+routes.post('/book-event/:eventId', auth, userEventController.bookEvent)
 
 // CREATING TAGS
 /**
