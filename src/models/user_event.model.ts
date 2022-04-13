@@ -12,6 +12,11 @@ const userEventSchema = new Schema<IUserEvent>(
             ref: 'Event',
             required: true
         },
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
         userInvite: {
             type: mongoose.Types.ObjectId,
             ref: 'User_Invite',

@@ -143,6 +143,7 @@ export interface IUserDetails {
 export interface IUserEvent {
     _id: Object,
     eventId: Object,
+    userId: Object,
     userInvite: Object,
     paymentId: Object,
     createdAt?: Date,

@@ -2,22 +2,31 @@ import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 
 import Event from '../../../models/admin/admin.event.model'
-
-export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        // here user registered event will be displayed
-    }
-    catch (err) {
-
-    }
-}
+import UserEvent from '../../../models/user_event.model'
 
 export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // here user registered event will be displayed
+        const eventId = req.params.eventId
+        const event = await Event.findById(eventId)
+        if(event) {
+            res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(event)
+        } else {
+            res.status(STATUS_MSG.ERROR.NOT_EXIST('').statusCode).json(STATUS_MSG.ERROR.NOT_EXIST('Invalid  event-id || Event does not exist'));
+        }
     }
     catch (err) {
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+    }
+}
 
+export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userEvents = await UserEvent.find({userId: req.body.tokenId});
+        res.status(200).json(userEvents);
+    }
+    catch (err) {
+        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
     }
 }
 
