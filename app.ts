@@ -1,12 +1,12 @@
-import { CONFIG } from './constants'
+import { CONFIG } from './src/constants'
 import express, {Request, Response, NextFunction, Application} from 'express';
 import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser';
 
-import * as v1Route from './routes/index'
+import * as v1Route from './src/routes/index'
 
-import connection from './db/db.config';
-import { swaggerFunc } from './lib/swagger';
+import connection from './src/db/db.config';
+import { swaggerFunc } from './src/lib/swagger';
 
 const port = CONFIG.PORT
 
