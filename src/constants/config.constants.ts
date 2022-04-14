@@ -1,10 +1,12 @@
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
+// dotenv.config({ path: '../.env' })
 
-dotenv.config({ path: '../.env' })
+import dotenv from 'dotenv/config'
+dotenv;
 
 export const CONFIG = {
     PORT: process.env.PORT,
-    DB_URL: process.env.MONGODB_URL,
+    DB_URL: <string>process.env.MONGODB_URL,
     JWT_SECRET_KEY: <string>process.env.JWT_SECRET_KEY
 }
 
