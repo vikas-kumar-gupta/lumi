@@ -42,6 +42,6 @@ export const auth = async (req: express.Request, res: express.Response, next: Ne
     }
     catch (err) {
         console.log('auth error');
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+        res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)
     }
 }

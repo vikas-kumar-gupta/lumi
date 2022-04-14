@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import Event from '../../../models/admin/admin.event.model'
 import UserEvent from '../../../models/user_event.model'
+import UserEventEntity from '../../../entity/v1/user/userEvent.entity';
 
 export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -30,7 +31,7 @@ export const myEvents = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
-export const allEvents = async (req: express.Request, res: express.Response) => {
+export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const events = await Event.find();
         if (events != undefined) res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS("").statusCode).json(events)

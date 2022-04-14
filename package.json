@@ -2,9 +2,11 @@
   "name": "lumi",
   "version": "1.0.0",
   "description": "Lumi is a dating application",
-  "main": ".src/app.js",
+  "main": "./build/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -w",
+    "start": "tsc && node ./build/app.js"
   },
   "author": "Vikas Kumar Gupta",
   "license": "ISC",

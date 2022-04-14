@@ -9,22 +9,36 @@ import Booking from '../../../models/booking.model'
 import UserDetails from '../../../models/userDetails.model'
 import { IUser } from '../../../interfaces/model.interface';
 
+import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
+
+// const client = new Twilio(<string>process.env.TWILIO_ACCOUNT_SID, <string>process.env.TWILIO_AUTH_TOKEN )
+// const client = new Twilio("AC3baeb56a91805d3ede402de0e8c8c04a", "e29be1449e21a4fec4ed196171b57a7b")
 const client = new Twilio(SERVICES.TWILIO.ACCOUNT_SID, SERVICES.TWILIO.AUTH_TOKEN)
 
 export const getOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
         const { phoneNumber } = req.body;
-        //  validating the body
         await validate.getOtp.validateAsync(req.body);
-        client.verify
-            .services(SERVICES.TWILIO.SERVICE_ID)
-            .verifications.create({ to: phoneNumber, channel: "sms" })
-            .then((data: any) => res.status(200).json(data))
-            .catch((err: any) => res.status(500).json(err));
+        await TwilioPhoneOTP.getOTP(phoneNumber)
+        res.status(STATUS_MSG.SUCCESS.OTPSENT.statusCode).json(STATUS_MSG.SUCCESS.OTPSENT)
     }
     catch (err: any) {
-        next(err);
+        res.status(err.statusCode).json(err)
     }
+
+    // try {
+    //     const { phoneNumber } = req.body;
+    //     //  validating the body
+    //     await validate.getOtp.validateAsync(req.body);
+    //     client.verify
+    //         .services(SERVICES.TWILIO.SERVICE_ID)
+    //         .verifications.create({ to: phoneNumber, channel: "sms" })
+    //         .then((data: any) => res.status(200).json(data))
+    //         .catch((err: any) => res.status(500).json(err));
+    // }
+    // catch (err: any) {
+    //     next(err);
+    // }
 }
 
 export const verifyOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
@@ -43,6 +57,8 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                 console.log(data);
             })
             .catch((err: any) => console.log(`--------------\n${err}`));
+
+        // otpData = await TwilioPhoneOTP.verifyOtp(phoneNumber, otp);
 
         //  if OTP verified then creating new User account
         if (otpData != undefined && otpData.status === 'approved') {

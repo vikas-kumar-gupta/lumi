@@ -198,6 +198,12 @@ export let STATUS_MSG = {
             message: 'Logged Out Successfully',
             type: 'LOGOUT'
         },
+        OTPSENT: {
+            statusCode: 200,
+            success: true,
+            message: 'Otp sent successfully',
+            type: 'OTP SENT'
+        },
         LOGIN: {
             statusCode: 200,
             success: true,

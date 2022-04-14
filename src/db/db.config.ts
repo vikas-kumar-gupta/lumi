@@ -2,7 +2,7 @@ import { CONFIG } from "../constants";
 import mongoose, {connect} from "mongoose";
 
 const connection =async () => {
-    return connect(<string>CONFIG.DB_URL)
+    return mongoose.connect(CONFIG.DB_URL)
     .then(() => {
         console.log('database connection established');
         
