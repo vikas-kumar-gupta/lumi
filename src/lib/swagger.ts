@@ -27,7 +27,7 @@ export const swaggerFunc = () => {
                 },
             },
         },
-        apis: ['../src/app.ts', '../src/routes/v1/*.ts', '../src/routes/v1/*/*.ts', ]
+        apis: ['./src/app.ts', './src/routes/v1/*.ts', './src/routes/v1/*/*.ts']
     }
 
     const swaggerSpecs = swaggerJSDoc(options)

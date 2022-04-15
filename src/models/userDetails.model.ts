@@ -6,16 +6,16 @@ import { IUserDetails } from "../interfaces/model.interface";
 const userDetailsSchema = new Schema<IUserDetails>(
     {
         _id: {
-            type: mongoose.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             required: true
         },
         blockedUsers: {
-            type: [mongoose.Types.ObjectId],
+            type: [Schema.Types.ObjectId],
             required: false,
             ref: 'User'
         },
         reportUsers: {
-            type: [mongoose.Types.ObjectId],
+            type: [Schema.Types.ObjectId],
             required: false,
             ref: 'User'
         }

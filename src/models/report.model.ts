@@ -42,4 +42,4 @@ const reportSchema = new Schema<IReport>(
 
 const Report = model<IReport>('Report', reportSchema);
 
-export default reportSchema
+export default Report;

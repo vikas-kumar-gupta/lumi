@@ -30,7 +30,7 @@ export const getOtp = async (req: express.Request, res: express.Response, next: 
 
 export const verifyOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
-        const { otp, phoneNumber } = req.body;
+        const { otp, phoneNumber, loginType } = req.body;
         //  validating the body
         await validate.verifyOtp.validateAsync(req.body);
         let otpData: any;
@@ -51,11 +51,11 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
 
             // check if phoneNumber already exist
             if (isAlreadyExist == null) {
-                const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true })
+                const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true, loginType: loginType });
                 user.save(err => {
                     if (!err) {
                         // creating new userDetails schema for the same user with same _id
-                        const userDetails = new UserDetails({ _id: user._id });
+                        const userDetails = new UserDetails({ _id: user._id });                        
                         userDetails.save(err => {
                             if (!err) {
                                 const token = jwt.sign({ _id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
@@ -70,7 +70,7 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                                 res.cookie('jwt', token, { expires: new Date(Date.now() + 21600000) }); // 6 hrs     
                                 res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json(STATUS_MSG.SUCCESS.CREATED);
                             }
-                            else {
+                            else {                                
                                 throw new Error(STATUS_MSG.ERROR.BAD_REQUEST.message);
                             }
                         });

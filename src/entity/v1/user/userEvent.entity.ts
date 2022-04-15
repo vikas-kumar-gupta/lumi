@@ -1,19 +1,63 @@
-import Event from "../../../models/admin/admin.event.model";
-import {IEvent} from '../../../interfaces/model.interface'
 import { STATUS_MSG } from "../../../constants";
+import mongoose, { Schema, model } from 'mongoose'
+import UserEvent from "../../../models/user_event.model"
+import Event from "../../../models/admin/admin.event.model";
+import { IEvent, IUserEvent } from '../../../interfaces/model.interface'
 
 export default class UserEventEntity {
 
     /**
-     * @description to fetch all the events available for user
+     * @description get event details
+     * @param eventId 
+     * @returns Event
      */
-    static async allEvents(): Promise<IEvent[] | void> {
+    static async eventDetails(eventId: Schema.Types.ObjectId): Promise<IEvent> {
         try {
-            const events: IEvent[] = await Event.find();
-            return events;
+            const event: IEvent | null = await Event.findById(eventId);
+            if (event)
+                return Promise.resolve(event);
+            throw new Error()
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while fetching events'));
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
+        }
+    }
+
+    /**
+     * @description list of user booked events
+     * @param userId 
+     * @returns Event[]
+     */
+    static async myEvents (userId: Schema.Types.ObjectId): Promise<IUserEvent[]>{
+        try {
+            const userEvents: IUserEvent[] = await UserEvent.find({userId: userId})
+            return Promise.resolve(userEvents)
+        }
+        catch (err) {
+            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+        }
+    }
+
+    /**
+     * @description all the events near user
+     * @returns Event[]
+     */
+    static async allevents(): Promise<IEvent[]> {
+        try {
+            const events: IEvent[] = await Event.find();
+            return Promise.resolve(events)
+        }
+        catch (err) {
+            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+        }
+    }
+
+    static async bookEvent() {
+        try {
+
+        }
+        catch (err) {
+
         }
     }
 }

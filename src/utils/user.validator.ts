@@ -7,7 +7,8 @@ export const getOtp = Joi.object({
 
 export const verifyOtp = Joi.object({
     phoneNumber: Joi.string().trim().required(),
-    otp: Joi.string().trim().length(4).required()
+    otp: Joi.string().trim().length(4).required(),
+    loginType: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.LOGIN_TYPE)).required()
 })
 
 export const updateUser = Joi.object({
