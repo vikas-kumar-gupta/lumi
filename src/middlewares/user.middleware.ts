@@ -30,8 +30,8 @@ export const auth = async (req: express.Request, res: express.Response, next: Ne
             if (err) {
                 throw new Error(err)
             } else {
-                if(data._id != undefined) {
-                    req.body.tokenId = data._id;
+                if(data.id != undefined) {                
+                    req.body.tokenId = data.id;
                 }
                 else {
                     res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)

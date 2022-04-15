@@ -57,6 +57,12 @@ export let STATUS_MSG = {
             type: "PASSWORD_NOT_MATCHED",
             message: "Password does not match with confirm password"
         },
+        INVALID_OTP: {
+            statusCode: 400,
+            success: false,
+            message: "Invalid OTP",
+            type: "INVALID_OTP"
+        },
 
         INCORRECT_CREDENTIALS: {
             statusCode: 400,

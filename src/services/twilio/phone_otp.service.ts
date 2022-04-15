@@ -20,14 +20,19 @@ export default class TwilioPhoneOTP {
      */
     static async getOTP(phoneNumber: string): Promise<void> {
         try {
-            client.verify
+            await client.verify
                 .services(SERVICES.TWILIO.SERVICE_ID)
                 .verifications.create({ to: phoneNumber, channel: "sms" })
-                .then((data: any) => data)
-                .catch((err: any) => new Error(err))
+                .then((data: any) => {
+                    console.log(data);
+                    return Promise.resolve(STATUS_MSG.SUCCESS.OTPSENT)
+                })
+                .catch((err: any) => {
+                    return Promise.reject(err)
+                })
         }
         catch (err: any) {
-            return Promise.reject(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while generating otp'))
+            return Promise.reject(err)
         }
     }
 
