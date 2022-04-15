@@ -11,6 +11,7 @@ import { IUser } from '../../../interfaces/model.interface';
 import UserEntity from '../../../entity/v1/user/user.entity';
 import TwilioPhone from '../../../services/twilio/phone_otp.service'
 import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
+import { sendErrorResponse } from '../../../utils/utils';
 
 const client = new Twilio(SERVICES.TWILIO.ACCOUNT_SID, SERVICES.TWILIO.AUTH_TOKEN)
 
@@ -51,7 +52,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         res.status(data.statusCode).json(data);
     }
     catch (err: any) {
-        next(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 

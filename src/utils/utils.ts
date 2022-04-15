@@ -1,4 +1,4 @@
-import { CONFIG } from '../constants'
+import { CONFIG, STATUS_MSG } from '../constants'
 import Joi from "joi"
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser';
@@ -34,5 +34,56 @@ export const decodeToken = async (token: string, secret?: string) => {
     catch (err: any) {
         type = err.name == "TokenExpiredError" ? "expired" : "invalid";
         return {success: false, message: type}
+    }
+}
+
+export const sendErrorResponse = (error: any) => {
+    switch(error.name) {
+        case "MongoError" : {
+            if(error.code == 11000) {
+                return {
+                    statusCode: 400,
+                    success: error.success ? error.success : false,
+                    message: "This" + error.errmsg.split(':')[2].split('_')[0] + " is already registered.",
+                    type: "MongoError"
+                }
+            }
+            else {
+                return {
+                    statusCode: 500,
+                    success: false,
+                    message: STATUS_MSG.ERROR.IMP_ERROR.message,
+                }
+            }
+        }
+        case "ValidationError": {
+            return {
+                statusCode: 400,
+                success: false,
+                message: error.message,
+                type: "ValidationError"
+            }
+        }
+        default: {
+            switch (error.type) {
+                case "DB_ERROR":
+                case "IMP_ERROR": {
+                    return {
+                        statusCode: error.statusCode ? error.statusCode : 500,
+                        success: false,
+                        message: error.message,
+                        type: "DB_ERROR"
+                    }
+                }
+                default: {
+                    return {
+                        statusCode: error.statusCode ? error.statusCode : 4008,
+                        success: error.success,
+                        message: error.message,
+                        type: error.type
+                    }
+                }
+            }
+        }
     }
 }
