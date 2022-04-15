@@ -157,6 +157,14 @@ export let STATUS_MSG = {
                 type: 'BAD_REQUEST'
             }
         },
+        ALREADY_EXIST: (title: String) => {
+            return {
+                statusCode: 400,
+                success: false,
+                message: `${title} already exists`,
+                type: 'ALREADY_EXIST'
+            }
+        },
         ACTION_NOT_ALLOWED: {
             statusCode: 406,
             success: false,

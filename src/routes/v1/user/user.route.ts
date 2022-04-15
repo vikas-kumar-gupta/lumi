@@ -8,7 +8,6 @@ routes.post('/signup/get-otp', userController.getOtp);
 routes.post('/signup/verify-otp', userController.verifyOtp);
 routes.get('/profile', auth, userController.userDetails)
 routes.patch('/profile/update', auth, userController.updateUser);
-routes.patch('/change-password', auth, userController.changePassword);                      //  partially done
 routes.patch('/change-phoneNumber', auth, userController.changePhoneNumber);                //  done
 routes.get('/my-bookings', auth, userController.myBookings);
 

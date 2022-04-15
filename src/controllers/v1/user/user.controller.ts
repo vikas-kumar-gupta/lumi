@@ -47,54 +47,22 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await validate.updateUser.validateAsync(req.body);
-        const user = await User.findByIdAndUpdate(req.body.tokenId, req.body)
-        if(user) {
-            res.status(200).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User'))
-        }
-        else {
-            throw new Error()
-        }
+        const data: any = await UserEntity.updateUser(req.body.tokenId, req.body)
+        res.status(data.statusCode).json(data);
     }
-    catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+    catch (err: any) {
+        next(err)
     }
 }
 
 export const userDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = await User.findById(req.body.tokenId);
-        if (user) {
-            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(user)
-        }
+        const data = await UserEntity.userDetails(req.body.tokenId);
+        res.status(200).json(data)
     }
-    catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
-    }
-}
-
-export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        /**
-         * ! password hashing is pending
-         */
-        const { currentPassword, newPassword } = req.body;
-        await validate.changePassword.validateAsync(req.body);
-        const user = await User.findById(req.body.tokenId);
-        if (user && user.password == currentPassword) {
-            await User.findByIdAndUpdate(req.body.tokenId, { password: newPassword }, null, (err: any, data: any) => {
-                if (err) {
-                    throw new Error(err)
-                }
-                res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Password'))
-            });
-        }
-        else {
-            res.status(STATUS_MSG.ERROR.INVALID_CREDENTIALS.statusCode).json(STATUS_MSG.ERROR.INVALID_CREDENTIALS)
-        }
-
-    }
-    catch (err) {
-        res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while changing the password'))
+    catch (err:any) {
+        next(err)
+        // res.status(err.statusCode).json(err)
     }
 }
 
@@ -102,30 +70,19 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
     try {
         const { newPhoneNumber } = req.body;
         await validate.changePhoneNumber.validateAsync(req.body);
-
-        //  check wheather the given phone number already registered
-        const isPhoneAlreadyRegistered = await User.findOne({ phoneNumber: newPhoneNumber })
-        if (!isPhoneAlreadyRegistered) {
-            const user = await User.findByIdAndUpdate(req.body.tokenId, { phoneNumber: newPhoneNumber, isPhoneVerified: false }, null, (err: any, data: any) => {
-                if (err) {
-                    throw new Error()
-                }
-                res.status(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('').statusCode).json(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Phone number updated'))
-            })
-        }
-        else {
-            res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Given phone number is already registered'))
-        }
+        const data: any = await UserEntity.changePhoneNumber( req.body.tokenId, newPhoneNumber)
+        res.status(data.statusCode).json(data)
     }
-    catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+    catch (err: any) {
+        // res.status(err.statusCode).json(err)
+        next(err)
     }
 }
 
 export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const bookings = await Booking.find({ bookedBy: req.body.tokenId })
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(bookings)
+        const data =  await UserEntity.myBookings(req.body.tokenId);
+        res.status(200).json(data)
     }
     catch (err) {
         res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)

@@ -53,7 +53,7 @@ export default class UserEntity {
      */
     static async newUser(otpData: any, phoneNumber: String, loginType: String): Promise<void | Object> {
         try {
-            if(otpData.status == 'approved' && otpData.status != undefined) {
+            if (otpData.status == 'approved' && otpData.status != undefined) {
                 if (!await UserEntity.isPhoneNumAlreadyExist(phoneNumber)) {
                     console.log('new user');
                     const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true, loginType: loginType });
@@ -68,7 +68,7 @@ export default class UserEntity {
                                     console.log(token);
                                     console.log(STATUS_MSG.SUCCESS.CREATED);
                                     const statusData = STATUS_MSG.SUCCESS.CREATED;
-                                    return Promise.resolve({token, statusData});
+                                    return Promise.resolve({ token, statusData });
                                 }
                                 else {
                                     console.log('error while saving user details');
@@ -92,13 +92,13 @@ export default class UserEntity {
                     if (user) {
                         const token = jwt.sign({ id: user._id }, CONFIG.JWT_SECRET_KEY)
                         console.log(token);
-                        const statusData= STATUS_MSG.SUCCESS.LOGIN;
-                        return Promise.resolve({token, statusData})
+                        const statusData = STATUS_MSG.SUCCESS.LOGIN;
+                        return Promise.resolve({ token, statusData })
                     }
                     else {
                         return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(''))
                     }
-                    
+
                 }
             }
             else {
@@ -108,7 +108,7 @@ export default class UserEntity {
         catch (err) {
             console.log('outer error');
             console.log(err);
-            
+
             return Promise.reject(err)
         }
     }
@@ -119,14 +119,15 @@ export default class UserEntity {
      * @param data 
      * @returns Object of status response
      */
-    static async updateUser(id: Schema.Types.ObjectId, data: Object): Promise<void> {
+    static async updateUser(id: Schema.Types.ObjectId, data: Object): Promise<Object> {
         try {
-            const user = await User.findByIdAndUpdate(id, data, null, (err: any, data: any) => {
-                if (err) {
-                    throw new Error(err)
-                }
-                return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
-            })
+            const user = await User.findByIdAndUpdate(id, data);
+            if (user) {
+                return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User updated'))
+            }
+            else {
+                return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+            }
         }
         catch (err) {
             return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
@@ -144,34 +145,10 @@ export default class UserEntity {
             if (user) {
                 return Promise.resolve(user)
             }
-            throw new Error(STATUS_MSG.ERROR.NOT_EXIST('').message)
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
         }
         catch (err) {
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
-        }
-    }
-
-    /**
-     * @description change the password of a user account
-     * @param userId 
-     * @param currentPassword 
-     * @param newPassword 
-     * @returns Object of status response
-     */
-    static async changePassword(userId: Schema.Types.ObjectId, currentPassword: string, newPassword: string): Promise<void> {
-        try {
-            const user = await User.findById(userId);
-            if (user && user.password == currentPassword) {
-                await User.findByIdAndUpdate(userId, { password: newPassword }, null, (err: any, data: any) => {
-                    if (err) {
-                        throw new Error(err)
-                    }
-                    return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Password updated'));
-                })
-            }
-        }
-        catch (err) {
-            return Promise.reject(err)
         }
     }
 
@@ -181,22 +158,20 @@ export default class UserEntity {
      * @param newPhoneNumber 
      * @returns Object of status response
      */
-    static async changePhoneNumber(userId: Schema.Types.ObjectId, newPhoneNumber: String): Promise<Object | void> {
+    static async changePhoneNumber(userId: Schema.Types.ObjectId, newPhoneNumber: String): Promise<Object> {
         try {
             if (!await UserEntity.isPhoneNumAlreadyExist(newPhoneNumber)) {
-                const user = await User.findByIdAndUpdate(userId, { phoneNumber: newPhoneNumber, isPhoneVerified: false }, null, (err: any, data: any) => {
-                    if (err) {
-                        throw new Error(err)
-                    }
-                    return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Phone number updated'));
-                })
+                const user: IUser | null = await User.findByIdAndUpdate(userId, { phoneNumber: newPhoneNumber, isPhoneVerified: false })
+                if (user)
+                    return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
+                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
             }
             else {
-                throw new Error('Phone number is already registered')
+                return Promise.reject(STATUS_MSG.ERROR.ALREADY_EXIST(newPhoneNumber))
             }
         }
         catch (err) {
-            return Promise.reject(err)
+            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
         }
     }
 
