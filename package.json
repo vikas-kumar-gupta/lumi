@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w",
-    "start": "tsc && node ./build/app.js"
+    "start": "tsc && nodemon ./build/app.js"
   },
   "author": "Vikas Kumar Gupta",
   "license": "ISC",

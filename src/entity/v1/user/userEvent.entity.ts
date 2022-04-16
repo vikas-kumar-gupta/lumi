@@ -16,10 +16,10 @@ export default class UserEventEntity {
             const event: IEvent | null = await Event.findById(eventId);
             if (event)
                 return Promise.resolve(event);
-            throw new Error()
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
+            return Promise.reject(err)
         }
     }
 
@@ -34,7 +34,7 @@ export default class UserEventEntity {
             return Promise.resolve(userEvents)
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+            return Promise.reject(err)
         }
     }
 
@@ -48,13 +48,13 @@ export default class UserEventEntity {
             return Promise.resolve(events)
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+            return Promise.reject(err)
         }
     }
 
     static async bookEvent() {
         try {
-
+        // booking of an event is to implemented here
         }
         catch (err) {
 

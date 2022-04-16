@@ -118,7 +118,7 @@ routes.post('/verify-email', auth, userController.verifyEmail);
 
 /**
  * @swagger
- * /user/signup/send-otp:
+ * /user/signup/get-otp:
  *  post:
  *      summary: Phone Number Authenctication
  *      tags: [User]
@@ -164,34 +164,10 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                          otp:
  *                              type: string
  *                              required: true
- *      responses:
- *          200:
- *              description: Sucess
- *          400:
- *              description: Bad request
- *          401:
- *              description: Unauthorized
- *          500:
- *              description: Internal server error
- */
-
-/**
- * @swagger
- * /user/signup/send-otp:
- *  post:
- *      summary: Phone Number Authenctication
- *      tags: [User]
- *      description: user login with phone number
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          phoneNumber:
+ *                          loginType:
  *                              type: string
  *                              required: true
+ *                              example: "PHONENUMBER"
  *      responses:
  *          200:
  *              description: Sucess
@@ -205,7 +181,43 @@ routes.post('/verify-email', auth, userController.verifyEmail);
 
 /**
  * @swagger
- * /user/update:
+ * /user/profile:
+ *  get:
+ *      summary: User profile data
+ *      tags: [User]
+ *      description: user profile all data
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/my-bookings:
+ *  get:
+ *      summary: User Bookings
+ *      tags: [User]
+ *      description: user booking all data
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/profile/update:
  *  patch:
  *      summary: User data updation
  *      tags: [User]
@@ -304,5 +316,61 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *              description: Internal server error
  */
 
+
+/**
+ * @swagger
+ * /user/change-phoneNumber:
+ *  patch:
+ *      summary: User data updation
+ *      tags: [User]
+ *      description: Update all the remaining crucial information of user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          newPhoneNumber:
+ *                              type: string
+ *                              required: false
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/verify-email:
+ *  post:
+ *      summary: Email Verification
+ *      tags: [User]
+ *      description: Verify the the given mail of the user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          email:
+ *                              type: string
+ *                              required: false
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
 
 export default routes

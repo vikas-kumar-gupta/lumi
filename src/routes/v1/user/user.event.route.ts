@@ -1,5 +1,4 @@
 import express from 'express'
-
 import { userEventController } from '../../../controllers'
 import {auth} from '../../../middlewares/user.middleware'
 
@@ -9,24 +8,66 @@ routes.get('/:eventId', auth, userEventController.eventDetails)
 routes.get('/all-events', auth, userEventController.allEvents)                            
 routes.get('/my-events', auth, userEventController.myEvents);
 
-// to be implement
+// !to be implement
 routes.post('/book-event/:eventId', auth, userEventController.bookEvent)
 
-// CREATING TAGS
+// CREATING UserEvent TAG
 /**
  * @swagger
  * tags:
- *  name: Event                                                                     
+ *  name: UserEvent                                                                     
  *  description: User Routes
  */
 
 /**
  * @swagger
- * /event/all-events:
+ * /user/event/all-events:
  *  get:
  *      summary: List of near location events
- *      tags: [Event]
+ *      tags: [UserEvent]
  *      description: array of all the available events near users location.
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/event/my-events:
+ *  get:
+ *      summary: List of user booked events
+ *      tags: [UserEvent]
+ *      description: array of all the user booked events near users location.
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/event/{eventId}:
+ *  get:
+ *      summary: Event Details
+ *      tags: [UserEvent]
+ *      description: All the data about a single ebent of the given event id
+ *      parameteres:
+ *          -in: path
+ *          name: eventId
+ *          schema:
+ *              type: string
+ *          required: true
  *      responses:
  *          200:
  *              description: Sucess

@@ -1,46 +1,47 @@
+import mongoose, { Schema } from 'mongoose';
 import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 
 import Event from '../../../models/admin/admin.event.model'
 import UserEvent from '../../../models/user_event.model'
 import UserEventEntity from '../../../entity/v1/user/userEvent.entity';
+import {sendErrorResponse} from '../../../utils/utils'
 
 export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // here user registered event will be displayed
-        const eventId = req.params.eventId
-        const event = await Event.findById(eventId)
-        if(event) {
-            res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(event)
-        } else {
-            res.status(STATUS_MSG.ERROR.NOT_EXIST('').statusCode).json(STATUS_MSG.ERROR.NOT_EXIST('Invalid  event-id || Event does not exist'));
-        }
+        const eventId: Schema.Types.ObjectId = new Schema.Types.ObjectId(req.params.eventId);
+        const event = await UserEventEntity.eventDetails(eventId)
+        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(event)
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
 export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userEvents = await UserEvent.find({userId: req.body.tokenId});
-        res.status(200).json(userEvents);
+        const userEvent = await UserEventEntity.myEvents(req.body.tokenId);
+        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(userEvent)
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
 export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const events = await Event.find();
-        if (events != undefined) res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS("").statusCode).json(events)
+        const events = await UserEventEntity.allevents();
+        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(events)
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('Error while fetching events'))
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
+// ! to be implemented
 export const bookEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // booking of an event is to implemented here

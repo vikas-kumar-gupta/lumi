@@ -1,24 +1,13 @@
-import { CONFIG, STATUS_MSG, SERVICES } from '../../../constants'
+import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken'
-import { Twilio } from 'twilio'
-
 import * as validate from '../../../utils/user.validator'
-import User from '../../../models/user.model'
-import Booking from '../../../models/booking.model'
-import UserDetails from '../../../models/userDetails.model'
-import { IUser } from '../../../interfaces/model.interface';
 import UserEntity from '../../../entity/v1/user/user.entity';
-import TwilioPhone from '../../../services/twilio/phone_otp.service'
 import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
 import { sendErrorResponse } from '../../../utils/utils';
-
-const client = new Twilio(SERVICES.TWILIO.ACCOUNT_SID, SERVICES.TWILIO.AUTH_TOKEN)
 
 export const getOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
         const { phoneNumber } = req.body;
-        //  validating the body
         await validate.getOtp.validateAsync(req.body);
         const data = await TwilioPhoneOTP.getOTP(phoneNumber);
         res.status(STATUS_MSG.SUCCESS.OTPSENT.statusCode).json(data)
@@ -31,7 +20,6 @@ export const getOtp = async (req: express.Request, res: express.Response, next: 
 export const verifyOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
         const { otp, phoneNumber, loginType } = req.body;
-        //  validating the body
         await validate.verifyOtp.validateAsync(req.body);
         let otpData: any = await TwilioPhoneOTP.verifyOtp(phoneNumber, otp)
         console.log(otpData);
@@ -64,7 +52,6 @@ export const userDetails = async (req: Request, res: Response, next: NextFunctio
     }
     catch (err:any) {
         next(err)
-        // res.status(err.statusCode).json(err)
     }
 }
 
@@ -76,7 +63,6 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
         res.status(data.statusCode).json(data)
     }
     catch (err: any) {
-        // res.status(err.statusCode).json(err)
         next(err)
     }
 }
