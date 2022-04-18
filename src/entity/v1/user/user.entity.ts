@@ -66,8 +66,7 @@ export default class UserEntity {
                                     console.log('User Details created');
                                     const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
                                     console.log(token);
-                                    console.log(STATUS_MSG.SUCCESS.CREATED);
-                                    const statusData = STATUS_MSG.SUCCESS.CREATED;
+                                        const statusData = STATUS_MSG.SUCCESS.CREATED;
                                     return Promise.resolve({ token, statusData });
                                 }
                                 else {

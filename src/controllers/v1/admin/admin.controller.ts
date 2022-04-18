@@ -1,14 +1,36 @@
 import { STATUS_MSG } from '../../../constants'
-import mongoose, { Schema, model } from 'mongoose'
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AdminEntity from '../../../entity/v1/admin/admin.entity'
 import { sendErrorResponse } from '../../../utils/utils'
 
+
+export const adminSignup = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data: any = await AdminEntity.adminSignup(req.body);
+        res.cookie('jwt', data.token)
+        res.status(data.statusData.statusCode).json(data.statusData)
+    }
+    catch (err) {
+
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
+    }
+}
+
+export const adminLogin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data: any = await AdminEntity.adminLogin(req.body);
+        res.cookie('jwt', data.token)
+        res.status(data.statusData.statusCode).json(data.statusData)
+    }
+    catch (err) {
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
+    }
+}
+
 export const reportDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.params.reportId);
-        
-        // const reportId: Schema.Types.ObjectId = new Schema.Types.ObjectId(req.params.reportId);
         const reportId: any = req.params.reportId
         const report = await AdminEntity.reportDetails(reportId);
         res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(report)
@@ -29,12 +51,14 @@ export const reviewReport = async (req: Request, res: Response, next: NextFuncti
     }
 }
 
-// ! to be implemented
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        //  to be implemented
+        const userId = req.params.userId
+        const data = await AdminEntity.deleteUser(userId);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
-
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }

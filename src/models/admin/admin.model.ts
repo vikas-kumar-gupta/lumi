@@ -6,8 +6,9 @@ import {IAdmin} from '../../interfaces/model.interface'
 
 const adminSchema = new Schema<IAdmin>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
+        isAdmin: {
+            type: Boolean,
+            default: false,
             required: true
         },
         name: {
@@ -28,12 +29,12 @@ const adminSchema = new Schema<IAdmin>(
         },
         dob: {
             type: Date,
-            required: true
+            required: false
         },
         profilePicture: {
             type: [String],
             maxlength: 5,
-            required: true
+            required: false
         },
         phoneNumber: {
             type: String,
@@ -55,16 +56,6 @@ const adminSchema = new Schema<IAdmin>(
                 required: false
             }
         },
-        height: {
-            type: [Number],
-            length: 2,
-            required: true
-        },
-        zodiac: {
-            type: String,
-            enum: DBENUMS.ZODIAC,
-            required: true
-        },
         homeTown: {
             type: String,
             required: true
@@ -75,11 +66,13 @@ const adminSchema = new Schema<IAdmin>(
         },
         isPhoneVerified: {
             type: Boolean,
-            required: true
+            default: false,
+            required: false
         },
         isMailVerified: {
             type: Boolean,
-            required: true
+            default: false,
+            required: false
         }
     },
     {

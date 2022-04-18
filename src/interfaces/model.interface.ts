@@ -1,5 +1,6 @@
 export interface IAdmin {
     _id?: Object,
+    isAdmin: Boolean,
     name: String,
     email: String,
     gender: String,
@@ -8,8 +9,6 @@ export interface IAdmin {
     phoneNumber: String,
     password: String,
     geometry: Object,
-    height?: [Number],
-    zodiac?: String,
     homeTown?: String,
     jobTitle?: String,
     isPhoneVerified?: Boolean,

@@ -2,6 +2,28 @@ import { subscription } from './user.validator';
 import { DBENUMS } from '../constants'
 import Joi, { object } from "joi"
 
+export const adminSignup = Joi.object({
+    isAdmin: Joi.boolean().required(),
+    name: Joi.string().trim().required(),
+    email: Joi.string().trim().required(),
+    gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)).required(),
+    dob: Joi.date(),
+    profilePicture: Joi.array(),
+    phoneNumber: Joi.string().trim().required(),
+    password: Joi.string().trim().required(),
+    geometry: Joi.object(),
+    homeTown: Joi.string().trim().min(2).required(),
+    jobTitle: Joi.string().trim().required(),
+    isPhoneVerified: Joi.boolean(),
+    isMailVerified: Joi.boolean()
+
+})
+
+export const adminLogin = Joi.object({
+    phoneNumber: Joi.string().trim().required(),
+    password: Joi.string().required()
+})
+
 export const newSubscription = Joi.object({
     subscriptionPlan: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)).required(),
     subscriptionMonths: Joi.number().min(1).required(),

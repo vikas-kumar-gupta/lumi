@@ -64,6 +64,14 @@ export const sendErrorResponse = (error: any) => {
                 type: "ValidationError"
             }
         }
+        case "MongooseError": {
+            return {
+                statusCode: 400,
+                success: false,
+                message: error.message,
+                type: "MongooseError"
+            }
+        }
         default: {
             switch (error.type) {
                 case "DB_ERROR":
@@ -77,7 +85,7 @@ export const sendErrorResponse = (error: any) => {
                 }
                 default: {
                     return {
-                        statusCode: error.statusCode ? error.statusCode : 4008,
+                        statusCode: error.statusCode ? error.statusCode : 400,
                         success: error.success,
                         message: error.message,
                         type: error.type
