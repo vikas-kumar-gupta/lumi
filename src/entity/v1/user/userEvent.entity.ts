@@ -11,7 +11,7 @@ export default class UserEventEntity {
      * @param eventId 
      * @returns Event
      */
-    static async eventDetails(eventId: Schema.Types.ObjectId): Promise<IEvent> {
+    static async eventDetails(eventId: any): Promise<IEvent> {
         try {
             const event: IEvent | null = await Event.findById(eventId);
             if (event)
@@ -28,7 +28,7 @@ export default class UserEventEntity {
      * @param userId 
      * @returns Event[]
      */
-    static async myEvents (userId: Schema.Types.ObjectId): Promise<IUserEvent[]>{
+    static async myEvents (userId: any): Promise<IUserEvent[]>{
         try {
             const userEvents: IUserEvent[] = await UserEvent.find({userId: userId})
             return Promise.resolve(userEvents)
@@ -42,10 +42,10 @@ export default class UserEventEntity {
      * @description all the events near user
      * @returns Event[]
      */
-    static async allevents(): Promise<IEvent[]> {
+    static async allEvents(): Promise<IEvent[]> {
         try {
             const events: IEvent[] = await Event.find();
-            return Promise.resolve(events)
+            return Promise.resolve(events)            
         }
         catch (err) {
             return Promise.reject(err)

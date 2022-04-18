@@ -9,7 +9,7 @@ const bookingSchema = new Schema<IBooking>(
             required: true
         },
         bookingId: {
-            type: String,
+            type: String,       //  #0123456
             trim: true,
             required: true
         },

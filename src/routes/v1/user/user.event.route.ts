@@ -4,9 +4,11 @@ import {auth} from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
-routes.get('/:eventId', auth, userEventController.eventDetails)
-routes.get('/all-events', auth, userEventController.allEvents)                            
 routes.get('/my-events', auth, userEventController.myEvents);
+routes.get('/all-events', auth, userEventController.allEvents)
+
+// ! Error :eventId mongoose.types.objectId                         
+routes.get('/details/:eventId', auth, userEventController.eventDetails)
 
 // !to be implement
 routes.post('/book-event/:eventId', auth, userEventController.bookEvent)
@@ -57,13 +59,13 @@ routes.post('/book-event/:eventId', auth, userEventController.bookEvent)
 
 /**
  * @swagger
- * /user/event/{eventId}:
+ * /user/event/details/{eventId}:
  *  get:
  *      summary: Event Details
  *      tags: [UserEvent]
  *      description: All the data about a single ebent of the given event id
- *      parameteres:
- *          -in: path
+ *      parameters:
+ *        - in: path
  *          name: eventId
  *          schema:
  *              type: string

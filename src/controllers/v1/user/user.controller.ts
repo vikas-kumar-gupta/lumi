@@ -9,11 +9,12 @@ export const getOtp = async (req: express.Request, res: express.Response, next: 
     try {
         const { phoneNumber } = req.body;
         await validate.getOtp.validateAsync(req.body);
-        const data = await TwilioPhoneOTP.getOTP(phoneNumber);
-        res.status(STATUS_MSG.SUCCESS.OTPSENT.statusCode).json(data)
+        const data: any = await TwilioPhoneOTP.getOTP(phoneNumber);
+        res.status(data.statusCode).json(data)
     }
     catch (err: any) {
-        res.status(400).json(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 

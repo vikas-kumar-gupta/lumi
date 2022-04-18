@@ -172,3 +172,13 @@ export interface IUserSubscription {
     createdAt?: Date,
     updatedAt?: Date
 }
+
+export interface ISession {
+    _id?: Object,
+    token: String,
+    userId: Object,
+    deviceId: Object,
+    status: String,
+    createdAt?: Date,
+    updatedAt?: Date
+}

@@ -18,18 +18,14 @@ export default class TwilioPhoneOTP {
      * @param phoneNumber 
      * @description to get the otp on mobile number
      */
-    static async getOTP(phoneNumber: string): Promise<void> {
+    static async getOTP(phoneNumber: string): Promise<Object | void> {
         try {
-            await client.verify
+            const data = await client.verify
                 .services(SERVICES.TWILIO.SERVICE_ID)
                 .verifications.create({ to: phoneNumber, channel: "sms" })
-                .then((data: any) => {
-                    console.log(data);
+                if(data.status == 'pending') {
                     return Promise.resolve(STATUS_MSG.SUCCESS.OTPSENT)
-                })
-                .catch((err: any) => {
-                    return Promise.reject(err)
-                })
+                }
         }
         catch (err: any) {
             return Promise.reject(err)
