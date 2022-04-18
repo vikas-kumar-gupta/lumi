@@ -13,12 +13,12 @@ export default class AdminEntity {
      */
     static async reportDetails(reportId: any): Promise<IReport> {
         try {
-            const report: IReport | null = await Report.findById(reportId);
+            const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString()));
             if (report)
                 return Promise.resolve(report)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
         }
-        catch (err) {
+        catch (err: any) {
             return Promise.reject(err)
         }
     }

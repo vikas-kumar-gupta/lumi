@@ -1,4 +1,5 @@
 import { STATUS_MSG } from '../../../constants'
+import * as mongoose from 'mongoose'
 import { newEvent, updateEvent } from '../../../utils/admin.validator'
 import Event from '../../../models/admin/admin.event.model'
 import { IEvent } from '../../../interfaces/model.interface';
@@ -34,19 +35,19 @@ export default class AdminEvent {
     static async updateEvent(eventId: any, bodyData: Object): Promise<Object> {
         try {
             await updateEvent.validateAsync(bodyData);
-            const updatedEvent: IEvent | null = await Event.findByIdAndUpdate(eventId, bodyData);
+            const updatedEvent: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), bodyData);
             if(updatedEvent)
                 return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`EventId: ${eventId}`))
         }
-        catch (err) {
+        catch (err: any) {            
             return Promise.reject(err)
         }
     }
 
     static async deleteEvent(eventId: any) : Promise<Object>{
         try {
-            const delEvent: IEvent | null = await Event.findByIdAndDelete(eventId);
+            const delEvent: IEvent | null = await Event.findByIdAndDelete(new mongoose.Types.ObjectId(eventId));
             if(delEvent)
                 return Promise.resolve(STATUS_MSG.SUCCESS.DELETED);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Eventid: ${eventId}`))

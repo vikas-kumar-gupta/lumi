@@ -53,22 +53,7 @@ export const verifyMail = Joi.object({
     tokenId: Joi.string().trim()
 })
 
-export const newEvent = Joi.object({
-    createdBy: Joi.object(),
-    eventName: Joi.string().min(3).max(25).trim().required(),
-    geometry: Joi.object().required(),
-    eventDate: Joi.date().required(),
-    eventDescription: Joi.string().min(3).max(200).trim().required(),
-    totalTickets: Joi.number().required(),
-    availableTickets: Joi.number(),
-    bookedTickets: Joi.number().required(),
-    ageBetween: Joi.array().length(2).required(),
-    freeDrinks: Joi.number().required(),
-    price: Joi.number().min(1).required(),
-    bookedBy: Joi.array(),
-    eventImages: Joi.array(),
-    tokenId: Joi.string()
-})
+
 
 export const payment = Joi.object({
     nameOnCard: Joi.string().trim().uppercase().required(),

@@ -13,7 +13,7 @@ export default class UserEventEntity {
      */
     static async eventDetails(eventId: any): Promise<IEvent> {
         try {
-            const event: IEvent | null = await Event.findById(eventId);
+            const event: IEvent | null = await Event.findById(new mongoose.Types.ObjectId(eventId));
             if (event)
                 return Promise.resolve(event);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
