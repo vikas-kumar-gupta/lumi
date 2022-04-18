@@ -53,7 +53,7 @@ export const verifyMail = Joi.object({
     tokenId: Joi.string().trim()
 })
 
-export const event = Joi.object({
+export const newEvent = Joi.object({
     createdBy: Joi.object(),
     eventName: Joi.string().min(3).max(25).trim().required(),
     geometry: Joi.object().required(),

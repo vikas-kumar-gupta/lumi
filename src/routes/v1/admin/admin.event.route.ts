@@ -4,7 +4,7 @@ import { adminEventController } from '../../../controllers/'
 const routes = express.Router();
 
 routes.post('/new-event', adminEventController.newEvent)
-routes.patch('/new-event', adminEventController.updateEvent)
-routes.delete('/new-event', adminEventController.deleteEvent)
+routes.patch('/update-event/:eventId', adminEventController.updateEvent)
+routes.delete('/delete-event/:eventId', adminEventController.deleteEvent)
 
 export default routes;

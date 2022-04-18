@@ -1,71 +1,38 @@
-import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
-
-import * as validate from '../../../utils/user.validator'
-import Event from '../../../models/admin/admin.event.model'
+import AdminEvent from '../../../entity/v1/admin/adminEvent.entity'
+import {sendErrorResponse} from '../../../utils/utils'
 
 export const newEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.body.tokenId);
-
-        const {
-            eventName,
-            geometry,
-            eventDate,
-            eventDescription,
-            eventStatus,
-            totalTickets,
-            availableTickets,
-            bookedTickets,
-            ageBetween,
-            freeDrinks,
-            price,
-            eventImages,
-        } = req.body
-        await validate.event.validateAsync(req.body)
-
-        const query = {
-            createdBy: req.body.tokenId,
-            eventName: eventName,
-            geometry: geometry,
-            eventDate: eventDate,
-            eventDescription: eventDescription,
-            eventStatus: eventStatus,
-            totalTickets: totalTickets,
-            availableTickets: availableTickets,
-            bookedTickets: bookedTickets,
-            ageBetween: ageBetween,
-            freeDrinks: freeDrinks,
-            price: price,
-            eventImages: eventImages
-        }
-        const event = new Event(query);
-        event.save((err: any) => {
-            if (err) {
-                throw new Error(err.message)
-            }
-            res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json(STATUS_MSG.SUCCESS.CREATED);
-        })
+        const data: any = await AdminEvent.newEvent(req.body.tokenId, req.body);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
-        next(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
 export const updateEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // to bbe implemented
+        const eventId = req.params.eventId
+        const data: any = await AdminEvent.updateEvent(eventId, req.body);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
-
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
 export const deleteEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        //  deleting of an event is to be implemented
+        const eventId = req.params.eventId
+        const data: any = await AdminEvent.deleteEvent(eventId);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
-
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
