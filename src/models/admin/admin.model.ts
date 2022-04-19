@@ -6,11 +6,6 @@ import {IAdmin} from '../../interfaces/model.interface'
 
 const adminSchema = new Schema<IAdmin>(
     {
-        isAdmin: {
-            type: Boolean,
-            default: false,
-            required: true
-        },
         name: {
             type: String,
             trim: true,
@@ -79,6 +74,21 @@ const adminSchema = new Schema<IAdmin>(
         timestamps: true
     }
 )
+
+/**
+ * @description password hashisng
+ */
+adminSchema.pre('save', function(next) {
+    try {
+        if(this.isModified('password') || this.isNew) {
+            this.password = md5(this.password.toString())
+        }
+        next()
+    }
+    catch (err: any) {
+        next(err)
+    }
+})
 
 const Admin = model<IAdmin>('Admin', adminSchema);
 

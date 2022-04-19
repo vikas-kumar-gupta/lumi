@@ -1,6 +1,5 @@
 export interface IAdmin {
     _id?: Object,
-    isAdmin: Boolean,
     name: String,
     email: String,
     gender: String,
@@ -174,10 +173,11 @@ export interface IUserSubscription {
 
 export interface ISession {
     _id?: Object,
-    token: String,
     userId: Object,
-    deviceId: Object,
-    status: String,
+    isLoggedIn: Boolean,
+    deviceToken: String,
+    deviceId: String,
+    isActive: Boolean,
     createdAt?: Date,
     updatedAt?: Date
 }

@@ -3,7 +3,6 @@ import { DBENUMS } from '../constants'
 import Joi, { object } from "joi"
 
 export const adminSignup = Joi.object({
-    isAdmin: Joi.boolean().required(),
     name: Joi.string().trim().required(),
     email: Joi.string().trim().required(),
     gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)).required(),

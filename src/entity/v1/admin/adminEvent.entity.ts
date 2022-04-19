@@ -1,5 +1,5 @@
 import { STATUS_MSG } from '../../../constants'
-import * as mongoose from 'mongoose'
+import mongoose, { HydratedDocument } from 'mongoose'
 import { newEvent, updateEvent } from '../../../utils/admin.validator'
 import Event from '../../../models/admin/admin.event.model'
 import { IEvent } from '../../../interfaces/model.interface';
@@ -13,14 +13,14 @@ export default class AdminEvent {
      */
     static async newEvent(adminId: any, bodyData: Object): Promise<Object | void> {
         try {
-            await newEvent.validateAsync({createdBy: adminId, ...bodyData});
-            const event = new Event(bodyData);
+            await newEvent.validateAsync({ createdBy: adminId, ...bodyData });
+            const event: HydratedDocument<IEvent> = new Event(bodyData);
             event.save((err, res) => {
-                if(err)
+                if (err)
                     return Promise.reject(err)
                 return Promise.resolve(STATUS_MSG.SUCCESS.CREATED)
             })
-        }   
+        }
         catch (err) {
             return Promise.reject(err)
         }
@@ -36,19 +36,19 @@ export default class AdminEvent {
         try {
             await updateEvent.validateAsync(bodyData);
             const updatedEvent: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), bodyData);
-            if(updatedEvent)
+            if (updatedEvent)
                 return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`EventId: ${eventId}`))
         }
-        catch (err: any) {            
+        catch (err: any) {
             return Promise.reject(err)
         }
     }
 
-    static async deleteEvent(eventId: any) : Promise<Object>{
+    static async deleteEvent(eventId: any): Promise<Object> {
         try {
             const delEvent: IEvent | null = await Event.findByIdAndDelete(new mongoose.Types.ObjectId(eventId));
-            if(delEvent)
+            if (delEvent)
                 return Promise.resolve(STATUS_MSG.SUCCESS.DELETED);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Eventid: ${eventId}`))
         }

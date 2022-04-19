@@ -7,21 +7,28 @@ const sessionSchema = new Schema<ISession>(
             type: Schema.Types.ObjectId,
             required: true
         },
-        token: {
-            type: String,
-            required: true
-        },
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true
         },
-        deviceId: {
-            type: Object,
+        isLoggedIn: {
+            type: Boolean,
+            default: true,
             required: true
         },
-        status: {
+        deviceToken: {
             type: String,
+            required: true
+        },
+
+        deviceId: {
+            type: String,
+            required: true
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
             required: true
         }
     },

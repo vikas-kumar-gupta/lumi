@@ -56,17 +56,17 @@ export default class UserEntity {
             if (otpData.status == 'approved' && otpData.status != undefined) {
                 if (!await UserEntity.isPhoneNumAlreadyExist(phoneNumber)) {
                     console.log('new user');
-                    const user = new User({ phoneNumber: phoneNumber, isPhoneVerified: true, loginType: loginType });
+                    const user: HydratedDocument<IUser> = new User({ phoneNumber: phoneNumber, isPhoneVerified: true, loginType: loginType });
                     user.save(err => {
                         if (!err) {
                             console.log('user created');
-                            const userDetails = new UserDetails({ _id: user._id });
+                            const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
                             userDetails.save(err => {
                                 if (!err) {
                                     console.log('User Details created');
                                     const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
                                     console.log(token);
-                                        const statusData = STATUS_MSG.SUCCESS.CREATED;
+                                    const statusData = STATUS_MSG.SUCCESS.CREATED;
                                     return Promise.resolve({ token, statusData });
                                 }
                                 else {
@@ -120,7 +120,7 @@ export default class UserEntity {
      */
     static async updateUser(id: Schema.Types.ObjectId, data: Object): Promise<Object> {
         try {
-            const user = await User.findByIdAndUpdate(id, data);
+            const user : IUser | null= await User.findByIdAndUpdate(id, data);
             if (user) {
                 return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User updated'))
             }

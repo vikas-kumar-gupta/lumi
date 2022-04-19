@@ -1,9 +1,10 @@
 import { STATUS_MSG, CONFIG } from '../../../constants';
 import jwt from 'jsonwebtoken'
-import mongoose, { Schema, model } from 'mongoose';
+import md5 from 'md5'
+import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
 import Admin from '../../../models/admin/admin.model'
 import Report from '../../../models/report.model'
-import { IAdmin, IReport } from '../../../interfaces/model.interface'
+import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface'
 import { adminSignup, adminLogin } from '../../../utils/admin.validator';
 import User from '../../../models/user.model';
 
@@ -38,7 +39,7 @@ export default class AdminEntity {
         try {
             await adminSignup.validateAsync(bodyData);
             if (!await AdminEntity.isPhoneNumAlreadyExist((bodyData.phoneNumber))) {
-                const admin = new Admin(bodyData);
+                const admin: HydratedDocument<IAdmin> = new Admin(bodyData);
                 const data = await admin.save()
                 const token = jwt.sign({ id: data._id }, CONFIG.JWT_SECRET_KEY)
                 const statusData = STATUS_MSG.SUCCESS.CREATED;
@@ -61,9 +62,10 @@ export default class AdminEntity {
     static async adminLogin(bodyData: any): Promise<Object | void> {
         try {
             adminLogin.validate(bodyData)
-            const admin = await Admin.findOne({ phoneNumber: bodyData.phoneNumber });
+            const admin: IAdmin | null = await Admin.findOne({ phoneNumber: bodyData.phoneNumber });
             if (admin) {
-                if (admin.password == bodyData.password) {
+                const hashedPassword = md5(bodyData.password)
+                if (admin.password == hashedPassword) {
                     const token = jwt.sign({ id: admin._id }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.LOGIN;
@@ -106,7 +108,7 @@ export default class AdminEntity {
      */
     static async deleteUser(userId: any) {
         try {
-            const user = await User.findByIdAndDelete(new mongoose.Types.ObjectId(userId));
+            const user: IUser | null = await User.findByIdAndDelete(new mongoose.Types.ObjectId(userId));
             if (user)
                 return Promise.resolve(STATUS_MSG.SUCCESS.DELETED)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`))
