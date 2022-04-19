@@ -3,7 +3,7 @@ import AdminEvent from '../../../entity/v1/admin/adminEvent.entity'
 import {sendErrorResponse} from '../../../utils/utils'
 
 export const newEvent = async (req: Request, res: Response, next: NextFunction) => {
-    try {
+    try {        
         const data: any = await AdminEvent.newEvent(req.body.tokenId, req.body);
         res.status(data.statusCode).json(data)
     }

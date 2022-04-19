@@ -5,10 +5,6 @@ import { IUserInvite } from '../interfaces/model.interface';
 
 const userInviteSchema = new Schema<IUserInvite>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         invitedBy: {
             type: Schema.Types.ObjectId,
             ref: 'User',

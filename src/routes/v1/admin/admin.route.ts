@@ -1,6 +1,6 @@
 import express from 'express'
 import { adminController } from '../../../controllers';
-import {auth} from '../../../middlewares/user.middleware'
+import {auth} from '../../../middlewares/admin.middleware'
 
 const routes = express.Router();
 

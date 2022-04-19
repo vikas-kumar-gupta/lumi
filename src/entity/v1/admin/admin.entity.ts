@@ -41,7 +41,7 @@ export default class AdminEntity {
             if (!await AdminEntity.isPhoneNumAlreadyExist((bodyData.phoneNumber))) {
                 const admin: HydratedDocument<IAdmin> = new Admin(bodyData);
                 const data = await admin.save()
-                const token = jwt.sign({ id: data._id }, CONFIG.JWT_SECRET_KEY)
+                const token = jwt.sign({ id: data._id, isAdmin: admin.isAdmin }, CONFIG.JWT_SECRET_KEY)
                 const statusData = STATUS_MSG.SUCCESS.CREATED;
                 return Promise.resolve({ token, statusData })
             }
@@ -66,7 +66,7 @@ export default class AdminEntity {
             if (admin) {
                 const hashedPassword = md5(bodyData.password)
                 if (admin.password == hashedPassword) {
-                    const token = jwt.sign({ id: admin._id }, CONFIG.JWT_SECRET_KEY)
+                    const token = jwt.sign({ id: admin._id, isAdmin: admin.isAdmin }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.LOGIN;
                     return Promise.resolve({ token, statusData })

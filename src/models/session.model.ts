@@ -3,10 +3,6 @@ import { ISession } from '../interfaces/model.interface'
 
 const sessionSchema = new Schema<ISession>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',

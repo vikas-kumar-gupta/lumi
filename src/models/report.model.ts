@@ -5,10 +5,6 @@ import { IReport } from "../interfaces/model.interface"
 
 const reportSchema = new Schema<IReport>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         reasons: {
             type: String,
             enum: DBENUMS.REPORT_REASON,

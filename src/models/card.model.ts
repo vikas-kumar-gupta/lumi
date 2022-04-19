@@ -5,10 +5,6 @@ import { ICard } from '../interfaces/model.interface';
 
 const cardSchema = new Schema<ICard>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         nameOnCard: {
             type: String,
             required: true,

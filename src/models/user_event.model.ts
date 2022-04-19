@@ -3,10 +3,6 @@ import { IUserEvent } from '../interfaces/model.interface'
 
 const userEventSchema = new Schema<IUserEvent>(
     {
-        _id: {
-            type: mongoose.Types.ObjectId,
-            required: true
-        },
         eventId: {
             type: mongoose.Types.ObjectId,
             ref: 'Event',

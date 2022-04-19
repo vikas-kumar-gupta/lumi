@@ -5,10 +5,6 @@ import { IPayment } from "../interfaces/model.interface";
 
 const paymentSchema = new Schema<IPayment>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         payId: {
             type: String,
             trim: true,

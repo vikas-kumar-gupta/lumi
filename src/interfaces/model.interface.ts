@@ -1,5 +1,6 @@
 export interface IAdmin {
     _id?: Object,
+    isAdmin?: Boolean
     name: String,
     email: String,
     gender: String,
@@ -180,4 +181,9 @@ export interface ISession {
     isActive: Boolean,
     createdAt?: Date,
     updatedAt?: Date
+}
+
+export interface ISessionDeviceData {
+    deviceId: String,
+    deviceToken: String
 }

@@ -5,10 +5,6 @@ import { IEvent } from "../../interfaces/model.interface";
 
 const eventSchema = new Schema<IEvent>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         createdBy: {
             type: Schema.Types.ObjectId,
             required: true,
@@ -45,7 +41,7 @@ const eventSchema = new Schema<IEvent>(
         eventStatus: {
             type: String,
             enum: DBENUMS.EVENT_STATUS,
-            required: true
+            required: false
         },
         totalTickets: {
             type: Number,

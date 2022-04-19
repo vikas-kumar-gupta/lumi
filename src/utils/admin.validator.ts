@@ -3,6 +3,7 @@ import { DBENUMS } from '../constants'
 import Joi, { object } from "joi"
 
 export const adminSignup = Joi.object({
+    isAdmin: Joi.boolean().required(),
     name: Joi.string().trim().required(),
     email: Joi.string().trim().required(),
     gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)).required(),
@@ -27,23 +28,18 @@ export const newSubscription = Joi.object({
     subscriptionPlan: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)).required(),
     subscriptionMonths: Joi.number().min(1).required(),
     price: Joi.number().min(0).required(),
-    tokenId: Joi.object()
+    tokenId: Joi.any()
 })
 
 export const updateSubscription = Joi.object({
     subscriptionPlan: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
     subscriptionMonths: Joi.number().min(1),
     price: Joi.number().min(0),
-    tokenId: Joi.object()
-})
-
-export  const deleteSubscription = Joi.object({
-    subscriptionId: Joi.object().required(),
-    tokenId: Joi.object()
+    tokenId: Joi.any()
 })
 
 export const newEvent = Joi.object({
-    createdBy: Joi.object(),
+    createdBy: Joi.any(),
     eventName: Joi.string().min(3).max(25).trim().required(),
     geometry: Joi.object().required(),
     eventDate: Joi.date().required(),
@@ -56,7 +52,7 @@ export const newEvent = Joi.object({
     price: Joi.number().min(1).required(),
     bookedBy: Joi.array(),
     eventImages: Joi.array(),
-    tokenId: Joi.string()
+    tokenId: Joi.any()
 })
 
 export const updateEvent = Joi.object({

@@ -4,10 +4,6 @@ import { IUserSubscription } from '../interfaces/model.interface';
 
 const userSubscriptionSchema = new Schema<IUserSubscription>(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
         subscriptionId: {
             type: Schema.Types.ObjectId,
             ref: 'Subscription',

@@ -3,12 +3,12 @@ import Joi from "joi"
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser';
 
-export const getJWTToken = async (body: any, expIn?: number) => {
+export const getJWTToken = async (payload: {}, expIn?: number) => {
     const option: any = {};
     if (expIn) {
         option['expiresIn'] = expIn;
     }
-    const token = jwt.sign(body, CONFIG.JWT_SECRET_KEY, option);
+    const token = jwt.sign(payload, CONFIG.JWT_SECRET_KEY, option);
     console.log(token);
     
     return token

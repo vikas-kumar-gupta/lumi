@@ -14,12 +14,9 @@ export default class AdminEvent {
     static async newEvent(adminId: any, bodyData: Object): Promise<Object | void> {
         try {
             await newEvent.validateAsync({ createdBy: adminId, ...bodyData });
-            const event: HydratedDocument<IEvent> = new Event(bodyData);
-            event.save((err, res) => {
-                if (err)
-                    return Promise.reject(err)
-                return Promise.resolve(STATUS_MSG.SUCCESS.CREATED)
-            })
+            const event: HydratedDocument<IEvent> = new Event({ createdBy: adminId, ...bodyData });
+            await event.save();
+            return Promise.resolve(STATUS_MSG.SUCCESS.CREATED)
         }
         catch (err) {
             return Promise.reject(err)
