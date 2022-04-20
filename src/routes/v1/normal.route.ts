@@ -7,7 +7,7 @@ import { normalController } from '../../controllers'
 const router = express.Router();
 
 router.get('/', normalController.homePage)
-router.post('/form-data',upload.single("img"), normalController.getFormData)
+router.post('/form-data', upload.array('img') ,normalController.getFormData)
 router.get('/*', normalController.pageNotFound)
 
 // CREATING TAGS

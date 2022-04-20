@@ -7,6 +7,7 @@ import Booking from '../../../models/booking.model'
 
 import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
+import { sendEmail } from '../../../services/nodemailer/email.service';
 
 export default class UserEntity {
 
@@ -166,7 +167,7 @@ export default class UserEntity {
     }
 
     /**
-     * ! to be implemented
+     * ! to be implemented cause of email and password
      */
 
     /**
@@ -175,12 +176,13 @@ export default class UserEntity {
      * @param email 
      * @returns Object of status response
      */
-    static async verifyEmail(userId: Schema.Types.ObjectId, email: String): Promise<void> {
+    static async verifyEmail(email: String): Promise<void> {
         try {
-
+            const mailData = await sendEmail(email);
+            return Promise.resolve(mailData)
         }
         catch (err) {
-
+            return Promise.reject(err)
         }
     }
 }

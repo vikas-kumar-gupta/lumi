@@ -18,6 +18,7 @@ routes.get('/my-bookings', auth, userController.myBookings);
 
 routes.post('/verify-email', auth, userController.verifyEmail);
 
+
 // CREATING TAGS
 /**
  * @swagger
@@ -321,7 +322,7 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  * @swagger
  * /user/change-phoneNumber:
  *  patch:
- *      summary: User data updation
+ *      summary: Update phone number
  *      tags: [User]
  *      description: Update all the remaining crucial information of user
  *      requestBody:

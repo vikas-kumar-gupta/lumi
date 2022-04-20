@@ -1,16 +1,7 @@
-import { CONFIG } from '../../constants'
-import { STATUS_MSG } from '../../constants'
-import { SERVICES } from '../../constants'
+import { STATUS_MSG, SERVICES } from '../../constants'
 import { Twilio } from 'twilio'
-import jwt from 'jsonwebtoken'
-import express, { Request, Response, NextFunction } from 'express'
-
-import User from '../../models/user.model'
-import UserDetails from '../../models/userDetails.model'
-
 
 const client = new Twilio(SERVICES.TWILIO.ACCOUNT_SID, SERVICES.TWILIO.AUTH_TOKEN)
-
 
 export default class TwilioPhoneOTP {
 

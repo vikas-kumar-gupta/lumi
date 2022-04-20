@@ -18,7 +18,7 @@ export interface IAdmin {
 }
 export interface IBooking {
     _id?: Object,
-    bookingId: String,
+    bookingCode: String,
     eventId: Object,
     bookedBy: Object,
     bookedFor: Object,

@@ -145,7 +145,7 @@ routes.post('/review-report/:reportId', auth, adminController.reviewReport)
 /**
  * @swagger
  * /admin/delete-user/{userId}:
- *  get:
+ *  delete:
  *      summary: Delete User
  *      tags: [Admin]
  *      description: delete the account of reported user

@@ -15,5 +15,9 @@ export const SERVICES = {
         ACCOUNT_SID: <string>process.env.TWILIO_ACCOUNT_SID,
         AUTH_TOKEN: <string>process.env.TWILIO_AUTH_TOKEN,
         SERVICE_ID: <string>process.env.TWILIO_SERVICE_ID
+    },
+    EMAIL: {
+        MAIL: <string>process.env.MAIL,
+        MAIL_PASSWORD: <string>process.env.MAIL_PASSWORD
     }
 }

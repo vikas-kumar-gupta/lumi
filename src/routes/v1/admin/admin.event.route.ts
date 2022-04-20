@@ -82,9 +82,9 @@ routes.delete('/delete-event/:eventId', auth, adminEventController.deleteEvent)
  * @swagger
  * /admin/event/update-event/{eventId}:
  *  patch:
- *      summary: Adding new event
+ *      summary: Update event
  *      tags: [AdminEvent]
- *      description: Adding new event
+ *      description: Update existing event of eventID
  *      parameters:
  *        - in: path
  *          name: eventId
@@ -149,9 +149,9 @@ routes.delete('/delete-event/:eventId', auth, adminEventController.deleteEvent)
  * @swagger
  * /admin/event/delete-event/{eventId}:
  *  delete:
- *      summary: Adding new event
+ *      summary: Delete event
  *      tags: [AdminEvent]
- *      description: Adding new event
+ *      description: Delete an event of eventID
  *      parameters:
  *        - in: path
  *          name: eventId

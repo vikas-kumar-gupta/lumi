@@ -3,6 +3,7 @@ import * as validate from '../../../utils/user.validator'
 import UserEntity from '../../../entity/v1/user/user.entity';
 import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
 import { sendErrorResponse } from '../../../utils/utils';
+import { sendEmail } from '../../../services/nodemailer/email.service';
 
 export const getOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
@@ -81,13 +82,15 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-// ! to be implement
+// ! to be implement because of not having fake email and password
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
-
+        const data = await UserEntity.verifyEmail('recievers@gmail.com')
+        res.status(200).json(data)
     }
     catch (err) {
-
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData);
     }
 }
 
