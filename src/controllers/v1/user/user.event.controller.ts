@@ -1,12 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 import { STATUS_MSG } from '../../../constants'
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import UserEventEntity from '../../../entity/v1/user/userEvent.entity';
-import {sendErrorResponse} from '../../../utils/utils'
+import { sendErrorResponse } from '../../../utils/utils'
 import { IEvent, IUserEvent } from '../../../interfaces/model.interface';
 
-// ! Eroor :eventId ObjectId
 export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const eventId = req.params.eventId
@@ -47,6 +46,7 @@ export const bookEvent = async (req: Request, res: Response, next: NextFunction)
         // booking of an event is to implemented here
     }
     catch (err) {
-        
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }

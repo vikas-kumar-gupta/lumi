@@ -1,5 +1,5 @@
 import express from "express";
-import {auth, isLoggedIn} from '../../../middlewares/user.middleware'
+import { auth } from '../../../middlewares/user.middleware'
 import { userMatchController } from "../../../controllers";
 
 const routes = express.Router();

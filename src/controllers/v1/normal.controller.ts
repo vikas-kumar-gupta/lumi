@@ -1,5 +1,6 @@
 import { STATUS_MSG } from '../../constants'
-import express, { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
+import { sendErrorResponse } from '../../utils/utils'
 
 
 export const homePage = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,10 +15,10 @@ export const getFormData = async (req: Request, res: Response, next: NextFunctio
     try {
         console.log(req.body.phoneNumber);
         console.log(req.body);
-        
         // res.status(200).json({message: "uploaded successfully"}) 
     }
     catch (err) {
-        next(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData);
     }
 }

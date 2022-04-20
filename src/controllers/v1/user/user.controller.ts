@@ -1,4 +1,3 @@
-import { STATUS_MSG } from '../../../constants'
 import express, { Request, Response, NextFunction } from 'express';
 import * as validate from '../../../utils/user.validator'
 import UserEntity from '../../../entity/v1/user/user.entity';
@@ -25,12 +24,13 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
         let otpData: any = await TwilioPhoneOTP.verifyOtp(phoneNumber, otp)
         console.log(otpData);
         const data: any = await UserEntity.newUser(otpData, phoneNumber, loginType)
-        res.cookie('jwt', data.token)
-        res.status(data.statusData.statusCode).json(data.statusData)
+        const token = data.token;
+        const statusData = data.statusData
+        res.status(statusData.statusCode).json({token, statusData})
     }
     catch (err) {
-        // next(err);
-        res.status(400).json(err);
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
@@ -52,7 +52,8 @@ export const userDetails = async (req: Request, res: Response, next: NextFunctio
         res.status(200).json(data)
     }
     catch (err:any) {
-        next(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
@@ -64,7 +65,8 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
         res.status(data.statusCode).json(data)
     }
     catch (err: any) {
-        next(err)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
@@ -74,13 +76,25 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
         res.status(200).json(data)
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.BAD_REQUEST.statusCode).json(STATUS_MSG.ERROR.BAD_REQUEST)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }
 
+// ! to be implement
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // here user email will be verified
+
+    }
+    catch (err) {
+
+    }
+}
+
+// ! to be implement
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
     }
     catch (err) {
 

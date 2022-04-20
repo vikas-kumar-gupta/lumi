@@ -36,13 +36,6 @@ export const updateUser = Joi.object({
     tokenId: Joi.string(),
 })
 
-export const changePassword = Joi.object({
-    currentPassword: Joi.string().length(8).required(),
-    newPassword: Joi.string().length(8).required(),
-    confirmNewPassword: Joi.string().length(8).required(),
-    tokenId: Joi.string().trim()
-})
-
 export const changePhoneNumber = Joi.object({
     newPhoneNumber: Joi.string().trim().required(),
     tokenId: Joi.string().trim()
@@ -52,8 +45,6 @@ export const verifyMail = Joi.object({
     email: Joi.string().trim().email().required(),
     tokenId: Joi.string().trim()
 })
-
-
 
 export const payment = Joi.object({
     nameOnCard: Joi.string().trim().uppercase().required(),

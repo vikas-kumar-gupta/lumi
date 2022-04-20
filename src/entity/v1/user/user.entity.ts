@@ -5,7 +5,7 @@ import User from '../../../models/user.model';
 import UserDetails from "../../../models/userDetails.model";
 import Booking from '../../../models/booking.model'
 
-import mongoose, { Schema, model, HydratedDocument } from 'mongoose'
+import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
 
 export default class UserEntity {
@@ -55,38 +55,17 @@ export default class UserEntity {
         try {
             if (otpData.status == 'approved' && otpData.status != undefined) {
                 if (!await UserEntity.isPhoneNumAlreadyExist(phoneNumber)) {
-                    console.log('new user');
                     const user: HydratedDocument<IUser> = new User({ phoneNumber: phoneNumber, isPhoneVerified: true, loginType: loginType });
-                    user.save(err => {
-                        if (!err) {
-                            console.log('user created');
-                            const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
-                            userDetails.save(err => {
-                                if (!err) {
-                                    console.log('User Details created');
-                                    const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
-                                    console.log(token);
-                                    const statusData = STATUS_MSG.SUCCESS.CREATED;
-                                    return Promise.resolve({ token, statusData });
-                                }
-                                else {
-                                    console.log('error while saving user details');
-                                    console.log(err.message);
-                                    // throw new Error(err.message)
-                                    return Promise.reject(err)
-                                }
-                            })
-                        }
-                        else {
-                            console.log('error while saving user');
-                            console.log(err.message);
-                            // throw new Error(err.message)
-                            return Promise.reject(err)
-                        }
-                    })
+                    await user.save()
+                    const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
+                    await userDetails.save()
+                    const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
+                    console.log(token);
+                    const statusData = STATUS_MSG.SUCCESS.CREATED;
+                    return Promise.resolve({ token, statusData });
+
                 }
                 else {
-                    console.log('user already exist');
                     const user: IUser | null = await User.findOne({ phoneNumber: phoneNumber })
                     if (user) {
                         const token = jwt.sign({ id: user._id }, CONFIG.JWT_SECRET_KEY)
@@ -105,9 +84,6 @@ export default class UserEntity {
             }
         }
         catch (err) {
-            console.log('outer error');
-            console.log(err);
-
             return Promise.reject(err)
         }
     }
@@ -120,7 +96,7 @@ export default class UserEntity {
      */
     static async updateUser(id: Schema.Types.ObjectId, data: Object): Promise<Object> {
         try {
-            const user : IUser | null= await User.findByIdAndUpdate(id, data);
+            const user: IUser | null = await User.findByIdAndUpdate(id, data);
             if (user) {
                 return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User updated'))
             }

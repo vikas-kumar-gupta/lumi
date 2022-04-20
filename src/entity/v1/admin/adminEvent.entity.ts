@@ -27,7 +27,7 @@ export default class AdminEvent {
      * @description update existing event
      * @param eventId 
      * @param bodyData 
-     * @returns Sttaus obj
+     * @returns Status obj
      */
     static async updateEvent(eventId: any, bodyData: Object): Promise<Object> {
         try {
@@ -42,6 +42,11 @@ export default class AdminEvent {
         }
     }
 
+    /**
+     * @description delete an event of given eventId
+     * @param eventId 
+     * @returns status obj
+     */
     static async deleteEvent(eventId: any): Promise<Object> {
         try {
             const delEvent: IEvent | null = await Event.findByIdAndDelete(new mongoose.Types.ObjectId(eventId));

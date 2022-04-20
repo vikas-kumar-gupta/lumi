@@ -1,6 +1,6 @@
 import express from 'express'
 import { userEventController } from '../../../controllers'
-import {auth} from '../../../middlewares/user.middleware'
+import { auth } from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
