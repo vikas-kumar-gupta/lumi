@@ -4,7 +4,7 @@ import { IBooking } from '../interfaces/model.interface'
 
 const bookingSchema = new Schema<IBooking>(
     {
-        bookingId: {
+        bookingCode: {
             type: String,       //  #0123456
             trim: true,
             required: true
