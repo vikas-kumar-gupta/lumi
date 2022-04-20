@@ -7,11 +7,12 @@ import { sendErrorResponse } from '../../../utils/utils'
 export const adminSignup = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: any = await AdminEntity.adminSignup(req.body);
-        res.cookie('jwt', data.token)
-        res.status(data.statusData.statusCode).json(data.statusData)
+        // res.cookie('jwt', data.token)
+        const token = data.token
+        const statusData = data.statusData
+        res.status(data.statusData.statusCode).json({JSON :{token: token, statusData: statusData} })
     }
     catch (err) {
-
         const errData = sendErrorResponse(err);
         res.status(errData.statusCode).json(errData)
     }
@@ -20,8 +21,11 @@ export const adminSignup = async (req: Request, res: Response, next: NextFunctio
 export const adminLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: any = await AdminEntity.adminLogin(req.body);
-        res.cookie('jwt', data.token)
-        res.status(data.statusData.statusCode).json(data.statusData)
+        // res.cookie('jwt', data.token)
+        // res.status(data.statusData.statusCode).json(data.statusData)
+        const token = data.token
+        const statusData = data.statusData
+        res.status(data.statusData.statusCode).json({JSON :{token: token, statusData: statusData} })
     }
     catch (err) {
         const errData = sendErrorResponse(err);

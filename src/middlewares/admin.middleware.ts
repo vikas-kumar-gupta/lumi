@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const token = req.cookies.jwt;
+        // const token = req.cookies.jwt;
+        const token: any = req.headers['authorization']
         const verifyToken = jwt.verify(token, CONFIG.JWT_SECRET_KEY, (err: any, data: any) => {
             if (err) {
                 throw new Error(err)
@@ -25,7 +26,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         next()
     }
     catch (err) {
-        console.log('auth error');
         res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)
     }
 }

@@ -19,11 +19,6 @@ const userSchema = new Schema<IUser>(
             trim: true,
             required: false
         },
-        password: {
-            type: String,
-            length: 8,
-            required: false
-        },
         gender: {
             type: String,
             enum: DBENUMS.GENDER,
@@ -152,18 +147,6 @@ const userSchema = new Schema<IUser>(
         timestamps: true
     }
 )
-
-// userSchema.pre('save', function (next: any) {
-//     try {
-//         if (this.isModified('password') || this.isNew) {
-//             this.password = md5(this.password)
-//         }
-//         next()
-//     }
-//     catch (err: any) {
-//         next(err)
-//     }
-// })
 
 const User = model<IUser>('User', userSchema);
 

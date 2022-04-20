@@ -103,7 +103,7 @@ export interface IUser {
     name?: String,
     phoneNumber?: String,
     email?: String,
-    password?: String   //there is 
+    // password?: String 
     gender?: String,
     dob?: Date,
     loginType?: String,
