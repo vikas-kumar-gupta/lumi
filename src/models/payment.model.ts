@@ -10,22 +10,6 @@ const paymentSchema = new Schema<IPayment>(
             trim: true,
             required: true
         },
-        nameOnCard: {
-            type: String,
-            uppercase: true,
-            trim: true,
-            required: true
-        },
-        cardNumber: {
-            type: Number,
-            minlength: 16,
-            maxlength: 16,
-            required: true
-        },
-        expDate: {
-            type: Date,
-            required: true
-        },
         payDate: {
             type: Date,
             required: true

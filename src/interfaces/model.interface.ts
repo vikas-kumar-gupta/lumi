@@ -28,19 +28,6 @@ export interface IBooking {
     updatedAt?: Date,
 }
 
-export interface ICard {
-    _id?: Object,
-    nameOnCard: String,
-    cardNumber: Number,
-    expDate: Date,
-    cvv: Number,
-    cardType: String,
-    cardStatus: String,
-    userId: Object,
-    createdAt?: Date,
-    updatedAt?: Date
-}
-
 export interface IEvent {
     _id?: Object,
     createdBy: Object,
@@ -64,10 +51,6 @@ export interface IEvent {
 export interface IPayment {
     _id?: Object,
     payId: String,
-    nameOnCard: String,
-    cardNumber: Number,
-    expDate: Date,
-    cvv: Number,
     payDate: Date,
     payBy: Object,
     amount: Number,

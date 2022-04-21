@@ -56,7 +56,7 @@ const eventSchema = new Schema<IEvent>(
         bookedTickets: {
             type: Number,
             default: 0,
-            required: true
+            required: false
         },
         ageBetween: {
             type: [Number],
@@ -67,18 +67,18 @@ const eventSchema = new Schema<IEvent>(
             type: Number,
             min: 0,
             default: 0,
-            required: true
+            required: false
         },
         price: {
             type: Number,
             min: 0,
             default: 0,
-            required: true
+            required: false
         },
         bookedBy: {
             type: [mongoose.Types.ObjectId],
-            required: false,
-            ref: 'User'
+            ref: 'User',
+            required: false
         },
         eventImages: {
             type: [String],

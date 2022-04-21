@@ -49,7 +49,7 @@ export const newEvent = Joi.object({
     bookedTickets: Joi.number().required(),
     ageBetween: Joi.array().length(2).required(),
     freeDrinks: Joi.number().required(),
-    price: Joi.number().min(1).required(),
+    price: Joi.number().min(0).required(),
     bookedBy: Joi.array(),
     eventImages: Joi.array(),
     tokenId: Joi.any()
@@ -57,15 +57,15 @@ export const newEvent = Joi.object({
 
 export const updateEvent = Joi.object({
     eventName: Joi.string().min(3).max(25).trim(),
-    geometry: Joi.object(),
-    eventDate: Joi.date(),
-    eventDescription: Joi.string().min(3).max(200).trim(),
-    totalTickets: Joi.number(),
-    availableTickets: Joi.number(),
+    geometry: Joi.object().required(),  
+    eventDate: Joi.date().required(),
+    eventDescription: Joi.string().min(3).max(200).trim().required(),
+    totalTickets: Joi.number().min(1).required(),
+    availableTickets: Joi.number().min(0).required(),
     bookedTickets: Joi.number(),
     ageBetween: Joi.array().length(2),
-    freeDrinks: Joi.number(),
-    price: Joi.number().min(1),
+    freeDrinks: Joi.number().min(0),
+    price: Joi.number().min(0),
     bookedBy: Joi.array(),
     eventImages: Joi.array(),
     tokenId: Joi.string()
