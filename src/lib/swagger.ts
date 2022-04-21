@@ -18,14 +18,19 @@ export const swaggerFunc = () => {
             ],
             components: {
                 securitySchemes: {
-                    bearerAuth: {
-                        type: "http",
-                        name: "x-auth-token",
-                        scheme: "bearer",
-                        in: "header",
-                    },
+                  bearerAuth: {
+                    type: "apiKey",
+                    name: "authorization",
+                    scheme: "bearer",
+                    in: "header",
+                  },
                 },
-            },
+              },
+              security: [
+                {
+                  bearerAuth: [],
+                },
+              ],
         },
         apis: ['./src/app.ts', './src/routes/v1/*.ts', './src/routes/v1/*/*.ts']
         // apis: ['../app.ts', '../src/routes/v1/*.ts']

@@ -5,7 +5,7 @@ import dotenv from 'dotenv/config'
 dotenv;
 
 export const CONFIG = {
-    hOST: process.env.HOST,
+    HOST: process.env.HOST,
     PORT: process.env.PORT,
     DB_URL: <string>process.env.MONGODB_URL,
     JWT_SECRET_KEY: <string>process.env.JWT_SECRET_KEY
