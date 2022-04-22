@@ -33,8 +33,8 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
 export const reportDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const reportId: any = req.params.reportId
-        const report = await AdminEntity.reportDetails(reportId);
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(report)
+        const data: any = await AdminEntity.reportDetails(reportId);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);

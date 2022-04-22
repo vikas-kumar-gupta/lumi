@@ -3,6 +3,7 @@ import * as validate from '../../../utils/user.validator'
 import UserEntity from '../../../entity/v1/user/user.entity';
 import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
 import { sendErrorResponse } from '../../../utils/utils';
+
 import { sendEmail } from '../../../services/nodemailer/email.service';
 
 export const getOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
@@ -37,7 +38,6 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await validate.updateUser.validateAsync(req.body);
         const data: any = await UserEntity.updateUser(req.body.tokenId, req.body)
         res.status(data.statusCode).json(data);
     }
@@ -49,8 +49,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 
 export const userDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data = await UserEntity.userDetails(req.body.tokenId);
-        res.status(200).json(data)
+        const data: any = await UserEntity.userDetails(req.body.tokenId);
+        res.status(data.statusCode).json(data);
     }
     catch (err:any) {
         const errData = sendErrorResponse(err);
@@ -73,8 +73,8 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
 
 export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data =  await UserEntity.myBookings(req.body.tokenId);
-        res.status(200).json(data)
+        const data: any =  await UserEntity.myBookings(req.body.tokenId);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -85,9 +85,9 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
 // ! to be implement because of not having fake email and password
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const email: String = req.body.email;
-        const data = await UserEntity.verifyEmail(email)
-        res.status(200).json(data)
+        const email: string = req.body.email;
+        const data: any = await UserEntity.verifyEmail(email)
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);

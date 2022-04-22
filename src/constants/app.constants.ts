@@ -246,17 +246,16 @@ export let STATUS_MSG = {
             return {
                 statusCode: 200,
                 success: true,
-                message: `${title} successfully`,
+                message: `${title} updated successfully`,
                 type: 'UPDATE_SUCCESS'
             }
         },
-        FETCH_SUCCESS: (msg: string, data?: any) => {
+        FETCH_SUCCESS: (msg: string) => {
             return {
                 statusCode: 200,
                 success: true,
-                message: msg,
+                message: `${msg} fetch success`,
                 type: 'FETCH_SUCCESS',
-                data: data
             }
         }
     },

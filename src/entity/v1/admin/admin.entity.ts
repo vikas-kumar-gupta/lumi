@@ -18,13 +18,10 @@ export default class AdminEntity {
      */
     static async isPhoneNumAlreadyExist(phoneNumber: String): Promise<Boolean> {
         try {
-            const user: IAdmin | null = await Admin.findOne({ phoneNumber: phoneNumber })
-            if (user) {
+            const admin: IAdmin | null = await Admin.findOne({ phoneNumber: phoneNumber })
+            if (admin)
                 return Promise.resolve(true)
-            }
-            else {
-                return Promise.resolve(false)
-            }
+            return Promise.resolve(false)
         }
         catch (err) {
             return Promise.reject(err)
@@ -36,13 +33,13 @@ export default class AdminEntity {
      * @param bodyData 
      * @returns token and status object
      */
-    static async adminSignup(bodyData: any): Promise<Object | void> {
+    static async adminSignup(bodyData: any): Promise<Object> {
         try {
             await adminSignup.validateAsync(bodyData);
             if (!await AdminEntity.isPhoneNumAlreadyExist((bodyData.phoneNumber))) {
                 const admin: HydratedDocument<IAdmin> = new Admin(bodyData);
                 const data = await admin.save()
-                    await sessionEntity.createSession(admin._id);
+                await sessionEntity.createSession(admin._id);
                 const token = jwt.sign({ id: data._id, isAdmin: admin.isAdmin }, CONFIG.JWT_SECRET_KEY)
                 const statusData = STATUS_MSG.SUCCESS.CREATED;
                 return Promise.resolve({ token, statusData })
@@ -61,7 +58,7 @@ export default class AdminEntity {
      * @param bodyData (phoneNumber, password)
      * @returns token and status object
      */
-    static async adminLogin(bodyData: any): Promise<Object | void> {
+    static async adminLogin(bodyData: any): Promise<Object> {
         try {
             adminLogin.validate(bodyData)
             const admin: IAdmin | null = await Admin.findOne({ phoneNumber: bodyData.phoneNumber });
@@ -92,11 +89,11 @@ export default class AdminEntity {
      * @param reportId 
      * @returns Report
      */
-    static async reportDetails(reportId: any): Promise<IReport> {
+    static async reportDetails(reportId: any): Promise<Object> {
         try {
             const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString()));
             if (report)
-                return Promise.resolve(report)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details') ,data: report})
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
         }
         catch (err: any) {

@@ -5,9 +5,7 @@ import { auth } from '../../../middlewares/user.middleware'
 const routes = express.Router();
 
 routes.get('/my-events', auth, userEventController.myEvents);
-routes.get('/all-events', auth, userEventController.allEvents)
-
-// ! Error :eventId mongoose.types.objectId                         
+routes.get('/all-events', auth, userEventController.allEvents)                      
 routes.get('/details/:eventId', auth, userEventController.eventDetails)
 
 // !to be implement

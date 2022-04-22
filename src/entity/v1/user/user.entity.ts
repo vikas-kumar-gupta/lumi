@@ -1,10 +1,9 @@
 import { IBooking, IUser, IUserDetails } from './../../../interfaces/model.interface';
-import { CONFIG } from "../../../constants"
-import { STATUS_MSG } from "../../../constants";
+import { CONFIG, STATUS_MSG } from "../../../constants"
 import User from '../../../models/user.model';
 import UserDetails from "../../../models/userDetails.model";
 import Booking from '../../../models/booking.model'
-
+import * as validate from '../../../utils/user.validator'
 import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import { sendEmail } from '../../../services/nodemailer/email.service';
@@ -35,12 +34,9 @@ export default class UserEntity {
     static async isPhoneNumAlreadyExist(phoneNumber: String): Promise<Boolean> {
         try {
             const user: IUser | null = await User.findOne({ phoneNumber: phoneNumber })
-            if (user) {
+            if (user)
                 return Promise.resolve(true)
-            }
-            else {
-                return Promise.resolve(false)
-            }
+            return Promise.resolve(false)
         }
         catch (err) {
             return Promise.reject(err)
@@ -95,21 +91,19 @@ export default class UserEntity {
     /**
      * @description update existing user data
      * @param id 
-     * @param data 
+     * @param bodyData 
      * @returns Object of status response
      */
-    static async updateUser(id: Schema.Types.ObjectId, data: Object): Promise<Object> {
+    static async updateUser(id: Schema.Types.ObjectId, bodyData: Object): Promise<Object> {
         try {
-            const user: IUser | null = await User.findByIdAndUpdate(id, data);
-            if (user) {
-                return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User updated'))
-            }
-            else {
-                return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
-            }
+            await validate.updateUser.validateAsync(bodyData);
+            const user: IUser | null = await User.findByIdAndUpdate(id, bodyData, { new: true });
+            if (user)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User'), data: user })
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${id}`))
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+            return Promise.reject(err)
         }
     }
 
@@ -118,16 +112,15 @@ export default class UserEntity {
      * @param userId 
      * @returns User
      */
-    static async userDetails(userId: Schema.Types.ObjectId): Promise<IUser> {
+    static async userDetails(userId: Schema.Types.ObjectId): Promise<Object> {
         try {
             const user: IUser | null = await User.findById(userId);
-            if (user) {
-                return Promise.resolve(user)
-            }
+            if (user)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('User profile'), data: user })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
+            return Promise.reject(err)
         }
     }
 
@@ -140,9 +133,9 @@ export default class UserEntity {
     static async changePhoneNumber(userId: Schema.Types.ObjectId, newPhoneNumber: String): Promise<Object> {
         try {
             if (!await UserEntity.isPhoneNumAlreadyExist(newPhoneNumber)) {
-                const user: IUser | null = await User.findByIdAndUpdate(userId, { phoneNumber: newPhoneNumber, isPhoneVerified: false })
+                const user: IUser | null = await User.findByIdAndUpdate(userId, { phoneNumber: newPhoneNumber, isPhoneVerified: false }, { new: true })
                 if (user)
-                    return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
+                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATED, data: user })
                 return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
             }
             else {
@@ -159,10 +152,10 @@ export default class UserEntity {
      * @param userId 
      * @returns Booking[]
      */
-    static async myBookings(userId: Schema.Types.ObjectId): Promise<IBooking[] | Object> {
+    static async myBookings(userId: Schema.Types.ObjectId): Promise<Object> {
         try {
             const bookings: IBooking[] = await Booking.find({ bookedBy: userId })
-            return Promise.resolve(bookings)
+            return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('My booking'), data: bookings })
         }
         catch (err) {
             return Promise.reject(err)
@@ -179,10 +172,10 @@ export default class UserEntity {
      * @param email 
      * @returns Object of status response
      */
-    static async verifyEmail(email: String): Promise<Object> {
+    static async verifyEmail(email: string): Promise<Object> {
         try {
             const mailData = await sendEmail(email);
-            return Promise.resolve(mailData)
+            return Promise.resolve({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
         }
         catch (err) {
             return Promise.reject(err)

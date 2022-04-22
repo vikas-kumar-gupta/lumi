@@ -11,12 +11,12 @@ export default class AdminEvent {
      * @param bodyData 
      * @returns status object
      */
-    static async newEvent(adminId: any, bodyData: Object): Promise<Object | void> {
+    static async newEvent(adminId: any, bodyData: Object): Promise<Object> {
         try {
             await newEvent.validateAsync({ createdBy: adminId, ...bodyData });
             const event: HydratedDocument<IEvent> = new Event({ createdBy: adminId, ...bodyData });
             await event.save();
-            return Promise.resolve(STATUS_MSG.SUCCESS.CREATED)
+            return Promise.resolve({ ...STATUS_MSG.SUCCESS.CREATED, data: event })
         }
         catch (err) {
             return Promise.reject(err)
@@ -32,9 +32,9 @@ export default class AdminEvent {
     static async updateEvent(eventId: any, bodyData: Object): Promise<Object> {
         try {
             await updateEvent.validateAsync(bodyData);
-            const updatedEvent: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), bodyData);
+            const updatedEvent: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), bodyData, { new: true });
             if (updatedEvent)
-                return Promise.resolve(STATUS_MSG.SUCCESS.UPDATED)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATED, data: updatedEvent })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`EventId: ${eventId}`))
         }
         catch (err: any) {

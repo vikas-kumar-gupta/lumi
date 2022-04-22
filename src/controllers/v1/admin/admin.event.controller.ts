@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AdminEvent from '../../../entity/v1/admin/adminEvent.entity'
 import { sendErrorResponse } from '../../../utils/utils'
 

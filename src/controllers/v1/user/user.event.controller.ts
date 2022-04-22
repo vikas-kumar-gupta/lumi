@@ -1,4 +1,3 @@
-import mongoose, { Schema } from 'mongoose';
 import { STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
 
@@ -9,8 +8,8 @@ import { IEvent, IUserEvent } from '../../../interfaces/model.interface';
 export const eventDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const eventId = req.params.eventId
-        const event = await UserEventEntity.eventDetails(eventId)
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(event)
+        const data: any = await UserEventEntity.eventDetails(eventId)
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -20,8 +19,8 @@ export const eventDetails = async (req: Request, res: Response, next: NextFuncti
 
 export const myEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userEvent = await UserEventEntity.myEvents(req.body.tokenId);
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(userEvent)
+        const data: any = await UserEventEntity.myEvents(req.body.tokenId);
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -31,8 +30,8 @@ export const myEvents = async (req: Request, res: Response, next: NextFunction) 
 
 export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const events: IEvent[] = await UserEventEntity.allEvents();
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(events)
+        const data: any = await UserEventEntity.allEvents();
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);

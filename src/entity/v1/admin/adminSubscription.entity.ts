@@ -10,12 +10,12 @@ export default class AdminSubscription {
      * @param bodyData 
      * @returns Status object
      */
-    static async newSubscription(bodyData: any): Promise<Object | void> {
+    static async newSubscription(bodyData: any): Promise<Object> {
         try {
             await newSubscription.validateAsync(bodyData);
             const subscription: HydratedDocument<ISubscription> = new Subscription(bodyData);
             await subscription.save()
-            return Promise.resolve(STATUS_MSG.SUCCESS.CREATED)
+            return Promise.resolve({ ...STATUS_MSG.SUCCESS.CREATED, data: subscription });
         }
         catch (err) {
             return Promise.reject(err)
@@ -28,13 +28,12 @@ export default class AdminSubscription {
      * @param bodyData 
      * @returns status object
      */
-    static async updateSubscription(subscriptionId: any, bodyData: any): Promise<Object | void> {
+    static async updateSubscription(subscriptionId: any, bodyData: any): Promise<Object> {
         try {
             await updateSubscription.validateAsync(bodyData);
-            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(new mongoose.Types.ObjectId(subscriptionId), bodyData);
-            if (subscription) {
-                return Promise.resolve(STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Subscription updated '))
-            }
+            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(new mongoose.Types.ObjectId(subscriptionId), bodyData, { new: true });
+            if (subscription)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Subscription'), data: subscription })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${subscriptionId}`));
         }
         catch (err) {
