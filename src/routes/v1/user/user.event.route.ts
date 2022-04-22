@@ -1,15 +1,15 @@
 import express from 'express'
 import { userEventController } from '../../../controllers'
-import { auth } from '../../../middlewares/user.middleware'
+import { userAuth } from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
-routes.get('/my-events', auth, userEventController.myEvents);
-routes.get('/all-events', auth, userEventController.allEvents)                      
-routes.get('/details/:eventId', auth, userEventController.eventDetails)
+routes.get('/my-events', userAuth, userEventController.myEvents);
+routes.get('/all-events', userAuth, userEventController.allEvents)                      
+routes.get('/details/:eventId', userAuth, userEventController.eventDetails)
 
 // !to be implement
-routes.post('/book-event/:eventId', auth, userEventController.bookEvent)
+routes.post('/book-event/:eventId', userAuth, userEventController.bookEvent)
 
 // CREATING UserEvent TAG
 /**

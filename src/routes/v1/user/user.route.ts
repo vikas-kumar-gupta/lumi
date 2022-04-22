@@ -1,15 +1,15 @@
 import express from "express";
 import { userController } from "../../../controllers";
-import { auth } from '../../../middlewares/user.middleware'
+import { userAuth } from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
 routes.post('/signup/get-otp', userController.getOtp);
 routes.post('/signup/verify-otp', userController.verifyOtp);
-routes.get('/profile', auth, userController.userDetails)
-routes.patch('/profile/update', auth, userController.updateUser);
-routes.patch('/change-phoneNumber', auth, userController.changePhoneNumber);
-routes.get('/my-bookings', auth, userController.myBookings);
+routes.get('/profile', userAuth, userController.userDetails)
+routes.patch('/profile/update', userAuth, userController.updateUser);
+routes.patch('/change-phoneNumber', userAuth, userController.changePhoneNumber);
+routes.get('/my-bookings', userAuth, userController.myBookings);
 //! partially done
 routes.post('/verify-email', userController.verifyEmail);
 

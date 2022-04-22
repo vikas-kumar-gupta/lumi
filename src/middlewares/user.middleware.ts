@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction, Application } from 'express'
 import jwt from 'jsonwebtoken';
 
 
-export const auth = async (req: express.Request, res: express.Response, next: NextFunction) => {
+export const userAuth = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
         const token: any = req.headers['authorization']
         const verifyToken = jwt.verify(token, CONFIG.JWT_SECRET_KEY, (err: any, data: any) => {

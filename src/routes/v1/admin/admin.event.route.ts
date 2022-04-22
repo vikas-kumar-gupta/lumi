@@ -1,12 +1,12 @@
 import express from 'express'
 import { adminEventController } from '../../../controllers/'
-import {auth} from '../../../middlewares/admin.middleware'
+import {adminAuth} from '../../../middlewares/admin.middleware'
 
 const routes = express.Router();
 
-routes.post('/new-event', auth, adminEventController.newEvent)
-routes.patch('/update-event/:eventId', auth, adminEventController.updateEvent)
-routes.delete('/delete-event/:eventId', auth, adminEventController.deleteEvent)
+routes.post('/new-event', adminAuth, adminEventController.newEvent)
+routes.patch('/update-event/:eventId', adminAuth, adminEventController.updateEvent)
+routes.delete('/delete-event/:eventId', adminAuth, adminEventController.deleteEvent)
 
 // CREATING UserEvent TAG
 /**

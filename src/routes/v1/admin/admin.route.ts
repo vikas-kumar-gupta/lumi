@@ -1,16 +1,16 @@
 import express from 'express'
 import { adminController } from '../../../controllers';
-import {auth} from '../../../middlewares/admin.middleware'
+import {adminAuth} from '../../../middlewares/admin.middleware'
 
 const routes = express.Router();
 
 routes.post('/signup', adminController.adminSignup)
 routes.post('/login', adminController.adminLogin)
-routes.get('/report/:reportId', auth, adminController.reportDetails)
-routes.delete('/delete-user/:userId', auth, adminController.deleteUser)
+routes.get('/report/:reportId', adminAuth, adminController.reportDetails)
+routes.delete('/delete-user/:userId', adminAuth, adminController.deleteUser)
 
 // ! to be implemented
-routes.post('/review-report/:reportId', auth, adminController.reviewReport)
+routes.post('/review-report/:reportId', adminAuth, adminController.reviewReport)
 
 // CREATING UserEvent TAG
 /**
