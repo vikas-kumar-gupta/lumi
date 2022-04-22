@@ -8,6 +8,7 @@ import Booking from '../../../models/booking.model'
 import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import { sendEmail } from '../../../services/nodemailer/email.service';
+import sessionEntity from '../session/session.entity';
 
 export default class UserEntity {
 
@@ -60,6 +61,7 @@ export default class UserEntity {
                     await user.save()
                     const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
                     await userDetails.save()
+                    await sessionEntity.createSession(user._id);
                     const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.CREATED;
@@ -69,6 +71,7 @@ export default class UserEntity {
                 else {
                     const user: IUser | null = await User.findOne({ phoneNumber: phoneNumber })
                     if (user) {
+                        await sessionEntity.createSession(user._id);
                         const token = jwt.sign({ id: user._id }, CONFIG.JWT_SECRET_KEY)
                         console.log(token);
                         const statusData = STATUS_MSG.SUCCESS.LOGIN;
@@ -147,7 +150,7 @@ export default class UserEntity {
             }
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.BAD_REQUEST)
+            return Promise.reject(err)
         }
     }
 
@@ -162,7 +165,7 @@ export default class UserEntity {
             return Promise.resolve(bookings)
         }
         catch (err) {
-            return Promise.reject(STATUS_MSG.ERROR.DB_ERROR)
+            return Promise.reject(err)
         }
     }
 
@@ -176,7 +179,7 @@ export default class UserEntity {
      * @param email 
      * @returns Object of status response
      */
-    static async verifyEmail(email: String): Promise<void> {
+    static async verifyEmail(email: String): Promise<Object> {
         try {
             const mailData = await sendEmail(email);
             return Promise.resolve(mailData)

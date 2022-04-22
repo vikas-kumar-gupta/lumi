@@ -166,6 +166,6 @@ export interface ISession {
 }
 
 export interface ISessionDeviceData {
-    deviceId: String,
-    deviceToken: String
+    deviceId?: String,
+    deviceToken?: String
 }

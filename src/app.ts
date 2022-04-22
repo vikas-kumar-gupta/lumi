@@ -2,7 +2,7 @@ import { CONFIG } from './constants'
 import express, {Request, Response, NextFunction, Application} from 'express';
 import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser';
-
+import {redis} from './db/redis.config'
 import * as v1Route from './routes/index'
 
 import connection from './db/db.config';
@@ -14,6 +14,9 @@ const app: Application = express();
 
 //  db connection
 connection();
+
+//  redish connection
+redis.connect()
 
 //  express bodyParser
 app.use(express.json());

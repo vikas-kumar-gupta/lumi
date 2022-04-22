@@ -43,18 +43,22 @@ routes.post('/review-report/:reportId', auth, adminController.reviewReport)
  *                              required: true
  *                          email:
  *                              type: string
+ *                              example: "example@gmail.com"
  *                              required: true
  *                          gender:
  *                              type: string
  *                              required: true
  *                          dob:
- *                              type: date
+ *                              type: string
+ *                              example: "01/01/2022"
  *                              required: false
  *                          profilePicture:
  *                              type: [string]
+ *                              example: [imgUrl1, imgUrl2]
  *                              required: true
  *                          phoneNumber:
  *                              type: string
+ *                              example: "+919999999999"
  *                              required: true
  *                          password:
  *                              type: string
@@ -62,6 +66,15 @@ routes.post('/review-report/:reportId', auth, adminController.reviewReport)
  *                          geometry:
  *                              type: object
  *                              required: false
+ *                              properties:
+ *                                  type:
+ *                                      type: string
+ *                                      example: "Point"
+ *                                      require: true
+ *                                  coordinates:
+ *                                      type: [number]
+ *                                      example: [-90.9009, 789.54546]
+ *                                      require: true
  *                          homeTown:
  *                              type: string
  *                              required: true

@@ -15,12 +15,12 @@ const sessionSchema = new Schema<ISession>(
         },
         deviceToken: {
             type: String,
-            required: true
+            required: false
         },
 
         deviceId: {
             type: String,
-            required: true
+            required: false
         },
         isActive: {
             type: Boolean,

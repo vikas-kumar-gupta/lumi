@@ -8,15 +8,10 @@ routes.post('/signup/get-otp', userController.getOtp);
 routes.post('/signup/verify-otp', userController.verifyOtp);
 routes.get('/profile', auth, userController.userDetails)
 routes.patch('/profile/update', auth, userController.updateUser);
-routes.patch('/change-phoneNumber', auth, userController.changePhoneNumber);                //  done
+routes.patch('/change-phoneNumber', auth, userController.changePhoneNumber);
 routes.get('/my-bookings', auth, userController.myBookings);
-
-/**
- * TODO:
- * Given below each route & controller is to be implemented
- */
-
-routes.post('/verify-email', auth, userController.verifyEmail);
+//! partially done
+routes.post('/verify-email', userController.verifyEmail);
 
 
 // CREATING TAGS
@@ -235,18 +230,22 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                              required: false
  *                          email:
  *                              type: string
+ *                              example: "exampe@gmail.com"
  *                              requied: false
  *                          gender:
  *                              type: string
  *                              required: false
  *                          dob:
- *                              type: date
+ *                              type: string
+ *                              example: "01/01/2000"
  *                              required: false
  *                          phoneNumber:
  *                              type: string
+ *                              example: "+919999999999"
  *                              required: false
  *                          profilePicture:
  *                              type: [string]
+ *                              example: ["img-url-1", "img-url-2", "img-url-3", "img-url-4", "img-url-5"]
  *                              required: false
  *                          isPhoneVerified:
  *                              type: boolean
@@ -259,10 +258,21 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                              required: false
  *                          bio:
  *                              type: [string]
+ *                              example: ["Bio-1", "Bio-2", "Bio-3", "Bio-4", "Bio-5"]
  *                              required: false
  *                          geometry:
  *                              type: object
  *                              required: false
+ *                              properties:
+ *                                  type:
+ *                                      type: string
+ *                                      example: "Point"
+ *                                      require: true
+ *                                  coordinates:
+ *                                      type: [number]
+ *                                      example: [-90.9009, 789.54546]
+ *                                      require: true 
+ *                                  
  *                          homeTown:
  *                              type: string
  *                              required: false
@@ -292,9 +302,11 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                              required: false
  *                          ageBetween:
  *                              type: [number]
+ *                              example: [18, 26]
  *                              required: false
  *                          height:
  *                              type: [number]
+ *                              example: [5, 2]
  *                              required: false
  *                          interestedIn:
  *                              type: string
@@ -334,6 +346,7 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                      properties:
  *                          newPhoneNumber:
  *                              type: string
+ *                              example: "+919999999999"
  *                              required: false
  *      responses:
  *          200:
@@ -362,6 +375,7 @@ routes.post('/verify-email', auth, userController.verifyEmail);
  *                      properties:
  *                          email:
  *                              type: string
+ *                              example: example@gmail.com
  *                              required: false
  *      responses:
  *          200:

@@ -218,6 +218,12 @@ export let STATUS_MSG = {
             message: 'Otp sent successfully',
             type: 'OTP SENT'
         },
+        MAIL_SENT: {
+            statusCode: 250,
+            success: true,
+            message: 'Verification mail sent successfully',
+            type: 'MAIL_SENT'
+        },
         LOGIN: {
             statusCode: 200,
             success: true,
@@ -244,12 +250,13 @@ export let STATUS_MSG = {
                 type: 'UPDATE_SUCCESS'
             }
         },
-        FETCH_SUCCESS: (msg: string) => {
+        FETCH_SUCCESS: (msg: string, data?: any) => {
             return {
                 statusCode: 200,
                 success: true,
                 message: msg,
-                type: 'FETCH_SUCCESS'
+                type: 'FETCH_SUCCESS',
+                data: data
             }
         }
     },

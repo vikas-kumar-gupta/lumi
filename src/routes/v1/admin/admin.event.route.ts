@@ -35,9 +35,19 @@ routes.delete('/delete-event/:eventId', auth, adminEventController.deleteEvent)
  *                              required: true
  *                          geometry:
  *                              type: object
- *                              required: true
+ *                              required: false
+ *                              properties:
+ *                                  type:
+ *                                      type: string
+ *                                      example: "Point"
+ *                                      require: true
+ *                                  coordinates:
+ *                                      type: [number]
+ *                                      example: [-90.9009, 789.54546]
+ *                                      require: true 
  *                          eventDate:
- *                              type: date
+ *                              type: string
+ *                              example: "01/01/2000"
  *                              required: true
  *                          eventDescription:
  *                              type: string
@@ -104,8 +114,18 @@ routes.delete('/delete-event/:eventId', auth, adminEventController.deleteEvent)
  *                          geometry:
  *                              type: object
  *                              required: false
+ *                              properties:
+ *                                  type:
+ *                                      type: string
+ *                                      example: "Point"
+ *                                      require: true
+ *                                  coordinates:
+ *                                      type: [number]
+ *                                      example: [-90.9009, 789.54546]
+ *                                      require: true 
  *                          eventDate:
- *                              type: date
+ *                              type: string
+ *                              example: "01/01/2022"
  *                              required: false
  *                          eventDescription:
  *                              type: string

@@ -13,7 +13,7 @@ export const swaggerFunc = () => {
             // basePath: '/v1',
             servers: [
                 {
-                    url: `http://localhost:${CONFIG.PORT}`
+                    url: `http://${CONFIG.HOST}:${CONFIG.PORT}`
                 }
             ],
             components: {

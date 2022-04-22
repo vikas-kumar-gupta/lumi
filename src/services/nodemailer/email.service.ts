@@ -1,9 +1,8 @@
-import { SERVICES, CONFIG } from '../../constants'
+import { SERVICES, CONFIG, STATUS_MSG } from '../../constants'
 import nodemailer from "nodemailer"
 export async function sendEmail(email: String): Promise<any> {
-    console.log(email);
     const tranporter = nodemailer.createTransport({
-        name: "coach",
+        name: "Lumi",
         host: "smtp.gmail.com",
         port: 465,
         secure: true,
@@ -14,17 +13,14 @@ export async function sendEmail(email: String): Promise<any> {
     });
 
     try {
-        const info = await tranporter.sendMail({
+        await tranporter.sendMail({
             from: SERVICES.EMAIL.MAIL,
             to: <string>email,
             subject: "Verify your email",
-            html: `<a href ="http://localhost:${CONFIG.PORT}/user/mail-verified/:userId"> Click here</a>`
+            html: `<a href ="http://${CONFIG.HOST}:${CONFIG.PORT}/user/verify-mail/:userId"> Click here</a>`
         })
-        console.log({ info });
-        return info;
+        return Promise.resolve(STATUS_MSG.SUCCESS.MAIL_SENT);
     } catch (err) {
-        console.log({ err });
         return Promise.reject(err);
-
     }
 }

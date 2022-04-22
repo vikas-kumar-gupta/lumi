@@ -57,12 +57,11 @@ export const newEvent = Joi.object({
 
 export const updateEvent = Joi.object({
     eventName: Joi.string().min(3).max(25).trim(),
-    geometry: Joi.object().required(),  
-    eventDate: Joi.date().required(),
-    eventDescription: Joi.string().min(3).max(200).trim().required(),
-    totalTickets: Joi.number().min(1).required(),
-    availableTickets: Joi.number().min(0).required(),
-    bookedTickets: Joi.number(),
+    geometry: Joi.object(),
+    eventDate: Joi.date(),
+    eventDescription: Joi.string().min(3).max(200).trim(),
+    totalTickets: Joi.number().min(1),
+    availableTickets: Joi.number().min(0),
     ageBetween: Joi.array().length(2),
     freeDrinks: Joi.number().min(0),
     price: Joi.number().min(0),

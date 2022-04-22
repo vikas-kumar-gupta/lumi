@@ -85,7 +85,8 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
 // ! to be implement because of not having fake email and password
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data = await UserEntity.verifyEmail('recievers@gmail.com')
+        const email: String = req.body.email;
+        const data = await UserEntity.verifyEmail(email)
         res.status(200).json(data)
     }
     catch (err) {

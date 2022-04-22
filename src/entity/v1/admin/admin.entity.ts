@@ -7,6 +7,7 @@ import Report from '../../../models/report.model'
 import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface'
 import { adminSignup, adminLogin } from '../../../utils/admin.validator';
 import User from '../../../models/user.model';
+import sessionEntity from '../session/session.entity';
 
 export default class AdminEntity {
 
@@ -41,6 +42,7 @@ export default class AdminEntity {
             if (!await AdminEntity.isPhoneNumAlreadyExist((bodyData.phoneNumber))) {
                 const admin: HydratedDocument<IAdmin> = new Admin(bodyData);
                 const data = await admin.save()
+                    await sessionEntity.createSession(admin._id);
                 const token = jwt.sign({ id: data._id, isAdmin: admin.isAdmin }, CONFIG.JWT_SECRET_KEY)
                 const statusData = STATUS_MSG.SUCCESS.CREATED;
                 return Promise.resolve({ token, statusData })
@@ -66,6 +68,7 @@ export default class AdminEntity {
             if (admin) {
                 const hashedPassword = md5(bodyData.password)
                 if (admin.password == hashedPassword) {
+                    await sessionEntity.createSession(admin._id);
                     const token = jwt.sign({ id: admin._id, isAdmin: admin.isAdmin }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.LOGIN;
