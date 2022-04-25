@@ -35,9 +35,6 @@ routes.post('/review-report/:reportId', adminAuth, adminController.reviewReport)
  *                  schema:
  *                      type: object
  *                      properties:
- *                          isAdmin:
- *                              type: boolean
- *                              required: true
  *                          name:
  *                              type: string
  *                              required: true

@@ -1,10 +1,11 @@
 import express from 'express'
 import { adminEventController } from '../../../controllers/'
 import {adminAuth} from '../../../middlewares/admin.middleware'
+import {sessionAuth} from '../../../middlewares/session.middleware'
 
 const routes = express.Router();
 
-routes.post('/new-event', adminAuth, adminEventController.newEvent)
+routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
 routes.patch('/update-event/:eventId', adminAuth, adminEventController.updateEvent)
 routes.delete('/delete-event/:eventId', adminAuth, adminEventController.deleteEvent)
 

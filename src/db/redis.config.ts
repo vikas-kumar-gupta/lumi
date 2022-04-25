@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-
+import {STATUS_MSG} from '../constants'
 const client = createClient();
 
 class redisDAO {
@@ -15,7 +15,6 @@ class redisDAO {
     }
 
     async createSession(user_id: any, payLoad: any) {
-
         client.HSET(this.Session, user_id, JSON.stringify(payLoad));
     }
 
@@ -23,9 +22,9 @@ class redisDAO {
         try {
             const user = await client.HGET(this.Session, user_id);
             if (!user) {
-                return Promise.reject("Not found");
+                return Promise.reject(STATUS_MSG.ERROR.SESSION_EXPIRED);
             } else {
-                return user;
+                return true;
             }
         } catch (err: any) {
             return Promise.reject(err);

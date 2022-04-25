@@ -1,4 +1,5 @@
-import mongoose, { Schema, model } from "mongoose";
+import { DBENUMS } from "../constants";
+import { Schema, model } from "mongoose";
 import { ISession } from '../interfaces/model.interface'
 
 const sessionSchema = new Schema<ISession>(
@@ -6,6 +7,11 @@ const sessionSchema = new Schema<ISession>(
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
+            required: true
+        },
+        userType: {
+            type: String,
+            enum: DBENUMS.USER_TYPE,
             required: true
         },
         isLoggedIn: {
@@ -17,7 +23,6 @@ const sessionSchema = new Schema<ISession>(
             type: String,
             required: false
         },
-
         deviceId: {
             type: String,
             required: false

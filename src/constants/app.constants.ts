@@ -27,6 +27,7 @@ export const DBENUMS = {
     STATUS: ["ACTIVE", "INACTIVE", "DELETED"],
     SUBSCRIPTION_PLAN: ["SILVER", "GOLD", "PLATINUM"],
     SUBSCRIPTION_STATUS: ["ACTIVE", "EXPIRED"],
+    USER_TYPE: ["ADMIN", "USER"],
     ZODIAC: ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
 }
 
@@ -114,6 +115,12 @@ export let STATUS_MSG = {
             type: 'INVALID_TOKEN'
         },
 
+        SESSION_EXPIRED: {
+            statusCode:400,
+            success: false,
+            message: 'Session expired, please log in again',
+            type: 'SESSION_EXPIRED'
+        },
 
         UNAUTHORIZED: {
             statusCode: 401,
@@ -121,6 +128,7 @@ export let STATUS_MSG = {
             message: 'You are not authorized to perform this action',
             type: 'UNAUTHORIZED'
         },
+        
         UNAUTHORIZED_ADMIN: {
             statusCode: 408,
             success: false,

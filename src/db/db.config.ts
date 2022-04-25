@@ -1,5 +1,5 @@
 import { CONFIG } from "../constants";
-import mongoose, {connect} from "mongoose";
+import mongoose from "mongoose";
 
 const connection =async () => {
     return mongoose.connect(CONFIG.DB_URL)

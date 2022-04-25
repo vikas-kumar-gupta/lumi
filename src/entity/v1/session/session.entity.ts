@@ -5,12 +5,17 @@ import Session from '../../../models/session.model';
 import { redis } from '../../../db/redis.config'
 
 export default class sessionEntity {
-    static async createSession(userId: any): Promise<void> {
+    static async createSession(userId: any, userType: String): Promise<void> {
         try {
-
-            const session: HydratedDocument<ISession> = new Session({ userId });
+            const session: HydratedDocument<ISession> = new Session({ userId, userType: userType });
             await session.save();
-            redis.createSession(userId.toString(), ({sessionId: session._id?.toString(), deviceId: session.deviceId}));
+            const query = {
+                userType: session.userType,
+                isActive: session.isActive, 
+                isLoggedIn: session.isLoggedIn, 
+                deviceId: session.deviceId
+            }
+            redis.createSession(userId.toString(), ({ sessionId: session._id?.toString(),  ...query}));
         }
         catch (err) {
             return Promise.reject(err)
@@ -18,8 +23,9 @@ export default class sessionEntity {
     }
 
     static async chekSession(sessionId: any): Promise<void> {
-        try{
+        try {
             const session = await redis.findSession(sessionId)
+            if (!session) return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Session'))
         }
         catch (err) {
             return Promise.reject(err)

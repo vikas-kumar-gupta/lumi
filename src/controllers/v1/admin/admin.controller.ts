@@ -8,7 +8,7 @@ export const adminSignup = async (req: Request, res: Response, next: NextFunctio
         const data: any = await AdminEntity.adminSignup(req.body);
         const token = data.token
         const statusData = data.statusData
-        res.status(data.statusData.statusCode).json({ token: token, statusData: statusData })
+        res.status(data.statusData.statusCode).header('Token', `${token}`).json({ token: token, statusData: statusData })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -22,7 +22,7 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
 
         const token = data.token
         const statusData = data.statusData
-        res.status(data.statusData.statusCode).json({ token: token, statusData: statusData })
+        res.status(data.statusData.statusCode).header('Token', `${token}`).json({ token: token, statusData: statusData })
     }
     catch (err) {
         const errData = sendErrorResponse(err);

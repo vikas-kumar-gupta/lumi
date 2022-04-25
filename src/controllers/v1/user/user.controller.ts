@@ -28,7 +28,7 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
         const data: any = await UserEntity.newUser(otpData, phoneNumber, loginType)
         const token = data.token;
         const statusData = data.statusData
-        res.status(statusData.statusCode).json({token, statusData})
+        res.status(statusData.statusCode).header('Token', `${token}`).json({token, statusData})
     }
     catch (err) {
         const errData = sendErrorResponse(err);

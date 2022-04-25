@@ -6,11 +6,6 @@ import {IAdmin} from '../../interfaces/model.interface'
 
 const adminSchema = new Schema<IAdmin>(
     {
-        isAdmin: {
-            type: Boolean,
-            default: false,
-            required: true,
-        },
         name: {
             type: String,
             trim: true,

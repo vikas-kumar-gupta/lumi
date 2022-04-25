@@ -1,5 +1,5 @@
 import { IBooking, IUser, IUserDetails } from './../../../interfaces/model.interface';
-import { CONFIG, STATUS_MSG } from "../../../constants"
+import { CONFIG, STATUS_MSG, DBENUMS } from "../../../constants"
 import User from '../../../models/user.model';
 import UserDetails from "../../../models/userDetails.model";
 import Booking from '../../../models/booking.model'
@@ -57,18 +57,17 @@ export default class UserEntity {
                     await user.save()
                     const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
                     await userDetails.save()
-                    await sessionEntity.createSession(user._id);
-                    const token = jwt.sign({ id: userDetails._id }, CONFIG.JWT_SECRET_KEY);
+                    await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1]);
+                    const token = jwt.sign({ id: userDetails._id, isAdmin: false }, CONFIG.JWT_SECRET_KEY);
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.CREATED;
                     return Promise.resolve({ token, statusData });
-
                 }
                 else {
                     const user: IUser | null = await User.findOne({ phoneNumber: phoneNumber })
                     if (user) {
-                        await sessionEntity.createSession(user._id);
-                        const token = jwt.sign({ id: user._id }, CONFIG.JWT_SECRET_KEY)
+                        await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1]);
+                        const token = jwt.sign({ id: user._id, isAdmin: false }, CONFIG.JWT_SECRET_KEY)
                         console.log(token);
                         const statusData = STATUS_MSG.SUCCESS.LOGIN;
                         return Promise.resolve({ token, statusData })
