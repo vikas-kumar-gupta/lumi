@@ -1,12 +1,13 @@
 import express from 'express'
 import { adminSubscriberController } from '../../../controllers/index'
 import { adminAuth } from '../../../middlewares/admin.middleware'
+import { sessionAuth } from '../../../middlewares/session.middleware';
 
 const routes = express.Router();
 
-routes.post('/new-subscription', adminAuth, adminSubscriberController.newSubscription)
-routes.patch('/update-subscription/:subscriptionId', adminAuth, adminSubscriberController.updateSubscription)
-routes.delete('/delete-subscription/:subscriptionId', adminAuth, adminSubscriberController.deleteSubscription)
+routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberController.newSubscription)
+routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.updateSubscription)
+routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.deleteSubscription)
 
 // CREATING AdminSubscription TAG
 /**

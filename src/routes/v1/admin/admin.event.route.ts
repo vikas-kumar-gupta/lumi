@@ -6,9 +6,9 @@ import {sessionAuth} from '../../../middlewares/session.middleware'
 const routes = express.Router();
 
 routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
-routes.get('/details/:eventId', adminAuth, userEventController.eventDetails)
-routes.patch('/update-event/:eventId', adminAuth, adminEventController.updateEvent)
-routes.delete('/delete-event/:eventId', adminAuth, adminEventController.deleteEvent)
+routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.eventDetails)
+routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventController.updateEvent)
+routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventController.deleteEvent)
 
 // CREATING UserEvent TAG
 /**
