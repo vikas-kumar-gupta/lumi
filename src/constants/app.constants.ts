@@ -93,7 +93,7 @@ export let STATUS_MSG = {
         TOKEN_EXPIRED: {
             statusCode: 408,
             success: false,
-            message: "Your session has expired. Please logout and login again.",
+            message: "Token expired or not provided",
             type: "TOKEN_ALREADY_EXPIRED"
         },
         TOKEN_ALREADY_EXIST: {
@@ -213,6 +213,12 @@ export let STATUS_MSG = {
             success: true,
             message: 'Updated Successfully',
             name: 'UPDATED'
+        },
+        VERIFIED: {
+            statusCode: 200,
+            success: true,
+            message: 'Verified Successfully',
+            name: 'VERIFIED'
         },
         LOGOUT: {
             statusCode: 200,

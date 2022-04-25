@@ -6,9 +6,7 @@ import { sendErrorResponse } from '../../../utils/utils'
 export const adminSignup = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: any = await AdminEntity.adminSignup(req.body);
-        const token = data.token
-        const statusData = data.statusData
-        res.status(data.statusData.statusCode).header('Token', `${token}`).json({ token: token, statusData: statusData })
+        res.status(data.statusData.statusCode).setHeader('Token', `${data.token}`).json({ ...data })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -19,10 +17,18 @@ export const adminSignup = async (req: Request, res: Response, next: NextFunctio
 export const adminLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: any = await AdminEntity.adminLogin(req.body);
+        res.status(data.statusData.statusCode).setHeader('Token', `${data.token}`).json({ ...data })
+    }
+    catch (err) {
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
+    }
+}
 
-        const token = data.token
-        const statusData = data.statusData
-        res.status(data.statusData.statusCode).header('Token', `${token}`).json({ token: token, statusData: statusData })
+export const adminDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data: any = await AdminEntity.adminDetails(req.body.tokenId)
+        res.status(data.statusCode).json(data)
     }
     catch (err) {
         const errData = sendErrorResponse(err);

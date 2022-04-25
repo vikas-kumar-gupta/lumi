@@ -12,7 +12,6 @@ export default class sessionEntity {
             const query = {
                 userType: session.userType,
                 isActive: session.isActive, 
-                isLoggedIn: session.isLoggedIn, 
                 deviceId: session.deviceId
             }
             redis.createSession(userId.toString(), ({ sessionId: session._id?.toString(),  ...query}));

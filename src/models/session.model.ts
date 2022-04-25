@@ -14,11 +14,6 @@ const sessionSchema = new Schema<ISession>(
             enum: DBENUMS.USER_TYPE,
             required: true
         },
-        isLoggedIn: {
-            type: Boolean,
-            default: true,
-            required: true
-        },
         deviceToken: {
             type: String,
             required: false

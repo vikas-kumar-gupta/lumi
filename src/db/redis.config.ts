@@ -1,5 +1,4 @@
 import { createClient } from "redis";
-import {STATUS_MSG} from '../constants'
 const client = createClient();
 
 class redisDAO {
@@ -22,9 +21,9 @@ class redisDAO {
         try {
             const user = await client.HGET(this.Session, user_id);
             if (!user) {
-                return Promise.reject(STATUS_MSG.ERROR.SESSION_EXPIRED);
+                return Promise.resolve(false);
             } else {
-                return true;
+                return Promise.resolve(true);
             }
         } catch (err: any) {
             return Promise.reject(err);

@@ -1,11 +1,13 @@
 import express from 'express'
 import { adminController } from '../../../controllers';
 import {adminAuth} from '../../../middlewares/admin.middleware'
+import { sessionAuth } from '../../../middlewares/session.middleware';
 
 const routes = express.Router();
 
 routes.post('/signup', adminController.adminSignup)
 routes.post('/login', adminController.adminLogin)
+routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
 routes.get('/report/:reportId', adminAuth, adminController.reportDetails)
 routes.delete('/delete-user/:userId', adminAuth, adminController.deleteUser)
 
@@ -115,6 +117,24 @@ routes.post('/review-report/:reportId', adminAuth, adminController.reviewReport)
  *                          password:
  *                              type: string
  *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /admin/profile:
+ *  get:
+ *      summary: Admin profile data
+ *      tags: [Admin]
+ *      description: Admin profile all data
  *      responses:
  *          200:
  *              description: Sucess

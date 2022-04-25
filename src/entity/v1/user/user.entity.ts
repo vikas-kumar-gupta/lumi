@@ -171,10 +171,28 @@ export default class UserEntity {
      * @param email 
      * @returns Object of status response
      */
-    static async verifyEmail(email: string): Promise<Object> {
+    static async verifyEmail(email: string, token: any): Promise<Object> {
         try {
-            const mailData = await sendEmail(email);
+            const mailData = await sendEmail(email, token);
             return Promise.resolve({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async verifyEmailWithToken(token: any): Promise<Object> {
+        try {
+            const verifyToken: any = jwt.verify(token, CONFIG.JWT_SECRET_KEY)
+            if (verifyToken.id != undefined) {
+                const user: IUser | null = await User.findByIdAndUpdate(verifyToken.id, { isMailVerified: true }, { new: true })
+                if (user)
+                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.VERIFIED, data: user })
+                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserID: ${verifyToken.id}`))
+            }
+            else {
+                return Promise.reject(STATUS_MSG.ERROR.INVALID_TOKEN)
+            }
         }
         catch (err) {
             return Promise.reject(err)

@@ -1,6 +1,7 @@
 import { CONFIG, STATUS_MSG } from '../constants'
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken';
+import { sendErrorResponse } from '../utils/utils';
 
 export const adminAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -20,6 +21,7 @@ export const adminAuth = async (req: Request, res: Response, next: NextFunction)
         next()
     }
     catch (err) {
-        res.status(STATUS_MSG.ERROR.TOKEN_EXPIRED.statusCode).json(STATUS_MSG.ERROR.TOKEN_EXPIRED)
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData)
     }
 }

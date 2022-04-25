@@ -19,7 +19,6 @@ export const userAuth = async (req: Request, res: Response, next: NextFunction) 
         else {
             res.status(STATUS_MSG.ERROR.UNAUTHORIZED.statusCode).json(STATUS_MSG.ERROR.UNAUTHORIZED)
         }
-
     }
     catch (err) {
         const errData = sendErrorResponse(err);

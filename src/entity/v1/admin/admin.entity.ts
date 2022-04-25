@@ -84,6 +84,23 @@ export default class AdminEntity {
         }
     }
 
+    /**
+     * @description admin profile
+     * @param adminId 
+     * @returns admin data
+     */
+    static async adminDetails(adminId: any): Promise<Object> {
+        try {
+            const admin: IAdmin | null = await Admin.findById(adminId);
+            if (admin)
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Admin profile'), data: admin })
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`AdminId: ${adminId}`));
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
 
     /**
      * @description report details
@@ -94,7 +111,7 @@ export default class AdminEntity {
         try {
             const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString()));
             if (report)
-                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details') ,data: report})
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details'), data: report })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
         }
         catch (err: any) {

@@ -1,11 +1,12 @@
 import express from 'express'
-import { adminEventController } from '../../../controllers/'
+import { adminEventController, userEventController } from '../../../controllers/'
 import {adminAuth} from '../../../middlewares/admin.middleware'
 import {sessionAuth} from '../../../middlewares/session.middleware'
 
 const routes = express.Router();
 
 routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
+routes.get('/details/:eventId', adminAuth, userEventController.eventDetails)
 routes.patch('/update-event/:eventId', adminAuth, adminEventController.updateEvent)
 routes.delete('/delete-event/:eventId', adminAuth, adminEventController.deleteEvent)
 
@@ -88,6 +89,29 @@ routes.delete('/delete-event/:eventId', adminAuth, adminEventController.deleteEv
  *              description: Internal server error
  */
 
+/**
+ * @swagger
+ * /admin/event/details/{eventId}:
+ *  get:
+ *      summary: Event Details
+ *      tags: [AdminEvent]
+ *      description: Event Details
+ *      parameters:
+ *        - in: path
+ *          name: eventId
+ *          schema:
+ *              type: string
+ *          required: true                    
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
 
 /**
  * @swagger

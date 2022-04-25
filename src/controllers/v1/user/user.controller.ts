@@ -28,7 +28,7 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
         const data: any = await UserEntity.newUser(otpData, phoneNumber, loginType)
         const token = data.token;
         const statusData = data.statusData
-        res.status(statusData.statusCode).header('Token', `${token}`).json({token, statusData})
+        res.status(statusData.statusCode).setHeader('Token', `${token}`).json({ token, statusData })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -52,7 +52,7 @@ export const userDetails = async (req: Request, res: Response, next: NextFunctio
         const data: any = await UserEntity.userDetails(req.body.tokenId);
         res.status(data.statusCode).json(data);
     }
-    catch (err:any) {
+    catch (err: any) {
         const errData = sendErrorResponse(err);
         res.status(errData.statusCode).json(errData)
     }
@@ -62,7 +62,7 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
     try {
         const { newPhoneNumber } = req.body;
         await validate.changePhoneNumber.validateAsync(req.body);
-        const data: any = await UserEntity.changePhoneNumber( req.body.tokenId, newPhoneNumber)
+        const data: any = await UserEntity.changePhoneNumber(req.body.tokenId, newPhoneNumber)
         res.status(data.statusCode).json(data)
     }
     catch (err: any) {
@@ -73,7 +73,7 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
 
 export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data: any =  await UserEntity.myBookings(req.body.tokenId);
+        const data: any = await UserEntity.myBookings(req.body.tokenId);
         res.status(data.statusCode).json(data)
     }
     catch (err) {
@@ -86,7 +86,20 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const email: string = req.body.email;
-        const data: any = await UserEntity.verifyEmail(email)
+        const token: any = req.headers['authorization']
+        const data: any = await UserEntity.verifyEmail(email, token)
+        res.status(data.statusCode).json(data)
+    }
+    catch (err) {
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData);
+    }
+}
+
+export const verifyEmailWithToken = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = req.params.token;
+        const data: any = await UserEntity.verifyEmailWithToken(token)
         res.status(data.statusCode).json(data)
     }
     catch (err) {

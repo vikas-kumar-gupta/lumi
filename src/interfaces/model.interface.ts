@@ -157,7 +157,6 @@ export interface ISession {
     _id?: Object,
     userId: Object,
     userType: String,
-    isLoggedIn: Boolean,
     deviceToken: String,
     deviceId: String,
     isActive: Boolean,

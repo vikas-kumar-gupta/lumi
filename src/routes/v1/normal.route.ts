@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', normalController.homePage)
 router.post('/form-data', upload.array('img') ,normalController.getFormData)
+router.post('/logout')
 router.get('/*', normalController.pageNotFound)
 
 // CREATING TAGS

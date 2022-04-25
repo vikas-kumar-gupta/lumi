@@ -1,6 +1,7 @@
 import { SERVICES, CONFIG, STATUS_MSG } from '../../constants'
 import nodemailer from "nodemailer"
-export async function sendEmail(email: String): Promise<any> {
+
+export async function sendEmail(email: String, token: any): Promise<any> {
     const tranporter = nodemailer.createTransport({
         name: "Lumi",
         host: "smtp.gmail.com",
@@ -17,7 +18,7 @@ export async function sendEmail(email: String): Promise<any> {
             from: SERVICES.EMAIL.MAIL,
             to: <string>email,
             subject: "Verify your email",
-            html: `<a href ="http://${CONFIG.HOST}:${CONFIG.PORT}/user/verify-mail/:userId"> Click here</a>`
+            html: `<a href ="http://${CONFIG.HOST}:${CONFIG.PORT}/user/verify-email/${token}"> Click here to verify</a>`
         })
         return Promise.resolve(data);
     } catch (err) {

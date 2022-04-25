@@ -10,8 +10,8 @@ routes.get('/profile', userAuth, userController.userDetails)
 routes.patch('/profile/update', userAuth, userController.updateUser);
 routes.patch('/change-phoneNumber', userAuth, userController.changePhoneNumber);
 routes.get('/my-bookings', userAuth, userController.myBookings);
-//! partially done
 routes.post('/verify-email', userController.verifyEmail);
+routes.get('/verify-email/:token', userController.verifyEmailWithToken )
 
 
 // CREATING TAGS
