@@ -32,74 +32,81 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken )
  *              properties:
  *                  name:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  email:
  *                      type: email
- *                      required: true
- *                  password:
- *                      type: string
- *                      required: true
+ *                      required: false
  *                  gender:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  dob:
- *                      type: date
- *                      required: true
+ *                      type: string
+ *                      example: "01/01/2000"
+ *                      required: false
  *                  phoneNumber: 
- *                      type: number
+ *                      type: string
  *                      required: true
- *                  isVerified:
+ *                  isPhoneVerified:
  *                      type: boolean
  *                      required: true
+ *                  isMailVerified:
+ *                      type: boolean
+ *                      required: false
  *                  subscription:
  *                      type: object
  *                      required: false
  *                  bio:
- *                      type: array[string]
- *                      required: false
+ *                      type: [string]
  *                      example: ["str1", "str2", "str3", "str4", "str5"]
+ *                      required: false
  *                  geometry:
- *                      type: array[string]
- *                      required: true
- *                      example: ["latitude", "longitude"]
+ *                      type: object
+ *                      required: false
+ *                      properties:
+ *                          type: 
+ *                              type: string
+ *                              require: true
+ *                          coordinates:
+ *                              type: [number, number]
+ *                              require: true
  *                  homeTown:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  jobTitle:
  *                      type:  string
- *                      required: true
+ *                      required: false
  *                  eduLevel: 
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  religiousBelief:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  haveCigares:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  haveAlcohol:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  haveMarijuana:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  haveDrugs:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  piliticalLeaning:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  ageBetween:
- *                      type: array[number]
- *                      required: true
+ *                      type: [number]
+ *                      required: false
  *                      example: [18, 26]
  *                  height:
- *                      type: array[number]
- *                      required: true
+ *                      type: [number]
+ *                      required: false
  *                      example: [18, 26]
  *                  interestedIn:
  *                      type: string
- *                      required: true
+ *                      required: false
  *                  reportNum:
  *                      type: number
  *                      required: false
