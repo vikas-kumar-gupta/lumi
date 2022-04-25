@@ -127,7 +127,7 @@ export default class UserEntity {
      * @description change the phone number of a user account
      * @param userId 
      * @param newPhoneNumber 
-     * @returns Object of status response
+     * @returns User
      */
     static async changePhoneNumber(userId: Schema.Types.ObjectId, newPhoneNumber: String): Promise<Object> {
         try {
@@ -162,10 +162,6 @@ export default class UserEntity {
     }
 
     /**
-     * ! to be implemented cause of email and password
-     */
-
-    /**
      * @description verify the user's email address
      * @param userId 
      * @param email 
@@ -181,6 +177,11 @@ export default class UserEntity {
         }
     }
 
+    /**
+     * @description verifying the user data of email verification
+     * @param token 
+     * @returns status response
+     */
     static async verifyEmailWithToken(token: any): Promise<Object> {
         try {
             const verifyToken: any = jwt.verify(token, CONFIG.JWT_SECRET_KEY)

@@ -82,7 +82,6 @@ export const myBookings = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-// ! to be implement because of not having fake email and password
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const email: string = req.body.email;
