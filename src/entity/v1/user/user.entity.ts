@@ -169,8 +169,18 @@ export default class UserEntity {
      */
     static async verifyEmail(email: string, token: any): Promise<Object> {
         try {
-            const mailData = await sendEmail(email, token);
-            return Promise.resolve({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
+            const user: IUser | null = await User.findOne({ email: email });
+            if (user) {
+                if (user.isMailVerified) {
+                    return Promise.reject(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('This email is alrady registered and verified'))
+                }
+                const mailData = await sendEmail(email, token);
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
+            }
+            else {
+                const mailData = await sendEmail(email, token);
+                return Promise.resolve({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
+            }
         }
         catch (err) {
             return Promise.reject(err)

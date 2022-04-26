@@ -5,7 +5,7 @@ import Joi, { object } from "joi"
 export const adminSignup = Joi.object({
     name: Joi.string().trim().required(),
     email: Joi.string().trim().required(),
-    gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)).required(),
+    gender: Joi.string().trim().valid(...Object.values(DBENUMS.GENDER)).required(),
     dob: Joi.date(),
     profilePicture: Joi.array(),
     phoneNumber: Joi.string().trim().required(),
@@ -24,14 +24,14 @@ export const adminLogin = Joi.object({
 })
 
 export const newSubscription = Joi.object({
-    subscriptionPlan: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)).required(),
+    subscriptionPlan: Joi.string().trim().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)).required(),
     subscriptionMonths: Joi.number().min(1).required(),
     price: Joi.number().min(0).required(),
     tokenId: Joi.any()
 })
 
 export const updateSubscription = Joi.object({
-    subscriptionPlan: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
+    subscriptionPlan: Joi.string().trim().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
     subscriptionMonths: Joi.number().min(1),
     price: Joi.number().min(0),
     tokenId: Joi.any()

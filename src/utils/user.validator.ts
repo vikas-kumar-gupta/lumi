@@ -14,24 +14,24 @@ export const verifyOtp = Joi.object({
 export const updateUser = Joi.object({
     name: Joi.string().trim().min(3).max(20),
     email: Joi.string().trim().min(6),
-    gender: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.GENDER)),
+    gender: Joi.string().trim().valid(...Object.values(DBENUMS.GENDER)),
     dob: Joi.date(),
     profilePicture: Joi.array(),
     bio: Joi.array(),   
     geometry: Joi.object(),
     height: Joi.array().length(2),
-    zodiac: Joi.string().min(3).uppercase().trim().valid(...Object.values(DBENUMS.ZODIAC)),
-    interestedIn: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.INTERESTS)),
+    zodiac: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.ZODIAC)),
+    interestedIn: Joi.string().trim().valid(...Object.values(DBENUMS.INTERESTS)),
     ageBetween: Joi.array().length(2),
     homeTown: Joi.string().trim().min(5).max(30),
     jobTitle: Joi.string().min(5).trim(),
-    eduLevel: Joi.string().min(5).trim().uppercase().valid(...Object.values(DBENUMS.EDU_LEVEL)),
-    religiousBelief: Joi.string().min(3).trim().uppercase().valid(...Object.values(DBENUMS.RELIGIOUS)),
-    politicalLeaning: Joi.string().min(3).trim().uppercase().valid(...Object.values(DBENUMS.POLITICAL_LEANING)),
-    haveCigares: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.ACCEPTANCE)),
-    haveAlcohol: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.ACCEPTANCE)),
-    haveMarijuana: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.ACCEPTANCE)),
-    haveDrugs: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.ACCEPTANCE)),
+    eduLevel: Joi.string().min(5).trim().valid(...Object.values(DBENUMS.EDU_LEVEL)),
+    religiousBelief: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.RELIGIOUS)),
+    politicalLeaning: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.POLITICAL_LEANING)),
+    haveCigarette: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
+    haveAlcohol: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
+    haveMarijuana: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
+    haveDrugs: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
     isMailVerified: Joi.boolean(),
     tokenId: Joi.string(),
 })
@@ -57,13 +57,13 @@ export const payment = Joi.object({
 })
 
 export const subscription = Joi.object({
-    subType: Joi.string().trim().uppercase().required().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
+    subType: Joi.string().trim().required().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
     subMonths: Joi.number().min(1).max(12).required(),
     price: Joi.number().min(1).required(),
 })
 
 export const reportUser = Joi.object({
-    reasons: Joi.string().trim().uppercase().valid(...Object.values(DBENUMS.REPORT_REASON)),
+    reasons: Joi.string().trim().valid(...Object.values(DBENUMS.REPORT_REASON)),
     otherReasons: Joi.string().trim().min(3)
 })
 

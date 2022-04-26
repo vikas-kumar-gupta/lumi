@@ -14,9 +14,16 @@ export const pageNotFound = async (req: Request, res: Response, next: NextFuncti
 // ! function for testing purpose
 export const getFormData = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).json(req.body)
+        
+        let imgUrl =  `http://${CONFIG.HOST}:${CONFIG.PORT}/build/uploads/public/${req.file?.filename}`;
+        let bodyData = req.body;
+        bodyData.imgUrl = imgUrl;
+        res.status(200).json({...bodyData});
     }
-    catch (err) {
+    catch (err: any) {
+        console.log(err);
+        console.log(err.name);
+        
         const errData = sendErrorResponse(err);
         res.status(errData.statusCode).json(errData);
     }

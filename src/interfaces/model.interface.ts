@@ -101,7 +101,7 @@ export interface IUser {
     eduLevel?: String,
     religiousBelief?: String,
     politicalLeaning?: String,
-    haveCigares?: String,
+    haveCigarette?: String,
     haveAlcohol?: String,
     haveMarijuana?: String,
     haveDrugs?: String,

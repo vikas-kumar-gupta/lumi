@@ -293,7 +293,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *                          religiousBelief:
  *                              type: string
  *                              required: false
- *                          haveCigares:
+ *                          haveCigarette:
  *                              type: string
  *                              required: false
  *                          haveAlcohol:

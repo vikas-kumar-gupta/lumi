@@ -8,27 +8,27 @@ export const ENVIRONMENT = {
 }
 
 export const DBENUMS = {
-    ACCEPTANCE: ["YES", "NO", "SOMETIMES", "PREFER NOT TO SAY"],
+    ACCEPTANCE: ["Yes", "No", "Sometimes", "Prefer not to say"],
+    EDU_LEVEL: ["High School", "Undergraduate", "Post Graduate", "Prefer not to say"],
+    INTERESTS: ["Men", "Women", "Men + Women", "Gender Fluid People"],
+    POLITICAL_LEANING: ["Liberal", "Moderate", "Conservative", "Other", "Prefer not to say"],
+    RELIGIOUS: ["Buddhism", "Christianity", "Judaism", "Islam", "Hinduism", "Other", "None", "Prefer not to say"],
+    REPORT_REASON: ["Inappropriate Content", "Hate speech or voilence", "I don't want them to see me", "Others"],
+    SUBSCRIPTION_PLAN: ["Silver", "Gold", "Platinum"],
+    USER_TYPE: ["Admin", "User"],
+    ZODIAC: ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"],
     BOOKING_STATUS: ["BOOKED", "CANCELED"],
     CARD_TYPE: ["CREDIT CARD", "DEBIT CARD"],
     CARD_STATUS: ["ACTIVE", "INACTIVE", "EXPIRED"],
-    EDU_LEVEL: ["HIGH SCHOOL", "UNDERGRADUATE", "POST GRADUATE", "PREFER NOT TO SAY"],
     EVENT_STATUS: ["UPCOMING", "ACTIVE", "EXPIRED", "DELETED", "CANCELED"],
-    GENDER: ["MALE", "FEMALE", "NON-BINARY"],
-    INTERESTS: ["MEN", "WOMEN", "MEN + WOMEN", "GENDER FLUID PEOPLE"],
+    GENDER: ["Male", "Female", "Non-Binary"],
     INVITE_STATUS: ["PENDING", "ACCEPTED", "DECLINE"],
     INVITE_TYPE: ["SENT", "RECEIVED"],
     LOGIN_TYPE: ["FACEBOOK", "PHONENUMBER"],
-    POLITICAL_LEANING: ["LIBERAL", "MODERATE", "CONSERVATIVE", "OTHER", "PREFER NOT TO  SAY"],
     PAYMENT_STATUS: ["COMPLETE", "CANCELLED", "PENDING"],
-    RELIGIOUS: ["BUDDHISM", "CHRISTIANITY", "JUDAISM", "ISLAM", "HINDUISM", "OTHER", "NONE", "PREFER NOT TO SAY"],
-    REPORT_REASON: ["INAPPROPRIATE CONTENT", "HATE SPEECH OR VOILENCE", "I DONT WANT THEM TO SEE ME", "OTHER"],
     SIGNUPSOURCE: ["NORMAL", "APPLE", "GOOGLE", "FACEBOOK"],
     STATUS: ["ACTIVE", "INACTIVE", "DELETED"],
-    SUBSCRIPTION_PLAN: ["SILVER", "GOLD", "PLATINUM"],
-    SUBSCRIPTION_STATUS: ["ACTIVE", "EXPIRED"],
-    USER_TYPE: ["ADMIN", "USER"],
-    ZODIAC: ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
+    SUBSCRIPTION_STATUS: ["Active", "Expired"],
 }
 
 export let STATUS_MSG = {

@@ -7,7 +7,8 @@ import { normalController } from '../../controllers'
 const router = express.Router();
 
 router.get('/', normalController.homePage)
-router.post('/form-data', upload.array('img') ,normalController.getFormData)
+// ! for testig purpose
+router.post('/form-data', upload.single('imgUrl') ,normalController.getFormData)
 router.post('/logout')
 router.get('/*', normalController.pageNotFound)
 

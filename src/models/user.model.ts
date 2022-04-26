@@ -92,7 +92,7 @@ const userSchema = new Schema<IUser>(
             enum: DBENUMS.RELIGIOUS,
             required: false
         },
-        haveCigares: {
+        haveCigarette: {
             type: String,
             enum: DBENUMS.ACCEPTANCE,
             required: false
