@@ -111,7 +111,7 @@ export default class UserEntity {
      * @param userId 
      * @returns User
      */
-    static async userDetails(userId: Schema.Types.ObjectId): Promise<Object> {
+    static async userDetails(userId: any): Promise<Object> {
         try {
             const user: IUser | null = await User.findById(userId, { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             if (user)

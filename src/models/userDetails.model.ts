@@ -14,7 +14,7 @@ const userDetailsSchema = new Schema<IUserDetails>(
             required: false,
             ref: 'User'
         },
-        reportUsers: {
+        reportedUsers: {
             type: [Schema.Types.ObjectId],
             required: false,
             ref: 'User'

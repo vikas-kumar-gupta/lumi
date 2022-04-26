@@ -8,7 +8,7 @@ const reportSchema = new Schema<IReport>(
         reasons: {
             type: String,
             enum: DBENUMS.REPORT_REASON,
-            required: true
+            required: false
         },
         otherReasons: {
             type: String,

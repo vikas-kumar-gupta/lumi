@@ -1,3 +1,7 @@
+export interface IGeometry {
+    type: String,
+    coordinates: [Number, Number]
+}
 export interface IAdmin {
     _id?: Object,
     name: String,
@@ -7,7 +11,7 @@ export interface IAdmin {
     profilePicture?: [String],
     phoneNumber: String,
     password: String,
-    geometry: Object,
+    geometry: IGeometry,
     homeTown?: String,
     jobTitle?: String,
     isPhoneVerified?: Boolean,
@@ -91,7 +95,7 @@ export interface IUser {
     facebookId?: String,
     profilePicture?: [String],
     bio?: [String],
-    geometry?: Object,
+    geometry?: IGeometry,
     height?: [Number],
     zodiac?: String,
     interestedIn?: String,
@@ -115,7 +119,7 @@ export interface IUser {
 export interface IUserDetails {
     _id?: Object,
     blockedUsers?: [Object],
-    reportUsers?: [Object],
+    reportedUsers?: [Object],
     createdAt?: Date,
     updatedAt?: Date
 }
