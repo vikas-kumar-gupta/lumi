@@ -1,5 +1,5 @@
 import { IBooking, IUser, IUserDetails } from './../../../interfaces/model.interface';
-import { CONFIG, STATUS_MSG, DBENUMS } from "../../../constants"
+import { CONFIG, STATUS_MSG, DBENUMS, EXCLUDE_DATA } from "../../../constants"
 import User from '../../../models/user.model';
 import UserDetails from "../../../models/userDetails.model";
 import Booking from '../../../models/booking.model'
@@ -96,7 +96,7 @@ export default class UserEntity {
     static async updateUser(id: Schema.Types.ObjectId, bodyData: Object): Promise<Object> {
         try {
             await validate.updateUser.validateAsync(bodyData);
-            const user: IUser | null = await User.findByIdAndUpdate(id, bodyData, { new: true });
+            const user: IUser | null = await User.findByIdAndUpdate(id, bodyData, { new: true }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             if (user)
                 return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User'), data: user })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${id}`))
@@ -113,7 +113,7 @@ export default class UserEntity {
      */
     static async userDetails(userId: Schema.Types.ObjectId): Promise<Object> {
         try {
-            const user: IUser | null = await User.findById(userId);
+            const user: IUser | null = await User.findById(userId, { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             if (user)
                 return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('User profile'), data: user })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
@@ -133,6 +133,7 @@ export default class UserEntity {
         try {
             if (!await UserEntity.isPhoneNumAlreadyExist(newPhoneNumber)) {
                 const user: IUser | null = await User.findByIdAndUpdate(userId, { phoneNumber: newPhoneNumber, isPhoneVerified: false }, { new: true })
+                    .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                 if (user)
                     return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATED, data: user })
                 return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User'))
@@ -196,7 +197,7 @@ export default class UserEntity {
         try {
             const verifyToken: any = jwt.verify(token, CONFIG.JWT_SECRET_KEY)
             if (verifyToken.id != undefined) {
-                const user: IUser | null = await User.findByIdAndUpdate(verifyToken.id, { isMailVerified: true }, { new: true })
+                const user: IUser | null = await User.findByIdAndUpdate(verifyToken.id, { isMailVerified: true }, { new: true }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                 if (user)
                     return Promise.resolve({ ...STATUS_MSG.SUCCESS.VERIFIED, data: user })
                 return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserID: ${verifyToken.id}`))

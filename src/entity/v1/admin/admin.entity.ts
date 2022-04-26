@@ -1,4 +1,4 @@
-import { STATUS_MSG, CONFIG, DBENUMS } from '../../../constants';
+import { STATUS_MSG, CONFIG, DBENUMS, EXCLUDE_DATA } from '../../../constants';
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
 import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
@@ -91,7 +91,7 @@ export default class AdminEntity {
      */
     static async adminDetails(adminId: any): Promise<Object> {
         try {
-            const admin: IAdmin | null = await Admin.findById(adminId);
+            const admin: IAdmin | null = await Admin.findById(adminId, { ...EXCLUDE_DATA.MONGO, password: 0, isAdmin: 0 });
             if (admin)
                 return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Admin profile'), data: admin })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`AdminId: ${adminId}`));

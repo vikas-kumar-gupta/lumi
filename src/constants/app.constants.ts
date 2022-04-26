@@ -116,7 +116,7 @@ export let STATUS_MSG = {
         },
 
         SESSION_EXPIRED: {
-            statusCode:400,
+            statusCode: 400,
             success: false,
             message: 'Session expired, please log in again',
             type: 'SESSION_EXPIRED'
@@ -128,7 +128,7 @@ export let STATUS_MSG = {
             message: 'You are not authorized to perform this action',
             type: 'UNAUTHORIZED'
         },
-        
+
         UNAUTHORIZED_ADMIN: {
             statusCode: 408,
             success: false,
@@ -273,6 +273,23 @@ export let STATUS_MSG = {
             }
         }
     },
+}
+
+export const EXCLUDE_DATA = {
+    MONGO: {
+        _id: 0, 
+        __v: 0, 
+        createdAt: 0, 
+        updatedAt: 0
+    },
+    EVENT: {
+        createdBy: 0,
+        bookedBy: 0
+    },
+    USER_PROFILE: {
+        reportNum: 0,
+        loginType: 0
+    }
 }
 
 export const DATE = {

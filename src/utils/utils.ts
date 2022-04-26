@@ -72,6 +72,14 @@ export const sendErrorResponse = (error: any) => {
                 type: "MongooseError"
             }
         }
+        case "MulterError": {
+            return {
+                statusCode: 400,
+                success: false,
+                message: error.message,
+                type: "MulterError"
+            }
+        }
         default: {
             switch (error.type) {
                 case "DB_ERROR":
