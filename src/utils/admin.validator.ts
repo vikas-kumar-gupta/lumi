@@ -71,3 +71,9 @@ export const updateEvent = Joi.object({
     tokenId: Joi.any(),
     userLocation: Joi.any()
 })
+
+export const reviewReport = Joi.object({
+    isApproved: Joi.boolean().required(),
+    tokenId: Joi.any(),
+    userLocation: Joi.any()
+})

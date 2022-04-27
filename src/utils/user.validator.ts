@@ -68,7 +68,7 @@ export const subscription = Joi.object({
 })
 
 export const reportUser = Joi.object({
-    reasons: Joi.string().trim().valid(...Object.values(DBENUMS.REPORT_REASON)),
+    reasons: Joi.string().min(0).valid(...Object.values(DBENUMS.REPORT_REASON)),
     otherReasons: Joi.string().trim().min(3),
     tokenId: Joi.string().trim(),
     userLocation: Joi.any()

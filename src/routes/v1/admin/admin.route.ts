@@ -9,10 +9,8 @@ routes.post('/signup', adminController.adminSignup)
 routes.post('/login', adminController.adminLogin)
 routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
 routes.get('/report/:reportId', sessionAuth, adminAuth, adminController.reportDetails)
+routes.post('/report/:reportId', sessionAuth, adminAuth, adminController.reviewReport)
 routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.deleteUser)
-
-// ! to be implemented
-routes.post('/review-report/:reportId', sessionAuth, adminAuth, adminController.reviewReport)
 
 // CREATING UserEvent TAG
 /**
@@ -161,6 +159,40 @@ routes.post('/review-report/:reportId', sessionAuth, adminAuth, adminController.
  *          schema:
  *              type: string
  *          required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /admin/report/{reportId}:
+ *  post:
+ *      summary: Report action
+ *      tags: [Admin]
+ *      description: Review a report by either approving or disaprooving it
+ *      parameters:
+ *        - in: path
+ *          name: reportId
+ *          schema:
+ *              type: string
+ *          required: true
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          isApproved:
+ *                              type: boolean
+ *                              required: true
  *      responses:
  *          200:
  *              description: Sucess

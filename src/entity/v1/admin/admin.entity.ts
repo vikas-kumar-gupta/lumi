@@ -5,9 +5,10 @@ import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
 import Admin from '../../../models/admin/admin.model'
 import Report from '../../../models/report.model'
 import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface'
-import { adminSignup, adminLogin } from '../../../utils/admin.validator';
+import { adminSignup, adminLogin, reviewReport } from '../../../utils/admin.validator';
 import User from '../../../models/user.model';
 import sessionEntity from '../session/session.entity';
+import UserDetails from '../../../models/userDetails.model';
 
 export default class AdminEntity {
 
@@ -60,7 +61,7 @@ export default class AdminEntity {
      */
     static async adminLogin(bodyData: any): Promise<Object> {
         try {
-            adminLogin.validate(bodyData)
+            await adminLogin.validateAsync(bodyData)
             const admin: IAdmin | null = await Admin.findOne({ phoneNumber: bodyData.phoneNumber });
             if (admin) {
                 const hashedPassword = md5(bodyData.password)
@@ -109,7 +110,10 @@ export default class AdminEntity {
      */
     static async reportDetails(reportId: any): Promise<Object> {
         try {
-            const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString()));
+            const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString())).populate({
+                path: 'reportedTo reportedBy',
+                select: 'name phoneNumber'
+            }).select({ ...EXCLUDE_DATA.MONGO })
             if (report)
                 return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details'), data: report })
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
@@ -119,12 +123,36 @@ export default class AdminEntity {
         }
     }
 
+    static async reviewReport(reportId: any, bodyData: any): Promise<Object> {
+        try {
+            await reviewReport.validateAsync(bodyData)
+            const report: IReport | null = await Report.findByIdAndUpdate(new mongoose.Types.ObjectId(reportId), { isApproved: bodyData.isApproved }, { new: true })
+                .populate({
+                    path: 'reportedTo reportedBy',
+                    select: 'name phoneNumber'
+                })
+                .select({ ...EXCLUDE_DATA.MONGO })
+            if (report) {
+                const user: IUser | null = await User.findByIdAndUpdate(report.reportedTo, { $inc: { reportNum: 1 } })
+                if (user) {
+                    await UserDetails.findByIdAndUpdate(report.reportedBy, { $push: { reportedUsers: report.reportedTo } })
+                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATED, data: report })
+                }
+                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Reported user: ${report.reportedTo}`))
+            }
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
     /**
      * @description delete an user account
      * @param userId 
      * @returns status obj
      */
-    static async deleteUser(userId: any) {
+    static async deleteUser(userId: any): Promise<Object> {
         try {
             const user: IUser | null = await User.findByIdAndDelete(new mongoose.Types.ObjectId(userId));
             if (user)
