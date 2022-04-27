@@ -59,7 +59,7 @@ const userSchema = new Schema<IUser>(
             type: [String],
             required: false
         },
-        geometry: {
+        location: {
             type: {
                 type: String,
                 enum: ['Point'],

@@ -17,7 +17,7 @@ const eventSchema = new Schema<IEvent>(
             minlength: 3,
             maxlength: 25
         },
-        geometry: {
+        location: {
             type: {
                 type: String,
                 enum: ['Point'],

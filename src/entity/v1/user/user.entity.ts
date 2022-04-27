@@ -58,7 +58,7 @@ export default class UserEntity {
                     const userDetails: HydratedDocument<IUserDetails> = new UserDetails({ _id: user._id });
                     await userDetails.save()
                     await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1]);
-                    const token = jwt.sign({ id: userDetails._id, isAdmin: false }, CONFIG.JWT_SECRET_KEY);
+                    const token = jwt.sign({ id: userDetails._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY);
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.CREATED;
                     return Promise.resolve({ token, statusData });
@@ -67,7 +67,7 @@ export default class UserEntity {
                     const user: IUser | null = await User.findOne({ phoneNumber: phoneNumber })
                     if (user) {
                         await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1]);
-                        const token = jwt.sign({ id: user._id, isAdmin: false }, CONFIG.JWT_SECRET_KEY)
+                        const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location}, CONFIG.JWT_SECRET_KEY)
                         console.log(token);
                         const statusData = STATUS_MSG.SUCCESS.LOGIN;
                         return Promise.resolve({ token, statusData })
@@ -97,8 +97,10 @@ export default class UserEntity {
         try {
             await validate.updateUser.validateAsync(bodyData);
             const user: IUser | null = await User.findByIdAndUpdate(id, bodyData, { new: true }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
-            if (user)
+            if (user){
+                const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY);
                 return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATE_SUCCESS('User'), data: user })
+            }
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${id}`))
         }
         catch (err) {

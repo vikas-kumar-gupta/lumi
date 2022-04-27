@@ -62,7 +62,7 @@ routes.post('/review-report/:reportId', sessionAuth, adminAuth, adminController.
  *                          password:
  *                              type: string
  *                              required: true
- *                          geometry:
+ *                          location:
  *                              type: object
  *                              required: false
  *                              properties:

@@ -42,9 +42,21 @@ export default class UserEventEntity {
      * @description all the events near user
      * @returns Event[]
      */
-    static async allEvents(): Promise<Object> {
-        try {
-            const events: IEvent[] = await Event.find().select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
+    static async allEvents(userLocation: any): Promise<Object> {
+        try {          
+            const options = {
+                //  for near by location of 50 miles
+                location: {
+                    $geoWithin: {
+                        $centerSphere: [[userLocation.coordinates[0], userLocation.coordinates[1]], 50 / 3963.2]
+                    }
+                },
+                //  for upcoming or ongoing events
+                eventDate: {
+                    $gte: new Date()
+                }
+            }
+            const events: IEvent[] = await Event.find(options).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
             return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('All event'), data: events })
         }
         catch (err) {

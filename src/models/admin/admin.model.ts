@@ -39,7 +39,7 @@ const adminSchema = new Schema<IAdmin>(
             type: String,
             required: true
         },
-        geometry: {
+        location: {
             type: {
                 type: String,
                 enum: ['Point'],

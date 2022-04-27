@@ -35,7 +35,7 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *                          eventName:
  *                              type: string
  *                              required: true
- *                          geometry:
+ *                          location:
  *                              type: object
  *                              required: false
  *                              properties:
@@ -136,7 +136,7 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *                          eventName:
  *                              type: string
  *                              required: false
- *                          geometry:
+ *                          location:
  *                              type: object
  *                              required: false
  *                              properties:

@@ -1,4 +1,4 @@
-import { IReport, IUser } from './../../../interfaces/model.interface';
+import { IReport, IUser, IUserDetails } from './../../../interfaces/model.interface';
 import { STATUS_MSG, DBENUMS, EXCLUDE_DATA } from "../../../constants"
 import User from '../../../models/user.model';
 import Report from '../../../models/report.model';
@@ -6,49 +6,46 @@ import mongoose, { HydratedDocument } from 'mongoose'
 import UserDetails from '../../../models/userDetails.model';
 
 export default class UserMatchEntity {
-    static async mayBeMatches(userId: any): Promise<Object> {
+    static async mayBeMatches(userId: any, userLocation: any): Promise<Object> {
         /**
          ** IMP FACTOR TO BE MEASURE
-         * ! Reported account should not show
-         * user own account should not display          done
+         * ! Blocked and account should not show        done
+         * ! user own account should not display        done
          * gender                                       done
          * age                                          
          * location                                     partially done
          * education level                              done  
          * religious                                    done
          * drugs, alcohol, marijauna, cigarette         done
-         * height                                       
+         * height                                       not to consider
          */
         try {
             const user: IUser | null = await User.findById(userId);
-
-            if (user) {
-                console.log(user.geometry);
-
-                const commonQuery = {
-                    // geometry: {
-                    //     $near: {
-                    //         $maxDistance: 10000,
-                    //         $geometry: {
-                    //             type: "Point",
-                    //             coordinates: [user.geometry?.coordinates[0], user.geometry?.coordinates[1]]
-                    //         }
-                    //     }
-                    // },
-                    _id: { $ne: user._id },
+            const userDetails: IUserDetails | null = await UserDetails.findById(userId);
+            if (user && userDetails) {
+                const options = {
+                    //  for near by location of 50 miles
+                    location: {
+                        $geoWithin: {
+                            $centerSphere: [[userLocation.coordinates[0], userLocation.coordinates[1]], 15 / 3963.2]
+                        }
+                    },
+                    //  for not displaying own data and blocked users
+                    _id: { $nin: [user._id, ...(userDetails.blockedUsers || [])] },
+                    //  person adjustable factors for match
                     $or: [{ religiousBelief: user.religiousBelief }, { haveAlcohol: user.haveAlcohol }, { haveCigarette: user.haveCigarette }],
+                    //  not adjustable factors for match there for it should be same for both profile
                     $and: [{ haveDrugs: user.haveDrugs }, { haveMarijuana: user.haveMarijuana }]
                 }
                 switch (user.interestedIn) {
                     case "Men + Women":
                     case "Gender Fluid People": {
-                        const matches = await User.find({ ...commonQuery, gender: { $in: ["Male", "Female"] } })
+                        const matches = await User.find({ ...options, gender: { $in: ["Male", "Female"] } })
                             .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                         return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Matches'), data: matches })
                     }
                     default: {
-                        // const matches = await User.find({ ...commonQuery })
-                        const matches = await User.find({ ...commonQuery, gender: user.interestedIn })
+                            const matches = await User.find({ ...options, gender: user.interestedIn })
                             .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                         return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Matches'), data: matches })
                     }
@@ -68,14 +65,14 @@ export default class UserMatchEntity {
             const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(reportedTo));
             if (user) {
                 const reportedNum = user.reportNum;
-                await User.findByIdAndUpdate(user._id, {reportNum: reportedNum})
+                await User.findByIdAndUpdate(user._id, { reportNum: reportedNum })
 
                 // creating new report for the user
                 const report: HydratedDocument<IReport> = new Report({ reasons: bodyData.reasons, otherReasons: bodyData.otherReasons, reportedBy: reportedBy, reportedTo: reportedTo });
                 await report.save()
-                
+
                 // pushing reported account in the users details model
-                await UserDetails.findByIdAndUpdate(reportedBy, {$push: {reportedUsers: reportedTo}})
+                await UserDetails.findByIdAndUpdate(reportedBy, { $push: { reportedUsers: reportedTo } })
                 return Promise.resolve(STATUS_MSG.SUCCESS.REPORTED)
             }
             else {
@@ -90,7 +87,7 @@ export default class UserMatchEntity {
     static async blockProfile(userId: any, blockUserId: any) {
         try {
             const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(blockUserId));
-            if(user) {
+            if (user) {
                 await UserDetails.findByIdAndUpdate(userId, { $push: { blockedUsers: blockUserId } });
                 return Promise.resolve(STATUS_MSG.SUCCESS.BLOCKED)
             }

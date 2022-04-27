@@ -40,7 +40,7 @@ export default class AdminEntity {
                 const admin: HydratedDocument<IAdmin> = new Admin(bodyData);
                 const data = await admin.save()
                 await sessionEntity.createSession(admin._id, DBENUMS.USER_TYPE[0]);
-                const token = jwt.sign({ id: data._id, isAdmin: true }, CONFIG.JWT_SECRET_KEY)
+                const token = jwt.sign({ id: data._id, isAdmin: true, location: data.location }, CONFIG.JWT_SECRET_KEY)
                 const statusData = STATUS_MSG.SUCCESS.CREATED;
                 return Promise.resolve({ token, statusData })
             }
@@ -66,7 +66,7 @@ export default class AdminEntity {
                 const hashedPassword = md5(bodyData.password)
                 if (admin.password == hashedPassword) {
                     await sessionEntity.createSession(admin._id, DBENUMS.USER_TYPE[0]);
-                    const token = jwt.sign({ id: admin._id, isAdmin: true }, CONFIG.JWT_SECRET_KEY)
+                    const token = jwt.sign({ id: admin._id, isAdmin: true, location: admin.location }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
                     const statusData = STATUS_MSG.SUCCESS.LOGIN;
                     return Promise.resolve({ token, statusData })

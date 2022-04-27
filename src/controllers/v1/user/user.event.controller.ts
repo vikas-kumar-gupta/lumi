@@ -30,7 +30,7 @@ export const myEvents = async (req: Request, res: Response, next: NextFunction) 
 
 export const allEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data: any = await UserEventEntity.allEvents();
+        const data: any = await UserEventEntity.allEvents(req.body.userLocation);
         res.status(data.statusCode).json(data)
     }
     catch (err) {

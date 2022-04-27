@@ -18,7 +18,7 @@ export const updateUser = Joi.object({
     dob: Joi.date(),
     profilePicture: Joi.array(),
     bio: Joi.array(),   
-    geometry: Joi.object(),
+    location: Joi.object(),
     height: Joi.array().length(2),
     zodiac: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.ZODIAC)),
     interestedIn: Joi.string().trim().valid(...Object.values(DBENUMS.INTERESTS)),
@@ -34,16 +34,19 @@ export const updateUser = Joi.object({
     haveDrugs: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
     isMailVerified: Joi.boolean(),
     tokenId: Joi.string(),
+    userLocation: Joi.any()
 })
 
 export const changePhoneNumber = Joi.object({
     newPhoneNumber: Joi.string().trim().required(),
-    tokenId: Joi.string().trim()
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
 })
 
 export const verifyMail = Joi.object({
     email: Joi.string().trim().email().required(),
-    tokenId: Joi.string().trim()
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
 })
 
 export const payment = Joi.object({
@@ -60,17 +63,13 @@ export const subscription = Joi.object({
     subType: Joi.string().trim().required().valid(...Object.values(DBENUMS.SUBSCRIPTION_PLAN)),
     subMonths: Joi.number().min(1).max(12).required(),
     price: Joi.number().min(1).required(),
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
 })
 
 export const reportUser = Joi.object({
     reasons: Joi.string().trim().valid(...Object.values(DBENUMS.REPORT_REASON)),
-    otherReasons: Joi.string().trim().min(3)
-})
-
-export const card = Joi.object({
-    nameOnCard: Joi.string().trim().uppercase().required(),
-    cardNumber: Joi.number().required(),
-    expDate: Joi.date().required(),
-    cvv: Joi.number().min(1).max(999).required(),
-    cardType: Joi.string().trim().uppercase().required().valid(...Object.values(DBENUMS.CARD_TYPE))
+    otherReasons: Joi.string().trim().min(3),
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
 })

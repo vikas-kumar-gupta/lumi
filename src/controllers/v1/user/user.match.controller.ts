@@ -12,7 +12,7 @@ import UserEntity from '../../../entity/v1/user/user.entity';
  */
 export const mayBeMatches = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data: any = await UserMatchEntity.mayBeMatches(req.body.tokenId);
+        const data: any = await UserMatchEntity.mayBeMatches(req.body.tokenId, req.body.userLocation);
         res.status(data.statusCode).json(data);
     }
     catch (err) {

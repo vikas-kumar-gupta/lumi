@@ -60,7 +60,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *                      type: [string]
  *                      example: ["str1", "str2", "str3", "str4", "str5"]
  *                      required: false
- *                  geometry:
+ *                  location:
  *                      type: object
  *                      required: false
  *                      properties:
@@ -268,7 +268,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *                              type: [string]
  *                              example: ["Bio-1", "Bio-2", "Bio-3", "Bio-4", "Bio-5"]
  *                              required: false
- *                          geometry:
+ *                          location:
  *                              type: object
  *                              required: false
  *                              properties:

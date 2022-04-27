@@ -1,4 +1,4 @@
-export interface IGeometry {
+export interface ILocation {
     type: String,
     coordinates: [Number, Number]
 }
@@ -11,7 +11,7 @@ export interface IAdmin {
     profilePicture?: [String],
     phoneNumber: String,
     password: String,
-    geometry: IGeometry,
+    location: ILocation,
     homeTown?: String,
     jobTitle?: String,
     isPhoneVerified?: Boolean,
@@ -35,7 +35,7 @@ export interface IEvent {
     _id?: Object,
     createdBy: Object,
     eventName: String,
-    geometry: Object,
+    location: ILocation,
     eventDate: Date,
     eventDescription: String,
     eventStatus: String,
@@ -95,7 +95,7 @@ export interface IUser {
     facebookId?: String,
     profilePicture?: [String],
     bio?: [String],
-    geometry?: IGeometry,
+    location?: ILocation,
     height?: [Number],
     zodiac?: String,
     interestedIn?: String,
