@@ -24,7 +24,6 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
         const { otp, phoneNumber, loginType } = req.body;
         await validate.verifyOtp.validateAsync(req.body);
         let otpData: any = await TwilioPhoneOTP.verifyOtp(phoneNumber, otp)
-        console.log(otpData);
         const data: any = await UserEntity.newUser(otpData, phoneNumber, loginType)
         const token = data.token;
         const statusData = data.statusData

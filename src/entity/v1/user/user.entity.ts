@@ -201,7 +201,7 @@ export default class UserEntity {
             if (verifyToken.id != undefined) {
                 const user: IUser | null = await User.findByIdAndUpdate(verifyToken.id, { isMailVerified: true }, { new: true }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                 if (user)
-                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.VERIFIED, data: user })
+                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.VERIFIED})
                 return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserID: ${verifyToken.id}`))
             }
             else {
