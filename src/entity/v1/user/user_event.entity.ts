@@ -1,5 +1,5 @@
 import { STATUS_MSG, EXCLUDE_DATA } from "../../../constants";
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 import UserEvent from "../../../models/user_event.model"
 import Event from "../../../models/admin/admin.event.model";
 import { IEvent, IUserEvent } from '../../../interfaces/model.interface'

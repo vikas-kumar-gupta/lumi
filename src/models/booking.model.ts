@@ -1,5 +1,5 @@
 import { DBENUMS } from '../constants'
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IBooking } from '../interfaces/model.interface'
 
 const bookingSchema = new Schema<IBooking>(

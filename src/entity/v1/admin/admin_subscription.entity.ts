@@ -1,9 +1,8 @@
-import { ISubscription } from './../../../interfaces/model.interface';
+import { ISubscription } from '../../../interfaces/model.interface';
 import { STATUS_MSG } from '../../../constants'
 import mongoose, { HydratedDocument } from 'mongoose'
-import Event from '../../../models/admin/admin.event.model';
 import Subscription from '../../../models/admin/admin.subscription.model'
-import { newSubscription, updateSubscription } from './../../../utils/admin.validator';
+import { newSubscription, updateSubscription } from '../../../utils/admin.validator';
 export default class AdminSubscription {
     /**
      * @description create new subscription

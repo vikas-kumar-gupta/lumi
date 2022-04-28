@@ -1,8 +1,8 @@
 import { CONFIG } from './constants'
-import express, {Request, Response, NextFunction, Application} from 'express';
+import express, { Application } from 'express';
 import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser';
-import {redis} from './db/redis.config'
+import { redis } from './db/redis.config'
 import * as v1Route from './routes/index'
 
 import connection from './db/db.config';
@@ -20,10 +20,10 @@ redis.connect()
 
 //  express bodyParser
 app.use(express.json());
-app.use(cookieParser());-
+app.use(cookieParser()); -
 
-//  swagger  documentation setup
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
+    //  swagger  documentation setup
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
 
 //  admin mount paths
 app.use('/admin', v1Route.adminRoute.default)

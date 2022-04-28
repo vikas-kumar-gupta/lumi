@@ -1,6 +1,5 @@
 import { DBENUMS } from "../constants";
 import mongoose, { Schema, model } from "mongoose";
-
 import { IPayment } from "../interfaces/model.interface";
 
 const paymentSchema = new Schema<IPayment>(

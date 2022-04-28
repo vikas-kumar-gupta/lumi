@@ -5,13 +5,6 @@ import { sessionAuth } from '../../../middlewares/session.middleware';
 
 const routes = express.Router();
 
-routes.post('/signup', adminController.adminSignup)
-routes.post('/login', adminController.adminLogin)
-routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
-routes.get('/report/:reportId', sessionAuth, adminAuth, adminController.reportDetails)
-routes.post('/report/:reportId', sessionAuth, adminAuth, adminController.reviewReport)
-routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.deleteUser)
-
 // CREATING UserEvent TAG
 /**
  * @swagger
@@ -19,7 +12,6 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *  name: Admin                                                                     
  *  description: Admin Routes
  */
-
 
 /**
  * @swagger
@@ -94,6 +86,7 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
+routes.post('/signup', adminController.adminSignup)
 
 /**
  * @swagger
@@ -125,6 +118,7 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
+routes.post('/login', adminController.adminLogin)
 
 /**
  * @swagger
@@ -143,8 +137,7 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
-
-
+routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
 
 /**
  * @swagger
@@ -169,6 +162,7 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
+routes.get('/report/:reportId', sessionAuth, adminAuth, adminController.reportDetails)
 
 /**
  * @swagger
@@ -203,6 +197,7 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
+routes.post('/report/:reportId', sessionAuth, adminAuth, adminController.reviewReport)
 
 /**
  * @swagger
@@ -227,5 +222,6 @@ routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.de
  *          500:
  *              description: Internal server error
  */
+routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.deleteUser)
 
 export default routes;

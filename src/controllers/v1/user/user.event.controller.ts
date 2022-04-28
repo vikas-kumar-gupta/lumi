@@ -1,7 +1,6 @@
 import { STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
-
-import UserEventEntity from '../../../entity/v1/user/userEvent.entity';
+import UserEventEntity from '../../../entity/v1/user/user_event.entity';
 import { sendErrorResponse } from '../../../utils/utils'
 import { IEvent, IUserEvent } from '../../../interfaces/model.interface';
 

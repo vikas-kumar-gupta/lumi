@@ -5,10 +5,6 @@ import { sessionAuth } from '../../../middlewares/session.middleware';
 
 const routes = express.Router();
 
-routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberController.newSubscription)
-routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.updateSubscription)
-routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.deleteSubscription)
-
 // CREATING AdminSubscription TAG
 /**
  * @swagger
@@ -51,7 +47,7 @@ routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, ad
  *          500:
  *              description: Internal server error
  */
-
+routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberController.newSubscription)
 
 /**
  * @swagger
@@ -93,6 +89,7 @@ routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, ad
  *          500:
  *              description: Internal server error
  */
+routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.updateSubscription)
 
 /**
  * @swagger
@@ -117,5 +114,6 @@ routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, ad
  *          500:
  *              description: Internal server error
  */
+routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.deleteSubscription)
 
 export default routes;

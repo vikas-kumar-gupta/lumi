@@ -1,8 +1,7 @@
-import  { DBENUMS } from '../../constants'
-import mongoose, { Schema, model } from "mongoose";
+import { DBENUMS } from '../../constants'
+import { Schema, model } from "mongoose";
 import md5 from "md5";
-
-import {IAdmin} from '../../interfaces/model.interface'
+import { IAdmin } from '../../interfaces/model.interface'
 
 const adminSchema = new Schema<IAdmin>(
     {
@@ -78,9 +77,9 @@ const adminSchema = new Schema<IAdmin>(
 /**
  * @description password hashisng
  */
-adminSchema.pre('save', function(next) {
+adminSchema.pre('save', function (next) {
     try {
-        if(this.isModified('password') || this.isNew) {
+        if (this.isModified('password') || this.isNew) {
             this.password = md5(this.password.toString())
         }
         next()

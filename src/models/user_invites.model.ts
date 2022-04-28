@@ -1,6 +1,5 @@
 import { DBENUMS } from '../constants'
-import mongoose, { Schema, model } from 'mongoose';
-
+import { Schema, model } from 'mongoose';
 import { IUserInvite } from '../interfaces/model.interface';
 
 const userInviteSchema = new Schema<IUserInvite>(

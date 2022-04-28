@@ -1,16 +1,8 @@
-import { STATUS_MSG } from '../../constants'
-import express, { Request, Response } from 'express';
-
+import express from 'express';
 import { upload } from '../../middlewares/multer.middleware'
 import { normalController } from '../../controllers'
 
 const router = express.Router();
-
-router.get('/', normalController.homePage)
-// ! for testig purpose
-router.post('/form-data', upload.single('imgUrl') ,normalController.getFormData)
-router.post('/logout')
-router.get('/*', normalController.pageNotFound)
 
 // CREATING TAGS
 
@@ -34,6 +26,11 @@ router.get('/*', normalController.pageNotFound)
  *          500:
  *              description: Internal server error
  */
+router.get('/', normalController.landingPage)
+
+// ! for testig purpose
+router.post('/form-data', upload.single('imgUrl') ,normalController.getFormData)
+router.post('/logout')
 
 /**
  * @swagger
@@ -48,5 +45,6 @@ router.get('/*', normalController.pageNotFound)
  *          500:
  *              description: Internal server error
  */
+router.get('/*', normalController.pageNotFound)
 
 export default router;

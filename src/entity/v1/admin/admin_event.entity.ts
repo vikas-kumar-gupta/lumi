@@ -3,6 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose'
 import { newEvent, updateEvent } from '../../../utils/admin.validator'
 import Event from '../../../models/admin/admin.event.model'
 import { IEvent } from '../../../interfaces/model.interface';
+
 export default class AdminEvent {
 
     /**

@@ -5,16 +5,6 @@ import { userAuth } from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
-routes.post('/signup/get-otp', userController.getOtp);
-routes.post('/signup/verify-otp', userController.verifyOtp);
-routes.get('/profile', sessionAuth, userAuth, userController.userDetails)
-routes.patch('/profile/update', sessionAuth, userAuth, userController.updateUser);
-routes.patch('/change-phoneNumber', sessionAuth, userAuth, userController.changePhoneNumber);
-routes.get('/my-bookings', sessionAuth, userAuth, userController.myBookings);
-routes.post('/verify-email', sessionAuth, userAuth, userController.verifyEmail);
-routes.get('/verify-email/:token', userController.verifyEmailWithToken);
-
-
 // CREATING TAGS
 /**
  * @swagger
@@ -119,7 +109,6 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *                      required: false
  */
 
-
 /**
  * @swagger
  * /user/signup/get-otp:
@@ -147,6 +136,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
+routes.post('/signup/get-otp', userController.getOtp);
 
 /**
  * @swagger
@@ -182,6 +172,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
+routes.post('/signup/verify-otp', userController.verifyOtp);
 
 /**
  * @swagger
@@ -200,24 +191,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
-
-/**
- * @swagger
- * /user/my-bookings:
- *  get:
- *      summary: User Bookings
- *      tags: [User]
- *      description: user booking all data
- *      responses:
- *          200:
- *              description: Sucess
- *          400:
- *              description: Bad request
- *          401:
- *              description: Unauthorized
- *          500:
- *              description: Internal server error
- */
+routes.get('/profile', sessionAuth, userAuth, userController.userDetails)
 
 /**
  * @swagger
@@ -336,7 +310,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
-
+routes.patch('/profile/update', sessionAuth, userAuth, userController.updateUser);
 
 /**
  * @swagger
@@ -366,6 +340,26 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
+routes.patch('/change-phoneNumber', sessionAuth, userAuth, userController.changePhoneNumber);
+
+/**
+ * @swagger
+ * /user/my-bookings:
+ *  get:
+ *      summary: User Bookings
+ *      tags: [User]
+ *      description: user booking all data
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+routes.get('/my-bookings', sessionAuth, userAuth, userController.myBookings);
 
 /**
  * @swagger
@@ -395,5 +389,7 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
+routes.post('/verify-email', sessionAuth, userAuth, userController.verifyEmail);
+routes.get('/verify-email/:token', userController.verifyEmailWithToken);
 
 export default routes

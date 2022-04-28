@@ -1,14 +1,9 @@
 import express from 'express'
-import { adminEventController, userEventController } from '../../../controllers/'
+import { adminEventController, userEventController } from '../../../controllers'
 import {adminAuth} from '../../../middlewares/admin.middleware'
 import {sessionAuth} from '../../../middlewares/session.middleware'
 
 const routes = express.Router();
-
-routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
-routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.eventDetails)
-routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventController.updateEvent)
-routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventController.deleteEvent)
 
 // CREATING UserEvent TAG
 /**
@@ -88,6 +83,7 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *          500:
  *              description: Internal server error
  */
+routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
 
 /**
  * @swagger
@@ -112,6 +108,7 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *          500:
  *              description: Internal server error
  */
+routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.eventDetails)
 
 /**
  * @swagger
@@ -189,6 +186,7 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *          500:
  *              description: Internal server error
  */
+routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventController.updateEvent)
 
 /**
  * @swagger
@@ -213,5 +211,6 @@ routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventContro
  *          500:
  *              description: Internal server error
  */
+routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventController.deleteEvent)
 
 export default routes;

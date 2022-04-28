@@ -5,12 +5,6 @@ import { userAuth } from '../../../middlewares/user.middleware'
 
 const routes = express.Router();
 
-routes.get('/my-events', sessionAuth, userAuth, userEventController.myEvents);
-routes.get('/all-events', sessionAuth, userAuth, userEventController.allEvents)
-routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.eventDetails)
-
-// !to be implement
-routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.bookEvent)
 
 // CREATING UserEvent TAG
 /**
@@ -18,24 +12,6 @@ routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.b
  * tags:
  *  name: UserEvent                                                                     
  *  description: User Routes
- */
-
-/**
- * @swagger
- * /user/event/all-events:
- *  get:
- *      summary: List of near location events
- *      tags: [UserEvent]
- *      description: array of all the available events near users location.
- *      responses:
- *          200:
- *              description: Sucess
- *          400:
- *              description: Bad request
- *          401:
- *              description: Unauthorized
- *          500:
- *              description: Internal server error
  */
 
 /**
@@ -55,6 +31,26 @@ routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.b
  *          500:
  *              description: Internal server error
  */
+routes.get('/my-events', sessionAuth, userAuth, userEventController.myEvents);
+
+/**
+ * @swagger
+ * /user/event/all-events:
+ *  get:
+ *      summary: List of near location events
+ *      tags: [UserEvent]
+ *      description: array of all the available events near users location.
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+routes.get('/all-events', sessionAuth, userAuth, userEventController.allEvents)
 
 /**
  * @swagger
@@ -79,6 +75,9 @@ routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.b
  *          500:
  *              description: Internal server error
  */
+routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.eventDetails)
 
+// !to be implement
+routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.bookEvent)
 
 export default routes;

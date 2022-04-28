@@ -40,7 +40,7 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                 await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1]);
                 const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY);
                 console.log(token);
-                res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json({ token, ...STATUS_MSG.SUCCESS.CREATED })
+                res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).setHeader('Token', token).json({ token, ...STATUS_MSG.SUCCESS.CREATED })
             }
             else {
                 //  logging in the user
@@ -48,7 +48,7 @@ export const verifyOtp = async (req: express.Request, res: express.Response, nex
                 await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1])
                 const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY)
                 console.log(token);
-                res.status(STATUS_MSG.SUCCESS.LOGIN.statusCode).json({ token, ...STATUS_MSG.SUCCESS.LOGIN })
+                res.status(STATUS_MSG.SUCCESS.LOGIN.statusCode).setHeader('Token', token).json({ token, ...STATUS_MSG.SUCCESS.LOGIN })
             }
         }
         // if status is not approved
@@ -118,7 +118,7 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
     try {
         const email: string = req.body.email;
         const token: any = req.headers['authorization']
-        
+
         //  chheking if there exist the given mail
         const user: IUser | null = await User.findOne({ email })
         if (user) {

@@ -1,8 +1,8 @@
-import { CONFIG, STATUS_MSG, DATE } from '../../../constants'
+import { CONFIG, STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { sendErrorResponse } from '../../../utils/utils'
-import UserMatchEntity from '../../../entity/v1/user/userMatch.entity';
+import UserMatchEntity from '../../../entity/v1/user/user_match.entity';
 import UserEntity from '../../../entity/v1/user/user.entity';
 import { IReport, IUser } from '../../../interfaces/model.interface';
 import * as validate from '../../../utils/user.validator'
@@ -14,16 +14,6 @@ export const mayBeMatches = async (req: Request, res: Response, next: NextFuncti
     try {
         const matches: IUser[] = await UserMatchEntity.mayBeMatches(req.body.tokenId, req.body.userLocation);
         res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Match profile'), data: matches });
-    }
-    catch (err) {
-        const errData = sendErrorResponse(err);
-        res.status(errData.statusCode).json(errData)
-    }
-}
-
-export const matches = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-
     }
     catch (err) {
         const errData = sendErrorResponse(err);

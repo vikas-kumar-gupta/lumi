@@ -5,19 +5,6 @@ import { sessionAuth } from "../../../middlewares/session.middleware";
 
 const routes = express.Router();
 
-routes.get('/maybe-matches', sessionAuth, userAuth, userMatchController.mayBeMatches)
-routes.get('/profile/:userId', sessionAuth, userAuth, userMatchController.matchProfileDetails)
-routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.reportProfile)
-routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.blockProfile)
-
-/**
- * TODO:
- * Given below each route & controller is to be implemented
- */
-
-routes.get('/', sessionAuth, userAuth, userMatchController.matches)
-routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchController.matchProfileInviteEvent)
-
 // CREATING UserEvent TAG
 /**
  * @swagger
@@ -43,6 +30,7 @@ routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchControlle
  *          500:
  *              description: Internal server error
  */
+routes.get('/maybe-matches', sessionAuth, userAuth, userMatchController.mayBeMatches)
 
 /**
  * @swagger
@@ -67,6 +55,7 @@ routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchControlle
  *          500:
  *              description: Internal server error
  */
+routes.get('/profile/:userId', sessionAuth, userAuth, userMatchController.matchProfileDetails)
 
 /**
  * @swagger
@@ -104,6 +93,7 @@ routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchControlle
  *          500:
  *              description: Internal server error
  */
+routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.reportProfile)
 
 /**
  * @swagger
@@ -128,6 +118,13 @@ routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchControlle
  *          500:
  *              description: Internal server error
  */
+routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.blockProfile)
 
+/**
+ * TODO:
+ * Given below each route & controller is to be implemented
+ */
+
+routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchController.matchProfileInviteEvent)
 
 export default routes;

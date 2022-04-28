@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AdminSubscription from '../../../entity/v1/admin/adminSubscription.entity';
+import AdminSubscription from '../../../entity/v1/admin/admin_subscription.entity';
 import { sendErrorResponse } from '../../../utils/utils';
 
 export const newSubscription = async (req: Request, res: Response, next: NextFunction) => {

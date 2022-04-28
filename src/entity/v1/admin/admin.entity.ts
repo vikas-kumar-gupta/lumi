@@ -1,14 +1,14 @@
 import { STATUS_MSG, CONFIG, DBENUMS, EXCLUDE_DATA } from '../../../constants';
 import jwt from 'jsonwebtoken'
 import md5 from 'md5'
-import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import Admin from '../../../models/admin/admin.model'
 import Report from '../../../models/report.model'
 import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface'
 import { adminSignup, adminLogin, reviewReport } from '../../../utils/admin.validator';
 import User from '../../../models/user.model';
 import sessionEntity from '../session/session.entity';
-import UserDetails from '../../../models/userDetails.model';
+import UserDetails from '../../../models/user_details.model';
 
 export default class AdminEntity {
 
@@ -23,6 +23,17 @@ export default class AdminEntity {
             if (admin)
                 return Promise.resolve(true)
             return Promise.resolve(false)
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async createNewAdmin(options: Object): Promise<IAdmin> {
+        try {
+            const admin: HydratedDocument<IAdmin> = new Admin(options);
+            await admin.save()
+            return Promise.resolve(admin)
         }
         catch (err) {
             return Promise.reject(err)
@@ -90,11 +101,11 @@ export default class AdminEntity {
      * @param adminId 
      * @returns admin data
      */
-    static async adminDetails(adminId: any): Promise<Object> {
+    static async adminDetails(adminId: any): Promise<IAdmin> {
         try {
             const admin: IAdmin | null = await Admin.findById(adminId, { ...EXCLUDE_DATA.MONGO, password: 0, isAdmin: 0 });
             if (admin)
-                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Admin profile'), data: admin })
+                return Promise.resolve(admin)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`AdminId: ${adminId}`));
         }
         catch (err) {
@@ -108,14 +119,14 @@ export default class AdminEntity {
      * @param reportId 
      * @returns Report
      */
-    static async reportDetails(reportId: any): Promise<Object> {
+    static async reportDetails(reportId: any): Promise<IReport> {
         try {
             const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString())).populate({
                 path: 'reportedTo reportedBy',
                 select: 'name phoneNumber'
             }).select({ ...EXCLUDE_DATA.MONGO })
             if (report)
-                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details'), data: report })
+                return Promise.resolve(report)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
         }
         catch (err: any) {

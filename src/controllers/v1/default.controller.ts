@@ -1,9 +1,8 @@
 import { STATUS_MSG, CONFIG } from '../../constants'
 import { Request, Response, NextFunction } from 'express'
 import { sendErrorResponse } from '../../utils/utils'
-import jwt from 'jsonwebtoken'
 
-export const homePage = async (req: Request, res: Response, next: NextFunction) => {
+export const landingPage = async (req: Request, res: Response, next: NextFunction) => {
     res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json(STATUS_MSG.SUCCESS.DEFAULT);
 }
 

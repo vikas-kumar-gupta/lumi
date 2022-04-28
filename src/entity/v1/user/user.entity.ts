@@ -1,7 +1,7 @@
 import { IBooking, IUser, IUserDetails } from './../../../interfaces/model.interface';
 import { CONFIG, STATUS_MSG, EXCLUDE_DATA } from "../../../constants"
 import User from '../../../models/user.model';
-import UserDetails from "../../../models/userDetails.model";
+import UserDetails from "../../../models/user_details.model";
 import Booking from '../../../models/booking.model'
 import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'

@@ -1,7 +1,5 @@
 import { DBENUMS } from "../constants";
-import md5 from 'md5'
-import mongoose, { Schema, model } from "mongoose";
-
+import { Schema, model } from "mongoose";
 import { IUser } from "../interfaces/model.interface";
 
 const userSchema = new Schema<IUser>(

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AdminEvent from '../../../entity/v1/admin/adminEvent.entity'
+import AdminEvent from '../../../entity/v1/admin/admin_event.entity'
 import { sendErrorResponse } from '../../../utils/utils'
 
 export const newEvent = async (req: Request, res: Response, next: NextFunction) => {
