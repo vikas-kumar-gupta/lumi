@@ -6,7 +6,7 @@ import mongoose, { HydratedDocument } from 'mongoose'
 import UserDetails from '../../../models/userDetails.model';
 
 export default class UserMatchEntity {
-    static async mayBeMatches(userId: any, userLocation: any): Promise<Object> {
+    static async mayBeMatches(userId: any, userLocation: any): Promise<IUser[]> {
         /**
          ** IMP FACTOR TO BE MEASURE
          * ! Blocked and account should not show        done
@@ -40,51 +40,40 @@ export default class UserMatchEntity {
                 switch (user.interestedIn) {
                     case "Men + Women":
                     case "Gender Fluid People": {
-                        const matches = await User.find({ ...options, gender: { $in: ["Male", "Female"] } })
+                        const matches: IUser[] | null = await User.find({ ...options, gender: { $in: ["Male", "Female"] } })
                             .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
-                        return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Matches'), data: matches })
+                        return Promise.resolve(matches)
                     }
                     default: {
-                            const matches = await User.find({ ...options, gender: user.interestedIn })
+                        const matches: IUser[] | null = await User.find({ ...options, gender: user.interestedIn })
                             .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
-                        return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Matches'), data: matches })
+                        return Promise.resolve(matches)
                     }
                 }
             }
-            else {
-                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`));
-            }
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`));
         }
         catch (err) {
             return Promise.reject(err)
         }
     }
 
-    static async reportProfile(reportedBy: any, reportedTo: any, bodyData: any): Promise<Object> {
+    static async reportProfile(options: Object, reportedBy: any, reportedTo: any): Promise<IReport> {
         try {
-            const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(reportedTo));
-            if (user) {
-                const reportedNum = user.reportNum;
-                await User.findByIdAndUpdate(user._id, { reportNum: reportedNum })
+            // creating new report for the user
+            const report: HydratedDocument<IReport> = new Report(options);
+            await report.save()
 
-                // creating new report for the user
-                const report: HydratedDocument<IReport> = new Report({ reasons: bodyData.reasons, otherReasons: bodyData.otherReasons, reportedBy: reportedBy, reportedTo: reportedTo });
-                await report.save()
-
-                // pushing reported account in the users details model
-                await UserDetails.findByIdAndUpdate(reportedBy, { $push: { reportedUsers: reportedTo } })
-                return Promise.resolve(STATUS_MSG.SUCCESS.REPORTED)
-            }
-            else {
-                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${reportedTo}`));
-            }
+            // pushing reported account in the users details model
+            await UserDetails.findByIdAndUpdate(reportedBy, { $push: { reportedUsers: reportedTo } })
+            return Promise.resolve(report)
         }
         catch (err) {
             return Promise.reject(err)
         }
     }
 
-    static async blockProfile(userId: any, blockUserId: any) {
+    static async blockProfile(userId: any, blockUserId: any): Promise<Object> {
         try {
             const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(blockUserId));
             if (user) {

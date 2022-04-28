@@ -41,6 +41,11 @@ export default class UserEntity {
         }
     }
 
+    /**
+     * @description to create a new user account
+     * @param options 
+     * @returns User
+     */
     static async createNewUser(options: Object): Promise<IUser | Object> {
         try {
             const user: HydratedDocument<IUser> = new User(options);
@@ -54,6 +59,11 @@ export default class UserEntity {
         }
     }
 
+    /**
+     * @description to find any user based on the given otion
+     * @param options 
+     * @returns User
+     */
     static async findOneUser(options: Object): Promise<Object> {
         try {
             const user: IUser | null = await User.findOne(options);
@@ -72,7 +82,7 @@ export default class UserEntity {
      * @param options 
      * @returns Object of status response
      */
-    static async updateUserById(id: Schema.Types.ObjectId, options: Object): Promise<IUser | Object> {
+    static async updateUserById(id: any, options: Object): Promise<IUser | Object> {
         try {
             const user: IUser | null = await User.findByIdAndUpdate(id, options, { new: true }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             if (user)
@@ -89,7 +99,7 @@ export default class UserEntity {
      * @param userId 
      * @returns User
      */
-    static async userDetails(userId: any): Promise<IUser | Object> {
+    static async userDetails(userId: any): Promise<IUser> {
         try {
             const user: IUser | null = await User.findById(userId, { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             if (user)

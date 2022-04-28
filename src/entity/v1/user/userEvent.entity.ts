@@ -11,11 +11,11 @@ export default class UserEventEntity {
      * @param eventId 
      * @returns Event
      */
-    static async eventDetails(eventId: any): Promise<Object> {
+    static async eventDetails(eventId: any): Promise<IEvent> {
         try {
             const event: IEvent | null = await Event.findById(new mongoose.Types.ObjectId(eventId), { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
             if (event)
-                return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Event'), data: event })
+                return Promise.resolve(event)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
         }
         catch (err) {
@@ -28,10 +28,10 @@ export default class UserEventEntity {
      * @param userId 
      * @returns Event[]
      */
-    static async myEvents(userId: any): Promise<Object> {
+    static async myEvents(userId: any): Promise<IUserEvent[]> {
         try {
             const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
-            return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('My events'), data: userEvents })
+            return Promise.resolve(userEvents)
         }
         catch (err) {
             return Promise.reject(err)
@@ -42,8 +42,8 @@ export default class UserEventEntity {
      * @description all the events near user
      * @returns Event[]
      */
-    static async allEvents(userLocation: any): Promise<Object> {
-        try {          
+    static async allEvents(userLocation: any): Promise<IEvent[]> {
+        try {
             const options = {
                 //  for near by location of 50 miles
                 location: {
@@ -57,7 +57,7 @@ export default class UserEventEntity {
                 }
             }
             const events: IEvent[] = await Event.find(options).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
-            return Promise.resolve({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('All event'), data: events })
+            return Promise.resolve(events)
         }
         catch (err) {
             return Promise.reject(err)
