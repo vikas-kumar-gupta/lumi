@@ -6,15 +6,14 @@ import { newSubscription, updateSubscription } from '../../../utils/admin.valida
 export default class AdminSubscription {
     /**
      * @description create new subscription
-     * @param bodyData 
+     * @param options 
      * @returns Status object
      */
-    static async newSubscription(bodyData: any): Promise<Object> {
+    static async newSubscription(options: Object): Promise<ISubscription> {
         try {
-            await newSubscription.validateAsync(bodyData);
-            const subscription: HydratedDocument<ISubscription> = new Subscription(bodyData);
+            const subscription: HydratedDocument<ISubscription> = new Subscription(options);
             await subscription.save()
-            return Promise.resolve({ ...STATUS_MSG.SUCCESS.CREATED, data: subscription });
+            return Promise.resolve(subscription);
         }
         catch (err) {
             return Promise.reject(err)
@@ -24,15 +23,14 @@ export default class AdminSubscription {
     /**
      * @description update the existing subscription
      * @param subscriptionId 
-     * @param bodyData 
+     * @param options 
      * @returns status object
      */
-    static async updateSubscription(subscriptionId: any, bodyData: any): Promise<Object> {
+    static async updateSubscription(subscriptionId: any, options: any): Promise<ISubscription> {
         try {
-            await updateSubscription.validateAsync(bodyData);
-            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(new mongoose.Types.ObjectId(subscriptionId), bodyData, { new: true });
+            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(new mongoose.Types.ObjectId(subscriptionId), options, { new: true });
             if (subscription)
-                return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATE_SUCCESS('Subscription'), data: subscription })
+                return Promise.resolve(subscription)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${subscriptionId}`));
         }
         catch (err) {
@@ -46,11 +44,11 @@ export default class AdminSubscription {
      * @param bodyData 
      * @returns 
      */
-    static async deleteSubscription(subscriptionId: any, bodyData: any): Promise<Object | void> {
+    static async deleteSubscription(subscriptionId: any, bodyData: any): Promise<ISubscription> {
         try {
-            const delSubscription: ISubscription | null = await Subscription.findByIdAndDelete(new mongoose.Types.ObjectId(subscriptionId));
-            if (delSubscription)
-                return Promise.resolve(STATUS_MSG.SUCCESS.DELETED);
+            const subscription: ISubscription | null = await Subscription.findByIdAndDelete(new mongoose.Types.ObjectId(subscriptionId));
+            if (subscription)
+                return Promise.resolve(subscription);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${subscriptionId}`))
         }
         catch (err) {

@@ -3,7 +3,7 @@ import AdminEntity from '../../../entity/v1/admin/admin.entity'
 import { sendErrorResponse } from '../../../utils/utils'
 import * as validator from '../../../utils/admin.validator'
 import { CONFIG, DBENUMS, STATUS_MSG } from '../../../constants';
-import { IAdmin, IReport } from '../../../interfaces/model.interface';
+import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface';
 import sessionEntity from '../../../entity/v1/session/session.entity';
 import jwt from 'jsonwebtoken'
 
@@ -52,7 +52,7 @@ export const reportDetails = async (req: Request, res: Response, next: NextFunct
     try {
         const reportId: any = req.params.reportId
         const report: IReport = await AdminEntity.reportDetails(reportId);
-        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details'), data: report})
+        res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Report details'), data: report })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -63,8 +63,8 @@ export const reportDetails = async (req: Request, res: Response, next: NextFunct
 export const reviewReport = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const reportId: any = req.params.reportId;
-        const data: any = await AdminEntity.reviewReport(reportId, req.body);
-        res.status(data.statusCode).json(data)
+        const report: IReport = await AdminEntity.reviewReport(reportId, req.body);
+        res.status(STATUS_MSG.SUCCESS.REPORTED.statusCode).json({ ...STATUS_MSG.SUCCESS.REPORTED, data: report })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -75,8 +75,8 @@ export const reviewReport = async (req: Request, res: Response, next: NextFuncti
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.params.userId
-        const data: any = await AdminEntity.deleteUser(userId);
-        res.status(data.statusCode).json(data)
+        const user: IUser = await AdminEntity.deleteUser(userId);
+        res.status(STATUS_MSG.SUCCESS.DELETED.statusCode).json({ ...STATUS_MSG.SUCCESS.DELETED, data: user })
     }
     catch (err) {
         const errData = sendErrorResponse(err);

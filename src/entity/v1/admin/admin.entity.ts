@@ -134,7 +134,7 @@ export default class AdminEntity {
         }
     }
 
-    static async reviewReport(reportId: any, bodyData: any): Promise<Object> {
+    static async reviewReport(reportId: any, bodyData: any): Promise<IReport> {
         try {
             await reviewReport.validateAsync(bodyData)
             const report: IReport | null = await Report.findByIdAndUpdate(new mongoose.Types.ObjectId(reportId), { isApproved: bodyData.isApproved }, { new: true })
@@ -147,7 +147,7 @@ export default class AdminEntity {
                 const user: IUser | null = await User.findByIdAndUpdate(report.reportedTo, { $inc: { reportNum: 1 } })
                 if (user) {
                     await UserDetails.findByIdAndUpdate(report.reportedBy, { $push: { reportedUsers: report.reportedTo } })
-                    return Promise.resolve({ ...STATUS_MSG.SUCCESS.UPDATED, data: report })
+                    return Promise.resolve(report)
                 }
                 return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Reported user: ${report.reportedTo}`))
             }
@@ -163,11 +163,11 @@ export default class AdminEntity {
      * @param userId 
      * @returns status obj
      */
-    static async deleteUser(userId: any): Promise<Object> {
+    static async deleteUser(userId: any): Promise<IUser> {
         try {
             const user: IUser | null = await User.findByIdAndDelete(new mongoose.Types.ObjectId(userId));
             if (user)
-                return Promise.resolve(STATUS_MSG.SUCCESS.DELETED)
+                return Promise.resolve(user)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`))
         }
         catch (err) {
