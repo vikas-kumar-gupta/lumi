@@ -1,10 +1,11 @@
-import { IBooking, IUser, IUserDetails } from './../../../interfaces/model.interface';
+import { IPayment, IUser, IUserDetails, IUserEvent } from './../../../interfaces/model.interface';
 import { CONFIG, STATUS_MSG, EXCLUDE_DATA } from "../../../constants"
-import User from '../../../models/user.model';
-import UserDetails from "../../../models/user_details.model";
-import Booking from '../../../models/booking.model'
+import User from '../../../models/user/user.model';
+import UserDetails from "../../../models/user/user_details.model";
 import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
+import UserEvent from '../../../models/user/user_event.model';
+import Payment from '../../../models/user/payment.model';
 
 
 export default class UserEntity {
@@ -116,10 +117,23 @@ export default class UserEntity {
      * @param userId 
      * @returns Booking[]
      */
-    static async myBookings(userId: Schema.Types.ObjectId): Promise<IBooking[]> {
+    static async myBookings(userId: Schema.Types.ObjectId): Promise<IUserEvent[]> {
         try {
-            const bookings: IBooking[] = await Booking.find({ bookedBy: userId })
-            return Promise.resolve(bookings)
+            const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId }).populate({
+                path: 'eventId userInvite paymentId '
+            }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
+            return Promise.resolve(userEvents)
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async initPayment(options: Object): Promise<IPayment> {
+        try {
+            const payment: HydratedDocument<IPayment> = new Payment(options)
+            await payment.save();
+            return Promise.resolve(payment);
         }
         catch (err) {
             return Promise.reject(err)

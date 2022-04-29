@@ -1,9 +1,9 @@
 import { IReport, IUser, IUserDetails } from './../../../interfaces/model.interface';
 import { STATUS_MSG, EXCLUDE_DATA } from "../../../constants"
-import User from '../../../models/user.model';
-import Report from '../../../models/report.model';
+import User from '../../../models/user/user.model';
+import Report from '../../../models/user/report.model';
 import mongoose, { HydratedDocument } from 'mongoose'
-import UserDetails from '../../../models/user_details.model';
+import UserDetails from '../../../models/user/user_details.model';
 
 export default class UserMatchEntity {
     static async mayBeMatches(userId: any, userLocation: any): Promise<IUser[]> {

@@ -392,4 +392,39 @@ routes.get('/my-bookings', sessionAuth, userAuth, userController.myBookings);
 routes.post('/verify-email', sessionAuth, userAuth, userController.verifyEmail);
 routes.get('/verify-email/:token', userController.verifyEmailWithToken);
 
+/**
+ * @swagger
+ * /user/payment:
+ *  post:
+ *      summary: Payment
+ *      tags: [User]
+ *      description: Initiating a payment
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          price:
+ *                              type: number
+ *                              required: true
+ *                          payTax:
+ *                              type: number
+ *                              required: true
+ *                          payDescription:
+ *                              type: string
+ *                              required: fals
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+routes.post('/payment', sessionAuth, userAuth, userController.initPayment)
+
 export default routes

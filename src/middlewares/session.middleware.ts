@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken';
 import { sendErrorResponse } from '../utils/utils'
 import { redis } from '../db/redis.config'
-import Session from '../models/session.model';
+import Session from '../models/user/session.model';
 import { ISession } from '../interfaces/model.interface';
 
 export const sessionAuth = async (req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,6 @@
-import { DBENUMS } from '../constants'
+import { DBENUMS } from '../../constants'
 import mongoose, { Schema, model } from "mongoose";
-import { IReport } from "../interfaces/model.interface"
+import { IReport } from "../../interfaces/model.interface"
 
 const reportSchema = new Schema<IReport>(
     {

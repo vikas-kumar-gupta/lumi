@@ -19,17 +19,6 @@ export interface IAdmin {
     createdAt?: Date,
     updatedAt?: Date,
 }
-export interface IBooking {
-    _id?: Object,
-    bookingCode: String,
-    eventId: Object,
-    bookedBy: Object,
-    bookedFor: Object,
-    paymentId: Object,
-    bookingStatus: String,
-    createdAt?: Date,
-    updatedAt?: Date,
-}
 
 export interface IEvent {
     _id?: Object,
@@ -53,13 +42,13 @@ export interface IEvent {
 
 export interface IPayment {
     _id?: Object,
-    payId: String,
-    payDate: Date,
-    payBy: Object,
+    userId: Object,
     amount: Number,
     payTax: Number,
-    total: Number
-    status: String,
+    grandTotal: Number
+    payStatus: String,
+    payTransactionId: String,
+    payDescription: String,
     createdAt?: Date,
     updatedAt?: Date
 }
@@ -126,6 +115,7 @@ export interface IUserDetails {
 
 export interface IUserEvent {
     _id: Object,
+    eventBookingCode: string,
     eventId: Object,
     userId: Object,
     userInvite: Object,
@@ -141,6 +131,7 @@ export interface IUserInvite {
     eventId: Object,
     inviteStatus: String,
     inviteType: String,
+    isOfferingTicket: Boolean,
     createdAt?: Date,
     updatedAt?: Date
 }

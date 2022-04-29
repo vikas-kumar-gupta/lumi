@@ -1,6 +1,6 @@
-import { DBENUMS } from '../constants'
+import { DBENUMS } from '../../constants'
 import mongoose, { Schema, model} from 'mongoose';
-import { IUserSubscription } from '../interfaces/model.interface';
+import { IUserSubscription } from '../../interfaces/model.interface';
 
 const userSubscriptionSchema = new Schema<IUserSubscription>(
     {

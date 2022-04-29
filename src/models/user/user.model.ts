@@ -1,6 +1,6 @@
-import { DBENUMS } from "../constants";
+import { DBENUMS } from "../../constants";
 import { Schema, model } from "mongoose";
-import { IUser } from "../interfaces/model.interface";
+import { IUser } from "../../interfaces/model.interface";
 
 const userSchema = new Schema<IUser>(
     {

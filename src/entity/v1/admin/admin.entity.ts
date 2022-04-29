@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken'
 import md5 from 'md5'
 import mongoose, { HydratedDocument } from 'mongoose';
 import Admin from '../../../models/admin/admin.model'
-import Report from '../../../models/report.model'
+import Report from '../../../models/user/report.model'
 import { IAdmin, IReport, IUser } from '../../../interfaces/model.interface'
 import { adminSignup, adminLogin, reviewReport } from '../../../utils/admin.validator';
-import User from '../../../models/user.model';
+import User from '../../../models/user/user.model';
 import sessionEntity from '../session/session.entity';
-import UserDetails from '../../../models/user_details.model';
+import UserDetails from '../../../models/user/user_details.model';
 
 export default class AdminEntity {
 

@@ -1,8 +1,12 @@
 import mongoose, { Schema, model } from "mongoose";
-import { IUserEvent } from '../interfaces/model.interface'
+import { IUserEvent } from '../../interfaces/model.interface'
 
 const userEventSchema = new Schema<IUserEvent>(
     {
+        eventBookingCode: {
+            type: String,
+            required: true
+        },
         eventId: {
             type: mongoose.Types.ObjectId,
             ref: 'Event',

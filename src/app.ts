@@ -21,9 +21,10 @@ redis.connect()
 //  express bodyParser
 app.use(express.json());
 app.use(cookieParser()); -
+app.use(express.static("uploads"))
 
-    //  swagger  documentation setup
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
+//  swagger  documentation setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
 
 //  admin mount paths
 app.use('/admin', v1Route.adminRoute.default)
@@ -35,7 +36,7 @@ app.use('/user', v1Route.userRoute.default)
 app.use('/user/event', v1Route.userEventRoute.default)
 app.use('/user/match', v1Route.userMatchRoute.default)
 
-//  common mount paths
+//  common mount paths  
 app.use('/', v1Route.noramlRoute.default)
 
 app.listen(port, (): void => {

@@ -1,7 +1,7 @@
 import { STATUS_MSG } from '../../../constants';
 import { HydratedDocument } from 'mongoose';
 import { ISession, ISessionDeviceData } from './../../../interfaces/model.interface';
-import Session from '../../../models/session.model';
+import Session from '../../../models/user/session.model';
 import { redis } from '../../../db/redis.config'
 
 export default class sessionEntity {

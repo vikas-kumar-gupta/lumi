@@ -17,7 +17,7 @@ export const updateUser = Joi.object({
     gender: Joi.string().trim().valid(...Object.values(DBENUMS.GENDER)),
     dob: Joi.date(),
     profilePicture: Joi.array(),
-    bio: Joi.array(),   
+    bio: Joi.array(),
     location: Joi.object(),
     height: Joi.array().length(2),
     zodiac: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.ZODIAC)),
@@ -68,8 +68,22 @@ export const subscription = Joi.object({
 })
 
 export const reportProfile = Joi.object({
-    reasons: Joi.string().min(0).valid(...Object.values(DBENUMS.REPORT_REASON)),
+    reasons: Joi.string().valid(...Object.values(DBENUMS.REPORT_REASON)),
     otherReasons: Joi.string().trim().min(3),
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
+})
+
+export const initPayment = Joi.object({
+    price: Joi.number().min(0).required(),
+    payTax: Joi.number().min(0).required(),
+    payDescription: Joi.string().trim(),
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any()
+})
+
+export const bookEvent = Joi.object({
+    paymentId: Joi.any().required(),
     tokenId: Joi.string().trim(),
     userLocation: Joi.any()
 })

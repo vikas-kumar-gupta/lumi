@@ -1,19 +1,10 @@
-import { DBENUMS } from "../constants";
+import { DBENUMS } from "../../constants";
 import mongoose, { Schema, model } from "mongoose";
-import { IPayment } from "../interfaces/model.interface";
+import { IPayment } from "../../interfaces/model.interface";
 
 const paymentSchema = new Schema<IPayment>(
     {
-        payId: {
-            type: String,
-            trim: true,
-            required: true
-        },
-        payDate: {
-            type: Date,
-            required: true
-        },
-        payBy: {
+        userId: {
             type: mongoose.Types.ObjectId,
             required: true,
             ref: 'User'
@@ -29,13 +20,23 @@ const paymentSchema = new Schema<IPayment>(
             default: 0,
             required: false
         },
-        total: {
+        grandTotal: {
             type: Number,
             required: false
         },
-        status: {
+        payStatus: {
             type: String,
             enum: DBENUMS.PAYMENT_STATUS,
+            default: DBENUMS.PAYMENT_STATUS[0],
+            required: true
+        },
+        payTransactionId: {
+            type: String,
+            required: false
+        },
+        payDescription: {
+            type: String,
+            dafault: "Something here",
             required: true
         }
     },

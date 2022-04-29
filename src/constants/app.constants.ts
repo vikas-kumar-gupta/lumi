@@ -8,6 +8,7 @@ export const ENVIRONMENT = {
 }
 
 export const DBENUMS = {
+    PAYMENT_FOR: ['Event', 'Subscription'],
     ACCEPTANCE: ["Yes", "No", "Sometimes", "Prefer not to say"],
     EDU_LEVEL: ["High School", "Undergraduate", "Post Graduate", "Prefer not to say"],
     INTERESTS: ["Men", "Women", "Men + Women", "Gender Fluid People"],
@@ -39,7 +40,12 @@ export let STATUS_MSG = {
             message: "BAD REQUEST",
             type: "BAD_REQUEST"
         },
-
+        TICKET_NOT_AVAILABLE: {
+            statusCode: 400,
+            success: false,
+            message: "Ticken is not available",
+            type: "TICKEN_NOT_AVAILABLE"
+        },
         PAGINATION: {
             statusCode: 400,
             success: false,
@@ -214,6 +220,12 @@ export let STATUS_MSG = {
             message: 'Profile reported Successfully',
             type: 'REPORTED'
         },
+        BOOKED: {
+            statusCode: 200,
+            success: true,
+            message: 'Event booked',
+            type: 'BLOCKED'
+        },
         BLOCKED: {
             statusCode: 200,
             success: true,
@@ -267,6 +279,12 @@ export let STATUS_MSG = {
             success: true,
             message: 'No record found.',
             type: 'DEFAULT'
+        },
+        PAYMENT_COMPLETE: {
+            statusCode: 200,
+            success: true,
+            message: 'Payment successfully completed.',
+            type: 'PAYMENT_COMPLETED'
         },
         UPDATE_SUCCESS: (title: string) => {
             return {

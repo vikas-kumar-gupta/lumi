@@ -77,7 +77,39 @@ routes.get('/all-events', sessionAuth, userAuth, userEventController.allEvents)
  */
 routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.eventDetails)
 
-// !to be implement
+/**
+ * @swagger
+ * /user/event/book-event/{eventId}:
+ *  post:
+ *      summary: Event Details
+ *      tags: [UserEvent]
+ *      description: All the data about a single ebent of the given event id
+ *      parameters:
+ *        - in: path
+ *          name: eventId
+ *          schema:
+ *              type: string
+ *          required: true
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          paymentId:
+ *                              type: string
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
 routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.bookEvent)
 
 export default routes;

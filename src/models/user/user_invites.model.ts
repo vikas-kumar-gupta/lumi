@@ -1,6 +1,6 @@
-import { DBENUMS } from '../constants'
+import { DBENUMS } from '../../constants'
 import { Schema, model } from 'mongoose';
-import { IUserInvite } from '../interfaces/model.interface';
+import { IUserInvite } from '../../interfaces/model.interface';
 
 const userInviteSchema = new Schema<IUserInvite>(
     {
@@ -29,7 +29,12 @@ const userInviteSchema = new Schema<IUserInvite>(
             type: String,
             enum: DBENUMS.INVITE_TYPE,
             required: true
-        }        
+        } ,
+        isOfferingTicket: {
+            type: Boolean,
+            default: false,
+            required: true
+        }
     },
     {
         timestamps: true

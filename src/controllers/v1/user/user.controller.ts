@@ -4,12 +4,13 @@ import UserEntity from '../../../entity/v1/user/user.entity';
 import TwilioPhoneOTP from '../../../services/twilio/phone_otp.service';
 import { sendErrorResponse } from '../../../utils/utils';
 import jwt from 'jsonwebtoken';
+const generateUniqueId = require('generate-unique-id')
 
 import { sendEmail } from '../../../services/nodemailer/email.service';
 import { CONFIG, DBENUMS, STATUS_MSG } from '../../../constants';
-import { IBooking, IUser } from '../../../interfaces/model.interface';
+import { IPayment, IUser, IUserEvent } from '../../../interfaces/model.interface';
 import sessionEntity from '../../../entity/v1/session/session.entity';
-import User from '../../../models/user.model';
+import User from '../../../models/user/user.model';
 
 export const getOtp = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
@@ -103,9 +104,10 @@ export const changePhoneNumber = async (req: Request, res: Response, next: NextF
     }
 }
 
+//! rechek after completing booking event and inviting user 
 export const myBookings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const bookings: IBooking[] = await UserEntity.myBookings(req.body.tokenId);
+        const bookings: IUserEvent[] = await UserEntity.myBookings(req.body.tokenId);
         res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json(bookings)
     }
     catch (err) {
@@ -118,24 +120,16 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
     try {
         const email: string = req.body.email;
         const token: any = req.headers['authorization']
+        const htmlMsg = `<a href ="http://${CONFIG.HOST}:${CONFIG.PORT}/user/verify-email/${token}"> Click here to verify</a>`
 
         //  chheking if there exist the given mail
         const user: IUser | null = await User.findOne({ email })
-        if (user) {
-
-            // if mail is already verified 
-            if (user.isMailVerified) {
-                res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('This email is alrady registered and verified'))
-            }
-            else {
-                const mailData = await sendEmail(email, token);
-                res.status(STATUS_MSG.SUCCESS.MAIL_SENT.statusCode).json({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
-            }
-        }
-        else {
-            const mailData = await sendEmail(email, token);
-            res.status(STATUS_MSG.SUCCESS.MAIL_SENT.statusCode).json({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
-        }
+        //  if users mail is already verified
+        if (user && user.isMailVerified)
+            res.status(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('').statusCode).json(STATUS_MSG.ERROR.DEFAULT_ERROR_MESSAGE('This email is alrady registered and verified'))
+        //  sending mail
+        const mailData = await sendEmail(email, "Verify your email", htmlMsg);
+        res.status(STATUS_MSG.SUCCESS.MAIL_SENT.statusCode).json({ ...STATUS_MSG.SUCCESS.MAIL_SENT, data: mailData })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
@@ -157,6 +151,28 @@ export const verifyEmailWithToken = async (req: Request, res: Response, next: Ne
         else {
             return Promise.reject(STATUS_MSG.ERROR.INVALID_TOKEN)
         }
+    }
+    catch (err) {
+        const errData = sendErrorResponse(err);
+        res.status(errData.statusCode).json(errData);
+    }
+}
+
+export const initPayment = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validate.initPayment.validateAsync(req.body);
+        //  generating random and unique payTransactionId
+        const payTransactionId = generateUniqueId({ length: 16 });
+        const payment: IPayment = await UserEntity.initPayment(
+            {
+                userId: req.body.tokenId,
+                amount: req.body.price,
+                payTax: req.body.payTax,
+                grandTotal: (req.body.price + req.body.payTax),
+                payTransactionId: payTransactionId,
+                payDescription: req.body.payDescription
+            })
+        res.status(STATUS_MSG.SUCCESS.PAYMENT_COMPLETE.statusCode).json({ ...STATUS_MSG.SUCCESS.PAYMENT_COMPLETE, data: payment })
     }
     catch (err) {
         const errData = sendErrorResponse(err);
