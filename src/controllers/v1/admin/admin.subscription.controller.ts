@@ -6,39 +6,42 @@ import * as validate from '../../../utils/admin.validator';
 import { ISubscription } from '../../../interfaces/model.interface';
 import { STATUS_MSG } from '../../../constants';
 
-export const newSubscription = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        await validate.newSubscription.validateAsync(req.body);
-        const subscription: ISubscription = await AdminSubscription.newSubscription(req.body);
-        res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json({ ...STATUS_MSG.SUCCESS.CREATED, data: subscription });
+export default class SubscriptionController {
+    
+    static async newSubscription(req: Request, res: Response, next: NextFunction) {
+        try {
+            await validate.newSubscription.validateAsync(req.body);
+            const subscription: ISubscription = await AdminSubscription.newSubscription(req.body);
+            res.status(STATUS_MSG.SUCCESS.CREATED.statusCode).json({ ...STATUS_MSG.SUCCESS.CREATED, data: subscription });
+        }
+        catch (err) {
+            const errData = sendErrorResponse(err);
+            res.status(errData.statusCode).json(errData)
+        }
     }
-    catch (err) {
-        const errData = sendErrorResponse(err);
-        res.status(errData.statusCode).json(errData)
-    }
-}
 
-export const updateSubscription = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        await validate.updateSubscription.validateAsync(req.body)
-        const subscriptionId = req.params.subscriptionId
-        const subscription: ISubscription = await AdminSubscription.updateSubscription(subscriptionId, req.body);
-        res.status(STATUS_MSG.SUCCESS.UPDATED.statusCode).json({ ...STATUS_MSG.SUCCESS.UPDATED, data: subscription })
+    static async updateSubscription(req: Request, res: Response, next: NextFunction) {
+        try {
+            await validate.updateSubscription.validateAsync(req.body)
+            const subscriptionId = req.params.subscriptionId
+            const subscription: ISubscription = await AdminSubscription.updateSubscription(subscriptionId, req.body);
+            res.status(STATUS_MSG.SUCCESS.UPDATED.statusCode).json({ ...STATUS_MSG.SUCCESS.UPDATED, data: subscription })
+        }
+        catch (err) {
+            const errData = sendErrorResponse(err);
+            res.status(errData.statusCode).json(errData)
+        }
     }
-    catch (err) {
-        const errData = sendErrorResponse(err);
-        res.status(errData.statusCode).json(errData)
-    }
-}
 
-export const deleteSubscription = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const subscriptionId = req.params.subscriptionId
-        const suscription: ISubscription = await AdminSubscription.deleteSubscription(subscriptionId, req.body);
-        res.status(STATUS_MSG.SUCCESS.DELETED.statusCode).json({ ...STATUS_MSG.SUCCESS.DELETED, data: suscription })
-    }
-    catch (err) {
-        const errData = sendErrorResponse(err);
-        res.status(errData.statusCode).json(errData)
+    static async deleteSubscription(req: Request, res: Response, next: NextFunction) {
+        try {
+            const subscriptionId = req.params.subscriptionId
+            const suscription: ISubscription = await AdminSubscription.deleteSubscription(subscriptionId, req.body);
+            res.status(STATUS_MSG.SUCCESS.DELETED.statusCode).json({ ...STATUS_MSG.SUCCESS.DELETED, data: suscription })
+        }
+        catch (err) {
+            const errData = sendErrorResponse(err);
+            res.status(errData.statusCode).json(errData)
+        }
     }
 }

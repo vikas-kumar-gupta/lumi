@@ -43,7 +43,13 @@ export default class UserEventEntity {
      */
     static async myEvents(userId: any): Promise<IUserEvent[]> {
         try {
-            const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
+            const userEvents: IUserEvent[] = await UserEvent.find({ userId })
+                .sort({ $natural: -1 })
+                .populate({
+                    path: 'eventId',
+                    select: 'eventName price location eventDate'
+                })
+                .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
             return Promise.resolve(userEvents)
         }
         catch (err) {
@@ -69,7 +75,9 @@ export default class UserEventEntity {
                     $gte: new Date()
                 }
             }
-            const events: IEvent[] = await Event.find(options).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
+            const events: IEvent[] = await Event.find(options)
+                .sort({ $natural: -1 })
+                .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
             return Promise.resolve(events)
         }
         catch (err) {

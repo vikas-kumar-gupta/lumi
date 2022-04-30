@@ -31,7 +31,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.get('/my-events', sessionAuth, userAuth, userEventController.myEvents);
+routes.get('/my-events', sessionAuth, userAuth, userEventController.default.myEvents);
 
 /**
  * @swagger
@@ -50,7 +50,7 @@ routes.get('/my-events', sessionAuth, userAuth, userEventController.myEvents);
  *          500:
  *              description: Internal server error
  */
-routes.get('/all-events', sessionAuth, userAuth, userEventController.allEvents)
+routes.get('/all-events', sessionAuth, userAuth, userEventController.default.allEvents)
 
 /**
  * @swagger
@@ -75,7 +75,7 @@ routes.get('/all-events', sessionAuth, userAuth, userEventController.allEvents)
  *          500:
  *              description: Internal server error
  */
-routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.eventDetails)
+routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.default.eventDetails)
 
 /**
  * @swagger
@@ -110,6 +110,6 @@ routes.get('/details/:eventId', sessionAuth, userAuth, userEventController.event
  *          500:
  *              description: Internal server error
  */
-routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.bookEvent)
+routes.post('/book-event/:eventId', sessionAuth, userAuth, userEventController.default.bookEvent)
 
 export default routes;

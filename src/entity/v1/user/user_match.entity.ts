@@ -41,6 +41,7 @@ export default class UserMatchEntity {
                     case "Men + Women":
                     case "Gender Fluid People": {
                         const matches: IUser[] | null = await User.find({ ...options, gender: { $in: ["Male", "Female"] } })
+                            .sort({ $natural: -1 })
                             .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE })
                         return Promise.resolve(matches)
                     }

@@ -119,9 +119,12 @@ export default class UserEntity {
      */
     static async myBookings(userId: Schema.Types.ObjectId): Promise<IUserEvent[]> {
         try {
-            const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId }).populate({
-                path: 'eventId userInvite paymentId '
-            }).select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
+            const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId })
+                .sort({ $natural: -1 })
+                .populate({
+                    path: 'eventId userInvite paymentId'
+                })
+                .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             return Promise.resolve(userEvents)
         }
         catch (err) {

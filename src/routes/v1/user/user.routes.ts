@@ -136,7 +136,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/get-otp', userController.getOtp);
+routes.post('/signup/get-otp', userController.default.getOtp);
 
 /**
  * @swagger
@@ -172,7 +172,7 @@ routes.post('/signup/get-otp', userController.getOtp);
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup/verify-otp', userController.verifyOtp);
+routes.post('/signup/verify-otp', userController.default.verifyOtp);
 
 /**
  * @swagger
@@ -191,7 +191,7 @@ routes.post('/signup/verify-otp', userController.verifyOtp);
  *          500:
  *              description: Internal server error
  */
-routes.get('/profile', sessionAuth, userAuth, userController.userDetails)
+routes.get('/profile', sessionAuth, userAuth, userController.default.userDetails)
 
 /**
  * @swagger
@@ -310,7 +310,7 @@ routes.get('/profile', sessionAuth, userAuth, userController.userDetails)
  *          500:
  *              description: Internal server error
  */
-routes.patch('/profile/update', sessionAuth, userAuth, userController.updateUser);
+routes.patch('/profile/update', sessionAuth, userAuth, userController.default.updateUser);
 
 /**
  * @swagger
@@ -340,7 +340,7 @@ routes.patch('/profile/update', sessionAuth, userAuth, userController.updateUser
  *          500:
  *              description: Internal server error
  */
-routes.patch('/change-phoneNumber', sessionAuth, userAuth, userController.changePhoneNumber);
+routes.patch('/change-phoneNumber', sessionAuth, userAuth, userController.default.changePhoneNumber);
 
 /**
  * @swagger
@@ -359,7 +359,7 @@ routes.patch('/change-phoneNumber', sessionAuth, userAuth, userController.change
  *          500:
  *              description: Internal server error
  */
-routes.get('/my-bookings', sessionAuth, userAuth, userController.myBookings);
+routes.get('/my-bookings', sessionAuth, userAuth, userController.default.myBookings);
 
 /**
  * @swagger
@@ -389,8 +389,8 @@ routes.get('/my-bookings', sessionAuth, userAuth, userController.myBookings);
  *          500:
  *              description: Internal server error
  */
-routes.post('/verify-email', sessionAuth, userAuth, userController.verifyEmail);
-routes.get('/verify-email/:token', userController.verifyEmailWithToken);
+routes.post('/verify-email', sessionAuth, userAuth, userController.default.verifyEmail);
+routes.get('/verify-email/:token', userController.default.verifyEmailWithToken);
 
 /**
  * @swagger
@@ -425,6 +425,6 @@ routes.get('/verify-email/:token', userController.verifyEmailWithToken);
  *          500:
  *              description: Internal server error
  */
-routes.post('/payment', sessionAuth, userAuth, userController.initPayment)
+routes.post('/payment', sessionAuth, userAuth, userController.default.initPayment)
 
 export default routes

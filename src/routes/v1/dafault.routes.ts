@@ -5,7 +5,6 @@ import { normalController } from '../../controllers'
 const router = express.Router();
 
 // CREATING TAGS
-
 /**
  * @swagger
  * tags:
@@ -26,10 +25,10 @@ const router = express.Router();
  *          500:
  *              description: Internal server error
  */
-router.get('/', normalController.landingPage)
+router.get('/', normalController.default.landingPage)
 
 // ! for testig purpose
-router.post('/form-data', upload.single('imgUrl') ,normalController.getFormData)
+router.post('/form-data', upload.single('imgUrl') ,normalController.default.getFormData)
 router.post('/logout')
 
 /**
@@ -45,6 +44,6 @@ router.post('/logout')
  *          500:
  *              description: Internal server error
  */
-router.get('/*', normalController.pageNotFound)
+router.get('/*', normalController.default.pageNotFound)
 
 export default router;

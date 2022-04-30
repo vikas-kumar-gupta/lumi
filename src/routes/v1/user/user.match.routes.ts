@@ -30,7 +30,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.get('/maybe-matches', sessionAuth, userAuth, userMatchController.mayBeMatches)
+routes.get('/maybe-matches', sessionAuth, userAuth, userMatchController.default.mayBeMatches)
 
 /**
  * @swagger
@@ -55,7 +55,7 @@ routes.get('/maybe-matches', sessionAuth, userAuth, userMatchController.mayBeMat
  *          500:
  *              description: Internal server error
  */
-routes.get('/profile/:userId', sessionAuth, userAuth, userMatchController.matchProfileDetails)
+routes.get('/profile/:userId', sessionAuth, userAuth, userMatchController.default.matchProfileDetails)
 
 /**
  * @swagger
@@ -93,7 +93,7 @@ routes.get('/profile/:userId', sessionAuth, userAuth, userMatchController.matchP
  *          500:
  *              description: Internal server error
  */
-routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.reportProfile)
+routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.default.reportProfile)
 
 /**
  * @swagger
@@ -118,13 +118,13 @@ routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.report
  *          500:
  *              description: Internal server error
  */
-routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.blockProfile)
+routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.default.blockProfile)
 
 /**
  * TODO:
  * Given below each route & controller is to be implemented
  */
 
-routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchController.matchProfileInviteEvent)
+routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchController.default.matchProfileInviteEvent)
 
 export default routes;

@@ -1,7 +1,7 @@
 import express from 'express'
 import { adminEventController, userEventController } from '../../../controllers'
-import {adminAuth} from '../../../middlewares/admin.middleware'
-import {sessionAuth} from '../../../middlewares/session.middleware'
+import { adminAuth } from '../../../middlewares/admin.middleware'
+import { sessionAuth } from '../../../middlewares/session.middleware'
 
 const routes = express.Router();
 
@@ -83,7 +83,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
+routes.post('/new-event', sessionAuth, adminAuth, adminEventController.default.newEvent)
 
 /**
  * @swagger
@@ -108,7 +108,7 @@ routes.post('/new-event', sessionAuth, adminAuth, adminEventController.newEvent)
  *          500:
  *              description: Internal server error
  */
-routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.eventDetails)
+routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.default.eventDetails)
 
 /**
  * @swagger
@@ -186,7 +186,7 @@ routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.even
  *          500:
  *              description: Internal server error
  */
-routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventController.updateEvent)
+routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventController.default.updateEvent)
 
 /**
  * @swagger
@@ -211,6 +211,6 @@ routes.patch('/update-event/:eventId', sessionAuth, adminAuth, adminEventControl
  *          500:
  *              description: Internal server error
  */
-routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventController.deleteEvent)
+routes.delete('/delete-event/:eventId', sessionAuth, adminAuth, adminEventController.default.deleteEvent)
 
 export default routes;

@@ -47,7 +47,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberController.newSubscription)
+routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberController.default.newSubscription)
 
 /**
  * @swagger
@@ -89,7 +89,7 @@ routes.post('/new-subscription', sessionAuth, adminAuth, adminSubscriberControll
  *          500:
  *              description: Internal server error
  */
-routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.updateSubscription)
+routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.default.updateSubscription)
 
 /**
  * @swagger
@@ -114,6 +114,6 @@ routes.patch('/update-subscription/:subscriptionId', sessionAuth, adminAuth, adm
  *          500:
  *              description: Internal server error
  */
-routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.deleteSubscription)
+routes.delete('/delete-subscription/:subscriptionId', sessionAuth, adminAuth, adminSubscriberController.default.deleteSubscription)
 
 export default routes;

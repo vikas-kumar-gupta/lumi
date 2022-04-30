@@ -86,7 +86,7 @@ const routes = express.Router();
  *          500:
  *              description: Internal server error
  */
-routes.post('/signup', adminController.adminSignup)
+routes.post('/signup', adminController.default.adminSignup)
 
 /**
  * @swagger
@@ -118,7 +118,7 @@ routes.post('/signup', adminController.adminSignup)
  *          500:
  *              description: Internal server error
  */
-routes.post('/login', adminController.adminLogin)
+routes.post('/login', adminController.default.adminLogin)
 
 /**
  * @swagger
@@ -137,7 +137,7 @@ routes.post('/login', adminController.adminLogin)
  *          500:
  *              description: Internal server error
  */
-routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
+routes.get('/profile', sessionAuth, adminAuth, adminController.default.adminDetails)
 
 /**
  * @swagger
@@ -162,6 +162,6 @@ routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
  *          500:
  *              description: Internal server error
  */
-routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.deleteUser)
+routes.delete('/delete-user/:userId', sessionAuth, adminAuth, adminController.default.deleteUser)
 
 export default routes;
