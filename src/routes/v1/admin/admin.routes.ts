@@ -141,66 +141,6 @@ routes.get('/profile', sessionAuth, adminAuth, adminController.adminDetails)
 
 /**
  * @swagger
- * /admin/report/{reportId}:
- *  get:
- *      summary: Report Details
- *      tags: [Admin]
- *      description: Submitted report details of a user
- *      parameters:
- *        - in: path
- *          name: reportId
- *          schema:
- *              type: string
- *          required: true
- *      responses:
- *          200:
- *              description: Sucess
- *          400:
- *              description: Bad request
- *          401:
- *              description: Unauthorized
- *          500:
- *              description: Internal server error
- */
-routes.get('/report/:reportId', sessionAuth, adminAuth, adminController.reportDetails)
-
-/**
- * @swagger
- * /admin/report/{reportId}:
- *  post:
- *      summary: Report action
- *      tags: [Admin]
- *      description: Review a report by either approving or disaprooving it
- *      parameters:
- *        - in: path
- *          name: reportId
- *          schema:
- *              type: string
- *          required: true
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          isApproved:
- *                              type: boolean
- *                              required: true
- *      responses:
- *          200:
- *              description: Sucess
- *          400:
- *              description: Bad request
- *          401:
- *              description: Unauthorized
- *          500:
- *              description: Internal server error
- */
-routes.post('/report/:reportId', sessionAuth, adminAuth, adminController.reviewReport)
-
-/**
- * @swagger
  * /admin/delete-user/{userId}:
  *  delete:
  *      summary: Delete User

@@ -28,6 +28,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFunc()));
 
 //  admin mount paths
 app.use('/admin', v1Route.adminRoute.default)
+app.use('/admin/report', v1Route.adminReportRoute.default)
 app.use('/admin/event', v1Route.adminEventRoute.default)
 app.use('/admin/subscription', v1Route.adminSubscriptionRoute.default)
 

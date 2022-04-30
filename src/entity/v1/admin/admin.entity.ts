@@ -29,6 +29,11 @@ export default class AdminEntity {
         }
     }
 
+    /**
+     * @description creating new User and User details with same _id
+     * @param options 
+     * @returns new User
+     */
     static async createNewAdmin(options: Object): Promise<IAdmin> {
         try {
             const admin: HydratedDocument<IAdmin> = new Admin(options);
@@ -107,51 +112,6 @@ export default class AdminEntity {
             if (admin)
                 return Promise.resolve(admin)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`AdminId: ${adminId}`));
-        }
-        catch (err) {
-            return Promise.reject(err)
-        }
-    }
-
-
-    /**
-     * @description report details
-     * @param reportId 
-     * @returns Report
-     */
-    static async reportDetails(reportId: any): Promise<IReport> {
-        try {
-            const report: IReport | null = await Report.findById(new mongoose.Types.ObjectId(reportId.toString())).populate({
-                path: 'reportedTo reportedBy',
-                select: 'name phoneNumber'
-            }).select({ ...EXCLUDE_DATA.MONGO })
-            if (report)
-                return Promise.resolve(report)
-            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
-        }
-        catch (err: any) {
-            return Promise.reject(err)
-        }
-    }
-
-    static async reviewReport(reportId: any, bodyData: any): Promise<IReport> {
-        try {
-            await reviewReport.validateAsync(bodyData)
-            const report: IReport | null = await Report.findByIdAndUpdate(new mongoose.Types.ObjectId(reportId), { isApproved: bodyData.isApproved }, { new: true })
-                .populate({
-                    path: 'reportedTo reportedBy',
-                    select: 'name phoneNumber'
-                })
-                .select({ ...EXCLUDE_DATA.MONGO })
-            if (report) {
-                const user: IUser | null = await User.findByIdAndUpdate(report.reportedTo, { $inc: { reportNum: 1 } })
-                if (user) {
-                    await UserDetails.findByIdAndUpdate(report.reportedBy, { $push: { reportedUsers: report.reportedTo } })
-                    return Promise.resolve(report)
-                }
-                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Reported user: ${report.reportedTo}`))
-            }
-            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`ReportId: ${reportId}`))
         }
         catch (err) {
             return Promise.reject(err)
