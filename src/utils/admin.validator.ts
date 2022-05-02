@@ -40,10 +40,10 @@ export const updateSubscription = Joi.object({
 
 export const newEvent = Joi.object({
     createdBy: Joi.any(),
-    eventName: Joi.string().min(3).max(25).trim().required(),
+    eventName: Joi.string().min(3).max(100).trim().required(),
     location: Joi.object().required(),
     eventDate: Joi.date().required(),
-    eventDescription: Joi.string().min(3).max(200).trim().required(),
+    eventDescription: Joi.string().min(3).max(500).trim().required(),
     totalTickets: Joi.number().required(),
     availableTickets: Joi.number(),
     bookedTickets: Joi.number().required(),

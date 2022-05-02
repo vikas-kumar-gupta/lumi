@@ -51,8 +51,11 @@ export default class UserMatchController {
     static async blockProfile(req: Request, res: Response, next: NextFunction) {
         try {
             const blockUserId = req.params.userId;
-            const data: any = await UserMatchEntity.blockProfile(req.body.tokenId, blockUserId)
-            res.status(data.statusCode).json(data)
+            console.log(blockUserId);
+            const blockedUser: IUser = await UserEntity.findUserById(blockUserId);
+            const data = await UserMatchEntity.blockProfile(req.body.tokenId, blockedUser._id)
+            // const data: IUser = await UserEntity.updateUserDetailsById(req.body.tokenId, { $push: { blockedUsers: blockedUser._id } })
+            res.status(STATUS_MSG.SUCCESS.BLOCKED.statusCode).json({ ...STATUS_MSG.SUCCESS.BLOCKED })
         }
         catch (err) {
             const errData = sendErrorResponse(err);

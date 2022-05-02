@@ -4,6 +4,7 @@ import User from '../../../models/user/user.model';
 import Report from '../../../models/user/report.model';
 import mongoose, { HydratedDocument } from 'mongoose'
 import UserDetails from '../../../models/user/user_details.model';
+import UserEntity from './user.entity';
 
 export default class UserMatchEntity {
     static async mayBeMatches(userId: any, userLocation: any): Promise<IUser[]> {
@@ -76,14 +77,11 @@ export default class UserMatchEntity {
 
     static async blockProfile(userId: any, blockUserId: any): Promise<Object> {
         try {
-            const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(blockUserId));
-            if (user) {
-                await UserDetails.findByIdAndUpdate(userId, { $push: { blockedUsers: blockUserId } });
-                return Promise.resolve(STATUS_MSG.SUCCESS.BLOCKED)
-            }
-            else {
-                return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`));
-            }
+            const userDetails: IUserDetails | null = await UserDetails.findOne({ _id: userId, blockedUsers: blockUserId })
+            if (userDetails)
+                return Promise.reject(STATUS_MSG.ERROR.ALREADY_EXIST('Given userId in blacklist'))
+            await UserDetails.findByIdAndUpdate(userId, { $push: { blockedUsers: blockUserId } });
+            return Promise.resolve(STATUS_MSG.SUCCESS.BLOCKED)
         }
         catch (err) {
             return Promise.reject(err)

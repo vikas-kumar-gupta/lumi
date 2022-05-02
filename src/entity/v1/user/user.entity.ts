@@ -6,6 +6,7 @@ import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import UserEvent from '../../../models/user/user_event.model';
 import Payment from '../../../models/user/payment.model';
+import mongoose from 'mongoose';
 
 
 export default class UserEntity {
@@ -77,6 +78,18 @@ export default class UserEntity {
         }
     }
 
+    static async findUserById(userId: any): Promise<IUser> {
+        try {
+            const user: IUser | null = await User.findById(new mongoose.Types.ObjectId(userId));
+            if (user)
+                return Promise.resolve(user);
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('User '));
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
     /**
      * @description update existing user data
      * @param id 
@@ -89,6 +102,19 @@ export default class UserEntity {
             if (user)
                 return Promise.resolve(user)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${id}`))
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async updateUserDetailsById(userId: Schema.Types.ObjectId, options: Object): Promise<IUserDetails> {
+        try {
+            const userDetails: IUserDetails | null = await UserDetails.findByIdAndUpdate(userId, options, { new: true })
+                .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
+            if (userDetails)
+                return Promise.resolve(userDetails);
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserId: ${userId}`))
         }
         catch (err) {
             return Promise.reject(err)
