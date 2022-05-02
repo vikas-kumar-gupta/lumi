@@ -2,13 +2,19 @@ import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import { STATUS_MSG } from "../../../constants";
 import AdminReportEntity from "../../../entity/v1/admin/admin.report.entity";
-import { IReport, IUser } from "../../../interfaces/model.interface";
+import { IReport } from "../../../interfaces/model.interface";
 import { reviewReport } from "../../../utils/admin.validator";
 import { sendErrorResponse } from "../../../utils/utils";
 
 
 export default class AdminReportController {
 
+    /**
+     * @description list of reports
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async allReports(req: Request, res: Response, next: NextFunction) {
         try {
             const reports: IReport[] = await AdminReportEntity.allReports();
@@ -20,6 +26,12 @@ export default class AdminReportController {
         }
     }
 
+    /**
+     * @description report details of reportId
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async reportDetails(req: Request, res: Response, next: NextFunction) {
         try {
             const reportId = new mongoose.Types.ObjectId(req.params.reportId)
@@ -32,6 +44,12 @@ export default class AdminReportController {
         }
     }
 
+    /**
+     * @description admin can review the report by approvinf it or disapproving it
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async reviewReport(req: Request, res: Response, next: NextFunction) {
         try {
             await reviewReport.validateAsync(req.body)

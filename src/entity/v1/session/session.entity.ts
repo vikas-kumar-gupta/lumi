@@ -1,10 +1,17 @@
 import { STATUS_MSG } from '../../../constants';
 import { HydratedDocument } from 'mongoose';
-import { ISession, ISessionDeviceData } from './../../../interfaces/model.interface';
+import { ISession } from './../../../interfaces/model.interface';
 import Session from '../../../models/user/session.model';
 import { redis } from '../../../db/redis.config'
 
 export default class sessionEntity {
+
+    /**
+     * @description creating a new session
+     * @param userId 
+     * @param userType 
+     * @returns 
+     */
     static async createSession(userId: any, userType: String): Promise<void> {
         try {
             const session: HydratedDocument<ISession> = new Session({ userId, userType: userType });
@@ -21,6 +28,11 @@ export default class sessionEntity {
         }
     }
 
+    /**
+     * @description check if session already exist
+     * @param sessionId 
+     * @returns 
+     */
     static async chekSession(sessionId: any): Promise<void> {
         try {
             const session = await redis.findSession(sessionId)

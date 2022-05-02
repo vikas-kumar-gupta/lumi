@@ -2,11 +2,17 @@ import { IReport, IUser, IUserDetails } from './../../../interfaces/model.interf
 import { STATUS_MSG, EXCLUDE_DATA } from "../../../constants"
 import User from '../../../models/user/user.model';
 import Report from '../../../models/user/report.model';
-import mongoose, { HydratedDocument } from 'mongoose'
+import { HydratedDocument } from 'mongoose'
 import UserDetails from '../../../models/user/user_details.model';
-import UserEntity from './user.entity';
 
 export default class UserMatchEntity {
+
+    /**
+     * @description all the user match account that may be a match for user
+     * @param userId 
+     * @param userLocation 
+     * @returns IUser[]
+     */
     static async mayBeMatches(userId: any, userLocation: any): Promise<IUser[]> {
         /**
          ** IMP FACTOR TO BE MEASURE
@@ -63,7 +69,7 @@ export default class UserMatchEntity {
     /**
      * @description creating new Report
      * @param options 
-     * @returns Report
+     * @returns IReport
      */
     static async newReport(options: Object): Promise<IReport> {
         try {
@@ -76,6 +82,12 @@ export default class UserMatchEntity {
         }
     }
     
+    /**
+     * @description bloking a user account
+     * @param userId 
+     * @param blockUserId 
+     * @returns Staus Obejct
+     */
     static async blockProfile(userId: any, blockUserId: any): Promise<Object> {
         try {
             const userDetails: IUserDetails | null = await UserDetails.findOne({ _id: userId, blockedUsers: blockUserId })

@@ -1,4 +1,3 @@
-import { subscription } from './../../../utils/user.validator';
 import { Request, Response, NextFunction } from 'express';
 import AdminSubscriptionEntity from '../../../entity/v1/admin/admin_subscription.entity';
 import { sendErrorResponse } from '../../../utils/utils';
@@ -9,6 +8,12 @@ import mongoose from 'mongoose';
 
 export default class SubscriptionController {
 
+    /**
+     * @description list of all subscriptions
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async allSubscriptions(req: Request, res: Response, next: NextFunction) {
         try {
             const subscriptions: ISubscription[] = await AdminSubscriptionEntity.allSubscriptions();
@@ -20,6 +25,12 @@ export default class SubscriptionController {
         }
     }
 
+    /**
+     * @description all details of a subscription
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async subscriptionDetails(req: Request, res: Response, next: NextFunction) {
         try {
             const subscriptionId = new mongoose.Types.ObjectId(req.params.subscriptionId)
@@ -32,6 +43,12 @@ export default class SubscriptionController {
         }
     }
 
+    /**
+     * @description creating a new subscription by admin
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async newSubscription(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.newSubscription.validateAsync(req.body);
@@ -42,8 +59,15 @@ export default class SubscriptionController {
             const errData = sendErrorResponse(err);
             res.status(errData.statusCode).json(errData)
         }
+    
     }
 
+    /**
+     * @description updating an exixsting subscription by its id
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async updateSubscription(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.updateSubscription.validateAsync(req.body)
@@ -57,6 +81,12 @@ export default class SubscriptionController {
         }
     }
 
+    /**
+     * @description delting an existing subscription by its id
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async deleteSubscription(req: Request, res: Response, next: NextFunction) {
         try {
             const subscriptionId = new mongoose.Types.ObjectId(req.params.subscriptionId)

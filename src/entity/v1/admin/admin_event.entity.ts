@@ -1,5 +1,5 @@
 import { EXCLUDE_DATA, STATUS_MSG } from '../../../constants'
-import mongoose, { HydratedDocument } from 'mongoose'
+import { HydratedDocument } from 'mongoose'
 import Event from '../../../models/admin/admin.event.model'
 import { IEvent } from '../../../interfaces/model.interface';
 

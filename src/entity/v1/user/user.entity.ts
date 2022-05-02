@@ -6,7 +6,6 @@ import { Schema, HydratedDocument } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import UserEvent from '../../../models/user/user_event.model';
 import Payment from '../../../models/user/payment.model';
-import mongoose from 'mongoose';
 
 
 export default class UserEntity {

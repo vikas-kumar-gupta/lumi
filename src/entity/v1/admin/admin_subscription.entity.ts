@@ -1,8 +1,8 @@
 import { ISubscription } from '../../../interfaces/model.interface';
 import { EXCLUDE_DATA, STATUS_MSG } from '../../../constants'
-import mongoose, { Schema, HydratedDocument } from 'mongoose'
+import mongoose, { HydratedDocument } from 'mongoose'
 import Subscription from '../../../models/admin/admin.subscription.model'
-import { newSubscription, updateSubscription } from '../../../utils/admin.validator';
+
 export default class AdminSubscriptionEntity {
 
     /**

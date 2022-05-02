@@ -1,5 +1,5 @@
 import { STATUS_MSG, EXCLUDE_DATA } from "../../../constants";
-import mongoose, { HydratedDocument } from 'mongoose'
+import { HydratedDocument } from 'mongoose'
 import UserEvent from "../../../models/user/user_event.model"
 import Event from "../../../models/admin/admin.event.model";
 import { IEvent, IPayment, IUserEvent } from '../../../interfaces/model.interface'
@@ -24,6 +24,12 @@ export default class UserEventEntity {
         }
     }
 
+    /**
+     * @description updating an existing event by its eventId
+     * @param eventId 
+     * @param options 
+     * @returns IEvent
+     */
     static async updateEventDetails(eventId: any, options: Object): Promise<IEvent> {
         try {
             const event: IEvent | null = await Event.findByIdAndUpdate(eventId, options, { new: true });
@@ -85,6 +91,11 @@ export default class UserEventEntity {
         }
     }
 
+    /**
+     * @description all the details of a payment of paymentId
+     * @param paymentId 
+     * @returns IPayment
+     */
     static async paymentDetails(paymentId: any): Promise<IPayment> {
         try {
             const payment: IPayment | null = await Payment.findById(paymentId);
@@ -97,6 +108,11 @@ export default class UserEventEntity {
         }
     }
 
+    /**
+     * @description creating a new userEvent
+     * @param options 
+     * @returns IUserEvent
+     */
     static async bookEvent(options: Object): Promise<IUserEvent> {
         try {
             const userEvent: HydratedDocument<IUserEvent> = new UserEvent(options);

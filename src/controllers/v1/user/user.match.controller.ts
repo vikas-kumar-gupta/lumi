@@ -1,5 +1,4 @@
-import { IUserDetails } from './../../../interfaces/model.interface';
-import { CONFIG, STATUS_MSG } from '../../../constants'
+import { STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { sendErrorResponse } from '../../../utils/utils'
@@ -7,9 +6,15 @@ import UserMatchEntity from '../../../entity/v1/user/user_match.entity';
 import UserEntity from '../../../entity/v1/user/user.entity';
 import { IReport, IUser } from '../../../interfaces/model.interface';
 import * as validate from '../../../utils/user.validator';
-import UserDetails from '../../../models/user/user_details.model';
 
 export default class UserMatchController {
+
+    /**
+     * @description all the user match account that may be a match for user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     /**
      * ! matching algorithm to be implemented more accurately
      */

@@ -8,6 +8,13 @@ import sessionEntity from '../../../entity/v1/session/session.entity';
 import jwt from 'jsonwebtoken'
 
 export default class AdminController {
+
+    /**
+     * @description admin signup
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async adminSignup(req: Request, res: Response, next: NextFunction) {
         try {
             await validator.adminSignup.validateAsync(req.body);
@@ -27,6 +34,12 @@ export default class AdminController {
         }
     }
 
+    /**
+     * @description admin login
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async adminLogin(req: Request, res: Response, next: NextFunction) {
         try {
             const data: any = await AdminEntity.adminLogin(req.body);
@@ -38,6 +51,12 @@ export default class AdminController {
         }
     }
 
+    /**
+     * @description admin profile data
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async adminDetails(req: Request, res: Response, next: NextFunction) {
         try {
             const admin: IAdmin = await AdminEntity.adminDetails(req.body.tokenId)
@@ -49,6 +68,12 @@ export default class AdminController {
         }
     }
 
+    /**
+     * @description deleting a user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async deleteUser(req: Request, res: Response, next: NextFunction) {
         try {
             const userId = req.params.userId
