@@ -1,19 +1,16 @@
-import { STATUS_MSG } from '../../../constants'
+import { EXCLUDE_DATA, STATUS_MSG } from '../../../constants'
 import mongoose, { HydratedDocument } from 'mongoose'
 import Event from '../../../models/admin/admin.event.model'
 import { IEvent } from '../../../interfaces/model.interface';
 
-export default class AdminEvent {
+export default class AdminEventEntity {
 
     /**
      * @description create new event by admin
-     * @param adminId 
-     * @param bodyData 
      * @returns status object
      */
     static async newEvent(options: object): Promise<IEvent> {
         try {
-            // await newEvent.validateAsync({ createdBy: adminId, ...bodyData });
             const event: HydratedDocument<IEvent> = new Event(options);
             await event.save();
             return Promise.resolve(event)
@@ -26,12 +23,12 @@ export default class AdminEvent {
     /**
      * @description update existing event
      * @param eventId 
-     * @param options 
+     * @param update 
      * @returns Status obj
      */
-    static async updateEvent(eventId: any, options: Object): Promise<IEvent> {
+    static async updateEvent(eventId: any, update: Object): Promise<IEvent> {
         try {
-            const event: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), options, { new: true });
+            const event: IEvent | null = await Event.findByIdAndUpdate(eventId, update, { new: true }).select({...EXCLUDE_DATA.MONGO});
             if (event)
                 return Promise.resolve(event)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`EventId: ${eventId}`))
@@ -48,7 +45,7 @@ export default class AdminEvent {
      */
     static async deleteEvent(eventId: any): Promise<IEvent> {
         try {
-            const event: IEvent | null = await Event.findByIdAndDelete(new mongoose.Types.ObjectId(eventId));
+            const event: IEvent | null = await Event.findByIdAndDelete(eventId);
             if (event)
                 return Promise.resolve(event);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`Eventid: ${eventId}`))

@@ -8,9 +8,16 @@ import * as validate from '../../../utils/user.validator'
 const generateUniqueId = require('generate-unique-id')
 
 export default class UserEventController {
+
+    /**
+     * @description details of the event
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async eventDetails(req: Request, res: Response, next: NextFunction) {
         try {
-            const eventId = req.params.eventId
+            const eventId = new mongoose.Types.ObjectId(req.params.eventId)
             const event: IEvent = await UserEventEntity.eventDetails(eventId)
             res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('Event'), data: event })
         }
@@ -20,6 +27,12 @@ export default class UserEventController {
         }
     }
 
+    /**
+     * @description user booked events (only events)
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async myEvents(req: Request, res: Response, next: NextFunction) {
         try {
             const events: IUserEvent[] = await UserEventEntity.myEvents(req.body.tokenId);
@@ -31,6 +44,12 @@ export default class UserEventController {
         }
     }
 
+    /**
+     * @description all the users near by upcoming events
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async allEvents(req: Request, res: Response, next: NextFunction) {
         try {
             const events: IEvent[] = await UserEventEntity.allEvents(req.body.userLocation);
@@ -42,12 +61,17 @@ export default class UserEventController {
         }
     }
 
-    // ! to be implemented
+    /**
+     * @description booking an event after completion of payment
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async bookEvent(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.bookEvent.validateAsync(req.body)
-            const eventId = req.params.eventId;
-            const paymentId = req.body.paymentId;
+            const eventId = new mongoose.Types.ObjectId(req.params.eventId);
+            const paymentId = new mongoose.Types.ObjectId(req.body.paymentId)
             const eventBookingCode = generateUniqueId({
                 length: 7,
                 useLetters: false

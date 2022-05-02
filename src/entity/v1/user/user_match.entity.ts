@@ -60,26 +60,30 @@ export default class UserMatchEntity {
         }
     }
 
-    static async reportProfile(options: Object, reportedBy: any, reportedTo: any): Promise<IReport> {
+    /**
+     * @description creating new Report
+     * @param options 
+     * @returns Report
+     */
+    static async newReport(options: Object): Promise<IReport> {
         try {
-            // creating new report for the user
             const report: HydratedDocument<IReport> = new Report(options);
             await report.save()
-
-            // pushing reported account in the users details model
-            await UserDetails.findByIdAndUpdate(reportedBy, { $push: { reportedUsers: reportedTo } })
             return Promise.resolve(report)
         }
         catch (err) {
             return Promise.reject(err)
         }
     }
-
+    
     static async blockProfile(userId: any, blockUserId: any): Promise<Object> {
         try {
             const userDetails: IUserDetails | null = await UserDetails.findOne({ _id: userId, blockedUsers: blockUserId })
+
+            //  checking if user is already blocked
             if (userDetails)
                 return Promise.reject(STATUS_MSG.ERROR.ALREADY_EXIST('Given userId in blacklist'))
+            // if not blocked then blocking it 
             await UserDetails.findByIdAndUpdate(userId, { $push: { blockedUsers: blockUserId } });
             return Promise.resolve(STATUS_MSG.SUCCESS.BLOCKED)
         }

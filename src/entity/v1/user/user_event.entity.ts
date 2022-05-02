@@ -14,7 +14,7 @@ export default class UserEventEntity {
      */
     static async eventDetails(eventId: any): Promise<IEvent> {
         try {
-            const event: IEvent | null = await Event.findById(new mongoose.Types.ObjectId(eventId), { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
+            const event: IEvent | null = await Event.findById(eventId, { ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
             if (event)
                 return Promise.resolve(event)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST('Event'))
@@ -26,7 +26,7 @@ export default class UserEventEntity {
 
     static async updateEventDetails(eventId: any, options: Object): Promise<IEvent> {
         try {
-            const event: IEvent | null = await Event.findByIdAndUpdate(new mongoose.Types.ObjectId(eventId), options, { new: true });
+            const event: IEvent | null = await Event.findByIdAndUpdate(eventId, options, { new: true });
             if (event)
                 return Promise.resolve(event);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`EventId: ${eventId}`));
@@ -87,7 +87,7 @@ export default class UserEventEntity {
 
     static async paymentDetails(paymentId: any): Promise<IPayment> {
         try {
-            const payment: IPayment | null = await Payment.findById(new mongoose.Types.ObjectId(paymentId));
+            const payment: IPayment | null = await Payment.findById(paymentId);
             if (payment)
                 return Promise.resolve(payment)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`PaymentId: ${paymentId}`))

@@ -13,6 +13,12 @@ import sessionEntity from '../../../entity/v1/session/session.entity';
 import User from '../../../models/user/user.model';
 
 export default class UserController {
+    /**
+     * @description for generating an OTP for a phone Number
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async getOtp(req: express.Request, res: express.Response, next: NextFunction) {
         try {
             const { phoneNumber } = req.body;
@@ -26,6 +32,12 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description verifying OTP and signingUp/LoggingIn the user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async verifyOtp(req: express.Request, res: express.Response, next: NextFunction) {
         try {
             const { otp, phoneNumber, loginType } = req.body;
@@ -46,7 +58,8 @@ export default class UserController {
                 }
                 else {
                     //  logging in the user
-                    const user: IUser | null = await UserEntity.findOneUser({ phoneNumber });
+                    // const user: IUser | null = await UserEntity.findOneUser({ phoneNumber });
+                    const user: IUser = await UserEntity.updateOneUser({phoneNumber}, {isPhoneVerified: true})
                     await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1])
                     const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
@@ -62,6 +75,12 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description updating the existing user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.updateUser.validateAsync(req.body);
@@ -75,9 +94,15 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description getiing the user details from user model
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async userDetails(req: Request, res: Response, next: NextFunction) {
         try {
-            const user: IUser = await UserEntity.userDetails(req.body.tokenId);
+            const user: IUser = await UserEntity.userData(req.body.tokenId);
             res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('User profile'), data: user });
         }
         catch (err: any) {
@@ -86,6 +111,12 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description changing the phone Number of the user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async changePhoneNumber(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.changePhoneNumber.validateAsync(req.body);
@@ -105,7 +136,12 @@ export default class UserController {
         }
     }
 
-    //! rechek after completing booking event and inviting user 
+    /**
+     * @description get all the user event booking data (including- payment, invited person, event etc..)
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async myBookings(req: Request, res: Response, next: NextFunction) {
         try {
             const bookings: IUserEvent[] = await UserEntity.myBookings(req.body.tokenId);
@@ -117,6 +153,12 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description sending the verification link to the users email address
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async verifyEmail(req: Request, res: Response, next: NextFunction) {
         try {
             const email: string = req.body.email;
@@ -138,6 +180,13 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description verifyng the users mail 
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     static async verifyEmailWithToken(req: Request, res: Response, next: NextFunction) {
         try {
             // sending the token with url params
@@ -159,6 +208,12 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description initiating the payment by user
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     static async initPayment(req: Request, res: Response, next: NextFunction) {
         try {
             await validate.initPayment.validateAsync(req.body);

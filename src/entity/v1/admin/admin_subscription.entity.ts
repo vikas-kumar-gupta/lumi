@@ -1,9 +1,40 @@
 import { ISubscription } from '../../../interfaces/model.interface';
-import { STATUS_MSG } from '../../../constants'
-import mongoose, { HydratedDocument } from 'mongoose'
+import { EXCLUDE_DATA, STATUS_MSG } from '../../../constants'
+import mongoose, { Schema, HydratedDocument } from 'mongoose'
 import Subscription from '../../../models/admin/admin.subscription.model'
 import { newSubscription, updateSubscription } from '../../../utils/admin.validator';
-export default class AdminSubscription {
+export default class AdminSubscriptionEntity {
+
+    /**
+     * @description all the subscription list
+     * @returns ISubscription[]
+     */
+    static async allSubscriptions(): Promise<ISubscription[]> {
+        try {
+            const subscriptions: ISubscription[] = await Subscription.find().select({ ...EXCLUDE_DATA.MONGO });
+            return Promise.resolve(subscriptions);
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    /**
+     * @description subscription details
+     * @param suscriptionId 
+     * @returns ISusbscription
+     */
+    static async subscriptionDetails(suscriptionId: mongoose.Types.ObjectId): Promise<ISubscription> {
+        try {
+            const subscription: ISubscription | null = await Subscription.findById(suscriptionId).select({ ...EXCLUDE_DATA.MONGO });
+            if (subscription)
+                return Promise.resolve(subscription)
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${suscriptionId}`))
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
     /**
      * @description create new subscription
      * @param options 
@@ -23,12 +54,12 @@ export default class AdminSubscription {
     /**
      * @description update the existing subscription
      * @param subscriptionId 
-     * @param options 
+     * @param update 
      * @returns status object
      */
-    static async updateSubscription(subscriptionId: any, options: any): Promise<ISubscription> {
+    static async updateSubscription(subscriptionId: any, update: any): Promise<ISubscription> {
         try {
-            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(new mongoose.Types.ObjectId(subscriptionId), options, { new: true });
+            const subscription: ISubscription | null = await Subscription.findByIdAndUpdate(subscriptionId, update, { new: true });
             if (subscription)
                 return Promise.resolve(subscription)
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${subscriptionId}`));
@@ -41,12 +72,11 @@ export default class AdminSubscription {
     /**
      * @description delete the existing subscription
      * @param subscriptionId 
-     * @param bodyData 
-     * @returns 
+     * @returns ISubscription
      */
-    static async deleteSubscription(subscriptionId: any, bodyData: any): Promise<ISubscription> {
+    static async deleteSubscription(subscriptionId: any): Promise<ISubscription> {
         try {
-            const subscription: ISubscription | null = await Subscription.findByIdAndDelete(new mongoose.Types.ObjectId(subscriptionId));
+            const subscription: ISubscription | null = await Subscription.findByIdAndDelete(subscriptionId);
             if (subscription)
                 return Promise.resolve(subscription);
             return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`SubscriptionId: ${subscriptionId}`))
