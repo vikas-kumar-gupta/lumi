@@ -1,6 +1,6 @@
 # Lumi
 
-A Reusable boiler plate code to start a node js project with selective databases.
+A dating application where one can find the perfect match can date to each other by visiting to nearby events.
 
 ## Features Included in this Architecture
 
@@ -48,7 +48,6 @@ $ npm run lint
 - [Node.js](https://nodejs.org/en/) - A JavaScript runtime built on [Chrome's V8 JavaScript engine](https://v8.dev/).
 - [Typescript](https://www.typescriptlang.org/) - A typed superset of JavaScript that compiles to plain JavaScript.
 - [Express.js](https://expressjs.com/) - A Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org/en/).
-- [PostgreSQL](https://www.postgresql.org/) - The World's Most Advanced Open Source Relational Database.
 - [MongoDB](https://www.mongodb.com/) - An open-source document based NoSQL database.
 - [Joi](https://joi.dev/) - The most powerful schema description language
   and data validator for JavaScript.
