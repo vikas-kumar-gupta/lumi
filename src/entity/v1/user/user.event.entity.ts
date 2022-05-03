@@ -49,13 +49,44 @@ export default class UserEventEntity {
      */
     static async myEvents(userId: any): Promise<IUserEvent[]> {
         try {
-            const userEvents: IUserEvent[] = await UserEvent.find({ userId })
-                .sort({ $natural: -1 })
-                .populate({
-                    path: 'eventId',
-                    select: 'eventName price location eventDate'
-                })
-                .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.EVENT });
+            const userEvents: IUserEvent[] = await UserEvent.aggregate([
+                {
+                    $lookup: {
+                        from: 'events',
+                        localField: "eventId",
+                        foreignField: "_id",
+                        as: 'eventData'
+                    }
+                },
+                {
+                    $match: {
+                        "eventData.eventDate": { $gte: new Date() }
+                    }
+                },
+                {
+                    $project: {
+                        eventBookingCode: 0,
+                        userId: 0,
+                        paymentId: 0,
+                        createdAt: 0,
+                        updatedAt: 0,
+                        __v: 0,
+                        "eventData.createdBy": 0,
+                        "eventData.bookedBy": 0,
+                        "eventData.eventImages": 0,
+                        "eventData.freeDrinks": 0,
+                        "eventData.ageBetween": 0,
+                        "eventData.bookedTickets": 0,
+                        "eventData.availableTickets": 0,
+                        "eventData.eventDescription": 0,
+                        "eventData.totalTickets": 0,
+                        "eventData.createdAt": 0,
+                        "eventData.updatedAt": 0,
+                        "eventData.__v": 0
+                    }
+                }
+            ])
+
             return Promise.resolve(userEvents)
         }
         catch (err) {

@@ -30,6 +30,9 @@ const routes = express.Router();
  *                          eventName:
  *                              type: string
  *                              required: true
+ *                          eventLocation:
+ *                              type: string
+ *                              required: true
  *                          location:
  *                              type: object
  *                              required: false
@@ -133,6 +136,9 @@ routes.get('/details/:eventId', sessionAuth, adminAuth, userEventController.defa
  *                          eventName:
  *                              type: string
  *                              required: false
+ *                          eventLocation:
+ *                              type: string
+ *                              required: true
  *                          location:
  *                              type: object
  *                              required: false

@@ -24,6 +24,7 @@ export interface IEvent {
     _id?: Object,
     createdBy: Object,
     eventName: String,
+    eventLocation: String,
     location: ILocation,
     eventDate: Date,
     eventDescription: String,

@@ -124,7 +124,6 @@ routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.default.
  * TODO:
  * Given below each route & controller is to be implemented
  */
-
-routes.get('/:userId/invite/:eventId', sessionAuth, userAuth, userMatchController.default.matchProfileInviteEvent)
+routes.post('/invite/event/:userId/:eventId', sessionAuth, userAuth, userMatchController.default.matchProfileInviteEvent)
 
 export default routes;

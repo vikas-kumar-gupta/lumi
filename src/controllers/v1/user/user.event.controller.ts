@@ -1,7 +1,7 @@
 import { STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import UserEventEntity from '../../../entity/v1/user/user_event.entity';
+import UserEventEntity from '../../../entity/v1/user/user.event.entity';
 import { sendErrorResponse } from '../../../utils/utils'
 import { IEvent, IPayment, IUserEvent } from '../../../interfaces/model.interface';
 import * as validate from '../../../utils/user.validator'
@@ -28,7 +28,7 @@ export default class UserEventController {
     }
 
     /**
-     * @description user booked events (only events)
+     * @description user booked events (only upcoming or ongoing events)
      * @param req 
      * @param res 
      * @param next 
@@ -36,7 +36,7 @@ export default class UserEventController {
     static async myEvents(req: Request, res: Response, next: NextFunction) {
         try {
             const events: IUserEvent[] = await UserEventEntity.myEvents(req.body.tokenId);
-            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ data: events })
+            res.status(STATUS_MSG.SUCCESS.FETCH_SUCCESS('').statusCode).json({ ...STATUS_MSG.SUCCESS.FETCH_SUCCESS('My-Events'), data: events })
         }
         catch (err) {
             const errData = sendErrorResponse(err);

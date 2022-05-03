@@ -87,3 +87,9 @@ export const bookEvent = Joi.object({
     tokenId: Joi.string().trim(),
     userLocation: Joi.any()
 })
+
+export const inviteEvent = Joi.object({
+    tokenId: Joi.string().trim(),
+    userLocation: Joi.any(),
+    isOfferingTicket: Joi.boolean().required()
+})

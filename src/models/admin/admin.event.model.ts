@@ -16,6 +16,13 @@ const eventSchema = new Schema<IEvent>(
             minlength: 3,
             maxlength: 100
         },
+        eventLocation: {
+            type: String,
+            required: true,
+            trim: true,
+            minlength: 3,
+            maxlength: 50
+        },
         location: {
             type: {
                 type: String,

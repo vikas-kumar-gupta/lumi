@@ -41,6 +41,7 @@ export const updateSubscription = Joi.object({
 export const newEvent = Joi.object({
     createdBy: Joi.any(),
     eventName: Joi.string().min(3).max(100).trim().required(),
+    eventLocation: Joi.string().min(3).max(50).trim().required(),
     location: Joi.object().required(),
     eventDate: Joi.date().required(),
     eventDescription: Joi.string().min(3).max(500).trim().required(),
@@ -58,6 +59,7 @@ export const newEvent = Joi.object({
 
 export const updateEvent = Joi.object({
     eventName: Joi.string().min(3).max(25).trim(),
+    eventLocation: Joi.string().min(3).max(50).trim(),
     location: Joi.object(),
     eventDate: Joi.date(),
     eventDescription: Joi.string().min(3).max(200).trim(),

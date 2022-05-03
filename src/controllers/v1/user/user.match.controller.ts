@@ -1,11 +1,12 @@
-import { STATUS_MSG } from '../../../constants'
+import { DBENUMS, STATUS_MSG } from '../../../constants'
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { sendErrorResponse } from '../../../utils/utils'
-import UserMatchEntity from '../../../entity/v1/user/user_match.entity';
+import UserMatchEntity from '../../../entity/v1/user/user.match.entity';
 import UserEntity from '../../../entity/v1/user/user.entity';
-import { IReport, IUser } from '../../../interfaces/model.interface';
+import { IEvent, IReport, IUser, IUserInvite } from '../../../interfaces/model.interface';
 import * as validate from '../../../utils/user.validator';
+import UserEventEntity from '../../../entity/v1/user/user.event.entity';
 
 export default class UserMatchController {
 
@@ -86,7 +87,7 @@ export default class UserMatchController {
 
             // cheking if blocking user exist
             const blockedUser: IUser = await UserEntity.findUserById(blockUserId);
-            
+
             const data = await UserMatchEntity.blockProfile(req.body.tokenId, blockedUser._id)
             // const data: IUser = await UserEntity.updateUserDetailsById(req.body.tokenId, { $push: { blockedUsers: blockedUser._id } })
             res.status(STATUS_MSG.SUCCESS.BLOCKED.statusCode).json({ ...STATUS_MSG.SUCCESS.BLOCKED })
@@ -105,13 +106,32 @@ export default class UserMatchController {
      */
     static async matchProfileInviteEvent(req: Request, res: Response, next: NextFunction) {
         try {
+            const userId = new mongoose.Types.ObjectId(req.params.userId);
+            const eventId = new mongoose.Types.ObjectId(req.params.eventId);
+            await validate.inviteEvent.validateAsync(req.body)
 
+            //  cheking if given userId exist
+            const user: IUser = await UserEntity.findUserById(userId);
+
+            //  cheking if given eventId exist
+            const event: IEvent = await UserEventEntity.eventDetails(eventId);
+
+            //  creating new invites
+            const userInvite: IUserInvite = await UserMatchEntity.newInvite(
+                {
+                    invitedBy: req.body.tokenId,
+                    invitedTo: userId,
+                    eventId: eventId,
+                    inviteType: DBENUMS.INVITE_TYPE[0],
+                    isOfferingTicket: req.body.isOfferingTicket
+                }
+            )
+            res.status(STATUS_MSG.SUCCESS.DEFAULT.statusCode).json({ ...STATUS_MSG.SUCCESS.DEFAULT })
         }
         catch (err) {
             const errData = sendErrorResponse(err);
             res.status(errData.statusCode).json(errData)
         }
     }
-
 }
 

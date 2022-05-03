@@ -244,6 +244,18 @@ export let STATUS_MSG = {
             message: 'Verified Successfully',
             name: 'VERIFIED'
         },
+        INVITE_ACCEPTED: {
+            statusCode: 200,
+            success: true,
+            message: 'Invitation accepted',
+            name: 'INVITE_ACCEPTED'
+        },
+        INVITE_DECLINE: {
+            statusCode: 200,
+            success: true,
+            message: 'Invitation decline',
+            name: 'INVITE_DECLINE'
+        },
         LOGOUT: {
             statusCode: 200,
             success: true,

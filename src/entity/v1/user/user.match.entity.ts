@@ -1,9 +1,10 @@
-import { IReport, IUser, IUserDetails } from './../../../interfaces/model.interface';
+import { IReport, IUser, IUserDetails, IUserInvite } from '../../../interfaces/model.interface';
 import { STATUS_MSG, EXCLUDE_DATA } from "../../../constants"
 import User from '../../../models/user/user.model';
 import Report from '../../../models/user/report.model';
 import { HydratedDocument } from 'mongoose'
 import UserDetails from '../../../models/user/user_details.model';
+import UserInvite from '../../../models/user/user_invites.model';
 
 export default class UserMatchEntity {
 
@@ -81,7 +82,7 @@ export default class UserMatchEntity {
             return Promise.reject(err)
         }
     }
-    
+
     /**
      * @description bloking a user account
      * @param userId 
@@ -98,6 +99,17 @@ export default class UserMatchEntity {
             // if not blocked then blocking it 
             await UserDetails.findByIdAndUpdate(userId, { $push: { blockedUsers: blockUserId } });
             return Promise.resolve(STATUS_MSG.SUCCESS.BLOCKED)
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async newInvite(options: Object): Promise<IUserInvite> {
+        try {
+            const userInvite: HydratedDocument<IUserInvite> = new UserInvite(options);
+            await userInvite.save();
+            return Promise.resolve(userInvite);
         }
         catch (err) {
             return Promise.reject(err)
