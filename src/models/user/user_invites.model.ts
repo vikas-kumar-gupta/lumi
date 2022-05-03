@@ -34,6 +34,11 @@ const userInviteSchema = new Schema<IUserInvite>(
             type: Boolean,
             default: false,
             required: true
+        },
+        isBookingDoneForReceiver: {
+            type: Boolean,
+            default: false,
+            required: false
         }
     },
     {
@@ -41,6 +46,6 @@ const userInviteSchema = new Schema<IUserInvite>(
     }
 )
 
-const UserInvite = model<IUserInvite>('User_invite', userInviteSchema);
+const UserInvite = model<IUserInvite>('User_Invite', userInviteSchema);
 
 export default UserInvite;

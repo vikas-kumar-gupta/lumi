@@ -194,7 +194,8 @@ export default class UserEntity {
             const userEvents: IUserEvent[] = await UserEvent.find({ userId: userId })
                 .sort({ $natural: -1 })
                 .populate({
-                    path: 'eventId userInvite paymentId'
+                    path: 'eventId userInvite paymentId',
+                    select: 'eventName eventDate eventLocation price payTax grandTotal name'
                 })
                 .select({ ...EXCLUDE_DATA.MONGO, ...EXCLUDE_DATA.USER_PROFILE });
             return Promise.resolve(userEvents)

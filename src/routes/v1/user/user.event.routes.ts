@@ -1,5 +1,5 @@
 import express from 'express'
-import { userEventController } from '../../../controllers'
+import { userEventController, userMatchController } from '../../../controllers'
 import { sessionAuth } from '../../../middlewares/session.middleware';
 import { userAuth } from '../../../middlewares/user.middleware'
 
@@ -32,6 +32,46 @@ const routes = express.Router();
  *              description: Internal server error
  */
 routes.get('/my-events', sessionAuth, userAuth, userEventController.default.myEvents);
+
+/**
+ * @swagger
+ * /user/event/my-events/{userEventId}/invite/{userId}:
+ *  post:
+ *      summary: Invite a user to an event
+ *      tags: [UserEvent]
+ *      description: Invite a user to an event
+ *      parameters:
+ *        - in: path
+ *          name: userEventId
+ *          schema:
+ *              type: string
+ *          required: true
+ *        - in: path
+ *          name: userId
+ *          schema:
+ *              type: string
+ *          required: true
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          isOfferingTicket:
+ *                              type: boolean
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+routes.post('/my-events/:userEventId/invite/:userId', sessionAuth, userAuth, userEventController.default.userInviteEvent)
 
 /**
  * @swagger

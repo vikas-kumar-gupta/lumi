@@ -13,6 +13,7 @@ import sessionEntity from '../../../entity/v1/session/session.entity';
 import User from '../../../models/user/user.model';
 
 export default class UserController {
+    
     /**
      * @description for generating an OTP for a phone Number
      * @param req 

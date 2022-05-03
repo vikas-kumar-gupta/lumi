@@ -10,7 +10,7 @@ const routes = express.Router();
  * @swagger
  * tags:
  *  name: UserMatch                                                                     
- *  description: Admin Routes
+ *  description: User Match related routes
  */
 
 /**
@@ -120,10 +120,6 @@ routes.post('/report/:userId', sessionAuth, userAuth, userMatchController.defaul
  */
 routes.get('/block/:userId', sessionAuth, userAuth, userMatchController.default.blockProfile)
 
-/**
- * TODO:
- * Given below each route & controller is to be implemented
- */
-routes.post('/invite/event/:userId/:eventId', sessionAuth, userAuth, userMatchController.default.matchProfileInviteEvent)
+
 
 export default routes;

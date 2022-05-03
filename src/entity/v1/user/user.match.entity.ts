@@ -104,15 +104,4 @@ export default class UserMatchEntity {
             return Promise.reject(err)
         }
     }
-
-    static async newInvite(options: Object): Promise<IUserInvite> {
-        try {
-            const userInvite: HydratedDocument<IUserInvite> = new UserInvite(options);
-            await userInvite.save();
-            return Promise.resolve(userInvite);
-        }
-        catch (err) {
-            return Promise.reject(err)
-        }
-    }
 }

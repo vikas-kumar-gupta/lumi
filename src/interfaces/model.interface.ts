@@ -133,6 +133,7 @@ export interface IUserInvite {
     inviteStatus: String,
     inviteType: String,
     isOfferingTicket: Boolean,
+    isBookingDoneForReceiver: Boolean,
     createdAt?: Date,
     updatedAt?: Date
 }

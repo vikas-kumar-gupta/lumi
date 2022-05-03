@@ -8,6 +8,41 @@ import Payment from "../../../models/user/payment.model";
 export default class UserEventEntity {
 
     /**
+     * @description userEvent details of a userEventId
+     * @param userEventId 
+     * @returns IUserEvent
+     */
+    static async userEventDetails(userEventId: any): Promise<IUserEvent> {
+        try {
+            const userEvent: IUserEvent | null = await UserEvent.findById(userEventId);
+            if (userEvent)
+                return Promise.resolve(userEvent);
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserEventId: ${userEventId}`));
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    /**
+     * @description update UserEvent of userEventId
+     * @param userEventId 
+     * @param update 
+     * @returns updated IUserEvent
+     */
+    static async updateUserEventById(userEventId: any, update: Object): Promise<IUserEvent> {
+        try {
+            const userEvent: IUserEvent | null = await UserEvent.findByIdAndUpdate(userEventId, update, { new: true });
+            if(userEvent)
+                return Promise.resolve(userEvent);
+            return Promise.reject(STATUS_MSG.ERROR.NOT_EXIST(`UserEventId: ${userEventId}`));
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    /**
      * @description get event details
      * @param eventId 
      * @returns Event

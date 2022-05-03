@@ -35,6 +35,7 @@ export default class AdminSubscriptionEntity {
             return Promise.reject(err)
         }
     }
+    
     /**
      * @description create new subscription
      * @param options 
