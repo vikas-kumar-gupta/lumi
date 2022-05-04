@@ -8,12 +8,15 @@ const generateUniqueId = require('generate-unique-id')
 
 import { sendEmail } from '../../../services/nodemailer/email.service';
 import { CONFIG, DBENUMS, STATUS_MSG } from '../../../constants';
-import { IPayment, IUser, IUserEvent } from '../../../interfaces/model.interface';
+import { IPayment, IUser, IUserEvent, IUserSubscription } from '../../../interfaces/model.interface';
 import sessionEntity from '../../../entity/v1/session/session.entity';
 import User from '../../../models/user/user.model';
+import mongoose from 'mongoose';
+import UserSubscriptionEntity from '../../../entity/v1/user/user.subscription.entity';
+import UserEventEntity from '../../../entity/v1/user/user.event.entity';
 
 export default class UserController {
-    
+
     /**
      * @description for generating an OTP for a phone Number
      * @param req 
@@ -60,7 +63,7 @@ export default class UserController {
                 else {
                     //  logging in the user
                     // const user: IUser | null = await UserEntity.findOneUser({ phoneNumber });
-                    const user: IUser = await UserEntity.updateOneUser({phoneNumber}, {isPhoneVerified: true})
+                    const user: IUser = await UserEntity.updateOneUser({ phoneNumber }, { isPhoneVerified: true })
                     await sessionEntity.createSession(user._id, DBENUMS.USER_TYPE[1])
                     const token = jwt.sign({ id: user._id, isAdmin: false, location: user.location }, CONFIG.JWT_SECRET_KEY)
                     console.log(token);
@@ -237,6 +240,42 @@ export default class UserController {
         }
     }
 
+    /**
+     * @description subscribe a subscription
+     * @param req 
+     * @param res 
+     * @param next 
+     */
+    static async subscribe(req: Request, res: Response, next: NextFunction) {
+        try {
+            await validate.bookEvent.validateAsync(req.body)
+            const subscriptionId = new mongoose.Types.ObjectId(req.params.subscriptionId);
+            const paymentId = new mongoose.Types.ObjectId(req.params.paymentId)
+
+            //  check if given paymentId is valid payment
+            const payment: IPayment = await UserEventEntity.findPaymentById(paymentId);
+
+            //  check if given subscriptionId exist
+            const subscription = await UserSubscriptionEntity.findSubscriptionById(subscriptionId);
+
+            //  creating a new UserSubscription
+            const querry = {
+                subscriptionId,
+                subscriptionStartDate: new Date(),
+                subscriptionEndDate: new Date().setMonth(new Date().getMonth() + <number>subscription.subscriptionMonths),
+                subscriptionStatus: DBENUMS.SUBSCRIPTION_STATUS[0],
+                userId: req.body.tokenId,
+                paymentId
+            }
+            const userSubscription: IUserSubscription = await UserSubscriptionEntity.newUserSubscription(querry);
+            res.status(STATUS_MSG.SUCCESS.SUBSCRIBED.statusCode).json({ ...STATUS_MSG.SUCCESS.SUBSCRIBED})
+        }
+        catch (err) {
+            const errData = sendErrorResponse(err);
+            res.status(errData.statusCode).json(errData);
+        }
+    }
+
     // ! to be implement
     static async logout(req: Request, res: Response, next: NextFunction) {
         try {
@@ -247,6 +286,6 @@ export default class UserController {
         }
     }
 
-    
+
 }
 

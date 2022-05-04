@@ -226,6 +226,12 @@ export let STATUS_MSG = {
             message: 'Event booked',
             type: 'BLOCKED'
         },
+        SUBSCRIBED: {
+            statusCode: 200,
+            success: true,
+            message: 'Subscribed successfuly',
+            type: 'SUBSCRIBED'
+        },
         BLOCKED: {
             statusCode: 200,
             success: true,

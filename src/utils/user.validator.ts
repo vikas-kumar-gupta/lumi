@@ -16,8 +16,8 @@ export const updateUser = Joi.object({
     email: Joi.string().trim().min(6),
     gender: Joi.string().trim().valid(...Object.values(DBENUMS.GENDER)),
     dob: Joi.date(),
-    profilePicture: Joi.array(),
-    bio: Joi.array(),
+    profilePicture: Joi.array().length(6),
+    bio: Joi.array().length(4),
     location: Joi.object(),
     height: Joi.array().length(2),
     zodiac: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.ZODIAC)),
@@ -32,7 +32,6 @@ export const updateUser = Joi.object({
     haveAlcohol: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
     haveMarijuana: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
     haveDrugs: Joi.string().trim().valid(...Object.values(DBENUMS.ACCEPTANCE)),
-    isMailVerified: Joi.boolean(),
     tokenId: Joi.string(),
     userLocation: Joi.any()
 })

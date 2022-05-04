@@ -92,7 +92,7 @@ export default class UserInviteController {
             const userInviteId = new mongoose.Types.ObjectId(req.params.userInviteId);
 
             //  cheking if given paymentId is a valid payment
-            const payment: IPayment = await UserEventEntity.paymentDetails(paymentId);
+            const payment: IPayment = await UserEventEntity.findPaymentById(paymentId);
 
             //  cheking if userInvite exists and updating it
             const userInvite: IUserInvite = await UserInviteEntity.updateUserInviteById(userInviteId, { isBookingDoneForReceiver: true });

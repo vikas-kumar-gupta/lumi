@@ -216,31 +216,19 @@ routes.get('/profile', sessionAuth, userAuth, userController.default.userDetails
  *                              requied: false
  *                          gender:
  *                              type: string
+ *                              example: "Male"
  *                              required: false
  *                          dob:
  *                              type: string
  *                              example: "01/01/2000"
  *                              required: false
- *                          phoneNumber:
- *                              type: string
- *                              example: "+919999999999"
- *                              required: false
  *                          profilePicture:
  *                              type: [string]
- *                              example: ["img-url-1", "img-url-2", "img-url-3", "img-url-4", "img-url-5"]
- *                              required: false
- *                          isPhoneVerified:
- *                              type: boolean
- *                              required: false
- *                          isMailVerified:
- *                              type: boolean
- *                              required: false
- *                          subscription:
- *                              type: object
+ *                              example: ["img-url-1", "img-url-2", "img-url-3", "img-url-4", "img-url-5", "img-url-6"]
  *                              required: false
  *                          bio:
  *                              type: [string]
- *                              example: ["Bio-1", "Bio-2", "Bio-3", "Bio-4", "Bio-5"]
+ *                              example: ["Bio-1", "Bio-2", "Bio-3", "Bio-4"]
  *                              required: false
  *                          location:
  *                              type: object
@@ -257,30 +245,39 @@ routes.get('/profile', sessionAuth, userAuth, userController.default.userDetails
  *                                  
  *                          homeTown:
  *                              type: string
+ *                              example: "B-25, Appinventiv Technology Pvt. Ltd"
  *                              required: false
  *                          jobTitle:
  *                              type: string
+ *                              example: "Software Engineer"
  *                              required: false
  *                          eduLevel:
  *                              type: string
+ *                              example: "Undergraduate"
  *                              required: false
  *                          religiousBelief:
  *                              type: string
+ *                              example: "Hinduism"
  *                              required: false
  *                          haveCigarette:
  *                              type: string
+ *                              example: "Sometimes"
  *                              required: false
  *                          haveAlcohol:
  *                              type: string
+ *                              example: "Sometimes"
  *                              required: false
  *                          haveMarijuana:
  *                              type: string
+ *                              example: "Sometimes"
  *                              required: false
  *                          haveDrugs:
  *                              type: string
  *                              required: false
+ *                              example: "Sometimes"
  *                          politicalLeaning:
  *                              type: string
+ *                              example: "Moderate"
  *                              required: false
  *                          ageBetween:
  *                              type: [number]
@@ -292,12 +289,11 @@ routes.get('/profile', sessionAuth, userAuth, userController.default.userDetails
  *                              required: false
  *                          interestedIn:
  *                              type: string
+ *                              example: "Women"
  *                              required: false
  *                          zodiac:
  *                              type: string
- *                              required: false
- *                          reportNum:
- *                              type: number
+ *                              example: "Gemini"
  *                              required: false
  *                          
  *      responses:
@@ -426,5 +422,40 @@ routes.get('/verify-email/:token', userController.default.verifyEmailWithToken);
  *              description: Internal server error
  */
 routes.post('/payment', sessionAuth, userAuth, userController.default.initPayment)
+
+/**
+ * @swagger
+ * /user/subscribe-plan/{subscriptionId}:
+ *  post:
+ *      summary: Subscribe a subscription Plan
+ *      tags: [User]
+ *      description: Subscribe a subscription Plan
+ *      parameters:
+ *        - in: path
+ *          name: subscriptionId
+ *          schema:
+ *              type: string
+ *          required: true
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          paymentId:
+ *                              type: string
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Sucess
+ *          400:
+ *              description: Bad request
+ *          401:
+ *              description: Unauthorized
+ *          500:
+ *              description: Internal server error
+ */
+routes.post('subscribe-plan/:subscriptionId', sessionAuth, userAuth)
 
 export default routes

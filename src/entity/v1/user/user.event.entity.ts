@@ -162,7 +162,7 @@ export default class UserEventEntity {
      * @param paymentId 
      * @returns IPayment
      */
-    static async paymentDetails(paymentId: any): Promise<IPayment> {
+    static async findPaymentById(paymentId: any): Promise<IPayment> {
         try {
             const payment: IPayment | null = await Payment.findById(paymentId);
             if (payment)

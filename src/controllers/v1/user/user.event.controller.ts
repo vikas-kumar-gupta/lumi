@@ -87,7 +87,7 @@ export default class UserEventController {
             if (event.availableTickets >= 1 && event.eventDate) {
 
                 //  cheking if given paymentId is a valid payment
-                const payment: IPayment = await UserEventEntity.paymentDetails(paymentId);
+                const payment: IPayment = await UserEventEntity.findPaymentById(paymentId);
 
                 //  booking an event
                 const userEvent: IUserEvent = await UserEventEntity.bookEvent({ eventBookingCode: `#${eventBookingCode}`, eventId: eventId, userId: req.body.tokenId, paymentId: paymentId })
