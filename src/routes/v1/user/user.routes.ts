@@ -209,6 +209,7 @@ routes.get('/profile', sessionAuth, userAuth, userController.default.userDetails
  *                      properties:
  *                          name:
  *                              type: string
+ *                              example: "Peter Parker"
  *                              required: false
  *                          email:
  *                              type: string

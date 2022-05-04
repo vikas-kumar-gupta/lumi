@@ -23,7 +23,7 @@ export const updateUser = Joi.object({
     zodiac: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.ZODIAC)),
     interestedIn: Joi.string().trim().valid(...Object.values(DBENUMS.INTERESTS)),
     ageBetween: Joi.array().length(2),
-    homeTown: Joi.string().trim().min(5).max(30),
+    homeTown: Joi.string().trim().min(1),
     jobTitle: Joi.string().min(5).trim(),
     eduLevel: Joi.string().min(5).trim().valid(...Object.values(DBENUMS.EDU_LEVEL)),
     religiousBelief: Joi.string().min(3).trim().valid(...Object.values(DBENUMS.RELIGIOUS)),
